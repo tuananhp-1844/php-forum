@@ -4,17 +4,46 @@ namespace App\Http\Controllers\Questions;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\Contracts\QuestionRepositoryInterface;
+use App\Repositories\Contracts\CategoryRepositoryInterface;
+use App\Http\Requests\Questions\CreateQuestionRequest;
 
 class QuestionController extends Controller
 {
+    private $questionRepository;
+    private $categoryRepository;
+
+    public function __construct(QuestionRepositoryInterface $question, CategoryRepositoryInterface $category)
+    {
+        $this->questionRepository = $question;
+        $this->categoryRepository = $category;
+        $this->middleware('auth')->except('index', 'show');
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $questions = $this->questionRepository->with(['user', 'answers', 'votes']);
+        switch ($request->tag) {
+            case 'unresolve':
+                $questions = $questions->unResolve();
+                break;
+            case 'poll':
+                $questions = $questions->isPoll();
+                break;
+            case 'no-answer':
+                # code...
+                break;
+            default:
+                $questions = $questions->newest();
+                break;
+        }
+        $questions = $questions->paginate(config('pagination.question', 10));
+
+        return view('home', compact('questions'));
     }
 
     /**
@@ -24,7 +53,9 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        //
+        $categories = $this->categoryRepository->all();
+
+        return view('questions.create', compact('categories'));
     }
 
     /**
@@ -33,9 +64,11 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateQuestionRequest $request)
     {
-        //
+        $question = $this->questionRepository->store($request);
+
+        return redirect()->route('questions.show', ['id' => $question->id]);
     }
 
     /**
@@ -46,7 +79,9 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        //
+        $question = $this->questionRepository->find($id);
+        
+        return view('questions.show', compact('question'));
     }
 
     /**
