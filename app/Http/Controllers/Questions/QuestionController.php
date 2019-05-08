@@ -80,7 +80,7 @@ class QuestionController extends Controller
     public function show($id)
     {
         $question = $this->questionRepository->find($id);
-        
+
         return view('questions.show', compact('question'));
     }
 

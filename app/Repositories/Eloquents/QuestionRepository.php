@@ -46,7 +46,7 @@ class QuestionRepository extends BaseRepository implements QuestionRepositoryInt
             'content' => $request->content,
             'is_poll' => $request->has('question_poll') ? 1 : 0,
         ]);
-        
+
         return $question;
     }
 }
