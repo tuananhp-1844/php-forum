@@ -1,0 +1,9 @@
+.error{
+    color:red !important;
+}
+.editor-toolbar {
+    margin-left: 190px;
+}
+#logout-form {
+    display: none;
+}
