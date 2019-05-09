@@ -20,8 +20,8 @@ class AppServiceProvider extends ServiceProvider
         ];
         foreach ($models as $key => $model) {
             $this->app->bind(
-                'App\\Repositories\\Contracts\\{$model}RepositoryInterface',
-                'App\\Repositories\\Eloquents\\{$model}Repository'
+                "App\\Repositories\\Contracts\\{$model}RepositoryInterface",
+                "App\\Repositories\\Eloquents\\{$model}Repository"
             );
         }
     }
