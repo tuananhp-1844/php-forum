@@ -1,31 +1,3 @@
-<div class="panel-pop" id="signup">
-    <h2>{{ __('Register Now') }}<i class="icon-remove"></i></h2>
-    <div class="form-style form-style-3">
-        <form>
-            <div class="form-inputs clearfix">
-                <p>
-                    <label class="required">{{ __('Username') }}<span>*</span></label>
-                    <input type="text">
-                </p>
-                <p>
-                    <label class="required">{{ __('E-Mail') }}<span>*</span></label>
-                    <input type="email">
-                </p>
-                <p>
-                    <label class="required">{{ __('Password') }}<span>*</span></label>
-                    <input type="password" value="">
-                </p>
-                <p>
-                    <label class="required">{{ __('Confirm Password') }}<span>*</span></label>
-                    <input type="password" value="">
-                </p>
-            </div>
-            <p class="form-submit">
-                <input type="submit" value="Signup" class="button color small submit">
-            </p>
-    </div>
-</div><!-- End signup -->
-
 <div class="panel-pop" id="lost-password">
     <h2>{{ __('Lost Password') }}<i class="icon-remove"></i></h2>
     <div class="form-style form-style-3">
@@ -67,7 +39,8 @@
                         {{ csrf_field() }}</form>
                 </li>
                 @else
-                <li><a href="{{ route('login') }}"><i class="icon-user"></i>{{ __('login') }}</a></li>
+                <li><a href="{{ route('login') }}"><i class="icon-signin"></i>{{ __('login') }}</a></li>
+                <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
                 @endif
             </ul>
         </nav>
@@ -84,7 +57,7 @@
     <section class="container clearfix">
         <div class="logo">
             <a href="{{ route('home')}}">
-            <img alt="" src="{{ config('asset.logo') }}">
+            <img alt="" src="{{ asset(config('asset.logo')) }}">
             </a>
         </div>
         <nav class="navigation">

@@ -126,7 +126,9 @@
 
     <div class="about-author clearfix">
         <div class="author-image">
-            <a href="#" original-title="{{ $question->user->fullname }}" class="tooltip-n"><img alt="" src=""></a>
+            <a href="#" original-title="{{ $question->user->fullname }}" class="tooltip-n">
+                <img alt="" src="{{ asset($question->user->avatar) }}">
+            </a>
         </div>
         <div class="author-bio">
             <h4>{{ __('About the Author') }}</h4>
@@ -307,7 +309,6 @@
                 </li>
             </ul>
         </div>
-    
     </aside>
 <!-- End sidebar
 @endsection
