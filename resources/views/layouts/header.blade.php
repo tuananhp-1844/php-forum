@@ -67,9 +67,8 @@
                 <li>
                     <a href="cat_question.html">{{ __('Questions') }}</a>
                     <ul>
-                        <li><a href="cat_question.html">{{ __('Questions Category') }}</a></li>
-                        <li><a href="single_question.html">{{ __('Question Single') }}</a></li>
-                        <li><a href="single_question_poll.html">{{ __('Poll Question Single') }}</a></li>
+                        <li><a href="{{ route('categories.index') }}">{{ __('Questions Category') }}</a></li>
+                        <li><a href="{{ route('tags.index') }}">{{ __('Question Tag') }}</a></li>
                     </ul>
                 </li>
                 @if (Auth::check())

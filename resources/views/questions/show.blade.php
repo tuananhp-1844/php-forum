@@ -39,8 +39,8 @@
                     <div class="form-inputs clearfix">
                         @foreach ($question->polls as $item)
                             <p>
-                            <input id="poll-{{ $item->id }}" name="poll-radio" type="radio">
-                            <label for="poll-{{ $item->id }}">{{ $item->title }}  ({{ __('3 lượt chọn') }})</label>
+                                <input id="poll-{{ $item->id }}" name="poll-radio" type="radio">
+                                <label for="poll-{{ $item->id }}">{{ $item->title }}  ({{ __('3 lượt chọn') }})</label>
                             </p>
                         @endforeach
                     </div>

@@ -18,3 +18,9 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/change-language/{lang}', 'Languages\LanguageController')->name('change-language');
 
 Route::resource('questions', 'Questions\QuestionController');
+
+Route::resource('tags', 'Tags\TagController')->only('index');
+
+Route::resource('tags.questions', 'Questions\QuestionTagController')->only('index');
+
+Route::resource('categories', 'Category\CategoryController');
