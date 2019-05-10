@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
         $models = [
             'Question',
             'Category',
+            'User',
         ];
         foreach ($models as $key => $model) {
             $this->app->bind(
