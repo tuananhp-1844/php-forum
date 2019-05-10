@@ -115,23 +115,46 @@
         <a href="#">{{ __('vbegy') }}</a>
     </div>
 
-    <div class="widget">
-        <h3 class="widget_title">{{ __('Recent Questions') }}</h3>
-        <ul class="related-posts">
-            <li class="related-item">
-                <h3><a href="#">{{ __('This is my first Question') }}</a></h3>
-                <p>{{ __('Lorem ipsum dolor sit amet, consectetur adipiscing elit.') }}</p>
-                <div class="clear"></div>
-                <span>{{ __('Feb 22, 2014') }}</span>
+    <div class="widget widget_social">
+        <h3 class="widget_title">{{ __('Find Us') }}</h3>
+        <ul>
+            <li class="rss-subscribers">
+                <a href="#" target="_blank">
+                <strong>
+                    <i class="icon-rss"></i>
+                    <span>{{ __('Subscribe') }}</span><br>
+                    <small>{{ __('To RSS Feed') }}</small>
+                </strong>
+                </a>
             </li>
-            <li class="related-item">
-                <h3><a href="#">{{ __('This Is My Second Poll Question') }}</a></h3>
-                <p>{{ __('Lorem ipsum dolor sit amet, consectetur adipiscing elit.') }}</p>
-                <div class="clear"></div>
-                <span>{{ __('Feb 22, 2014') }}</span>
+            <li class="facebook-fans">
+                <a href="#" target="_blank">
+                <strong>
+                    <i class="social_icon-facebook"></i>
+                    <span>{{ __('5,000') }}</span><br>
+                    <small>{{ __('People like it') }}</small>
+                </strong>
+                </a>
+            </li>
+            <li class="twitter-followers">
+                <a href="#" target="_blank">
+                <strong>
+                    <i class="social_icon-twitter"></i>
+                    <span>{{ __('3,000') }}</span><br>
+                    <small>{{ __('Followers') }}</small>
+                </strong>
+                </a>
+            </li>
+            <li class="youtube-subs">
+                <a href="#" target="_blank">
+                <strong>
+                    <i class="icon-play"></i>
+                    <span>{{ __('1,000') }}</span><br>
+                    <small>{{ __('Subscribers') }}</small>
+                </strong>
+                </a>
             </li>
         </ul>
     </div>
-
 </aside><!-- End sidebar -->
 @endsection

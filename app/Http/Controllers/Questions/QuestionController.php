@@ -38,7 +38,7 @@ class QuestionController extends Controller
                 $questions = $questions->isPoll();
                 break;
             case 'no-answer':
-                # code...
+                $questions = $questions->newest();
                 break;
             default:
                 $questions = $questions->newest();
@@ -84,10 +84,12 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        $question = $this->questionRepository->findOrFail($id)->load(['user', 'answers.user', 'votes']);
+        $question = $this->questionRepository->findOrFail($id);
+        $question = $question->load(['user', 'answers.user', 'votes', 'tags', 'polls']);
         $this->questionRepository->increaseView($id);
+        $relate = $this->questionRepository->relate($question, config('pagination.question'));
 
-        return view('questions.show', compact('question'));
+        return view('questions.show', compact('question', 'relate'));
     }
 
     /**
