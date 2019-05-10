@@ -46,8 +46,9 @@
                 </div>
                 <h6><a href="#">{{ Auth::user()->fullname }}</a></h6>
             </li>
-            <li><i class="icon-question-sign"></i>{{ __('Questions') }} ( <span>20</span> )</li>
-            <li><i class="icon-comment"></i>{{ __('Answers') }} ( <span>50</span> )</li>
+        <li><i class="icon-question-sign"></i>{{ __('Questions') }} ( <span>{{ Auth::user()->questions->count() }}</span> )</li>
+        <li><i class="icon-comment"></i>{{ __('Answers') }} ( <span>{{ Auth::user()->answers->count() }}</span> )</li>
+        <li><i class="icon-btc"></i>{{ __('Points') }} ( <span>{{ Auth::user()->point }}</span> )</li>
         </ul>
     </div>
 </div>

@@ -25,9 +25,6 @@
     <div class="boxedtitle page-title">
         <h2>{{ __('Ask Question') }}</h2>
     </div>
-
-    <p>{{ __('Lorem') }}</p>
-
     <div class="form-style form-style-3" id="question-submit">
         <form method = "POST" action="{{ route('questions.store') }}">
             @csrf
@@ -49,10 +46,10 @@
                     <label class="required">{{ __('Category') }}<span>*</span></label>
                     <span class="styled-select">
                     <select name="category" value = "{{ old('category') }}">
-                            <option value="">{{ __('Select a Category') }}</option>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                            @endforeach
+                        <option value="">{{ __('Select a Category') }}</option>
+                        @foreach ($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
                         </select>
                     </span>
                     <span class="form-description">{{ __('Please choose the appropriate section so easily search for your question .') }}</span>
@@ -62,10 +59,11 @@
                 </p>
                 <p class="question_poll_p">
                     <label for="question_poll">{{ __('Poll') }}</label>
-                    <input type="checkbox" id="question_poll" value="1" name="question_poll">
+                    <input type="checkbox" id="question_poll" name="question_poll">
                     <span class="question_poll">{{ __('This question is a poll') }} ?</span>
                     <span class="poll-description">{{ __('If you want to be doing a poll click here') }} .</span>
                 </p>
+                <span class="error form-description poll-error"></span>
                 <div class="clearfix"></div>
                 <div class="poll_options">
                     <p class="form-submit add_poll">
@@ -75,8 +73,8 @@
                         <li id="poll_li_1">
                             <div class="poll-li">
                                 <p><input id="ask[1][title]" class="ask" name="ask[1][title]" value="" type="text"></p>
-                                <input id="ask[1][value]" name="ask[1][value]" value="" type="hidden">
-                                <input id="ask[1][id]" name="ask[1][id]" value="1" type="hidden">
+                                {{-- <input id="ask[1][value]" name="ask[1][value]" value="" type="hidden">
+                                <input id="ask[1][id]" name="ask[1][id]" value="1" type="hidden"> --}}
                                 <div class="del-poll-li"><i class="icon-remove"></i></div>
                                 <div class="move-poll-li"><i class="icon-fullscreen"></i></div>
                             </div>
@@ -93,7 +91,7 @@
                     <textarea id="question-details" aria-required="true" cols="58" rows="8" name="content">{{ old('content') }}</textarea>
                     <span class="form-description">{{ __('Type the description thoroughly and in detail') }} .</span>
                     @error('content')
-                        <span class="error form-description">{{ $message }}</span>
+                    <span class="error form-description">{{ $message }}</span>
                     @enderror
                 </p>
             </div>

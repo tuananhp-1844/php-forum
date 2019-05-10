@@ -4,6 +4,8 @@ namespace App\Repositories\Eloquents;
 
 use App\Repositories\Contracts\QuestionRepositoryInterface;
 use App\Models\Question;
+use App\Models\Tag;
+use App\Models\Poll;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -47,6 +49,32 @@ class QuestionRepository extends BaseRepository implements QuestionRepositoryInt
             'is_poll' => $request->has('question_poll') ? 1 : 0,
         ]);
 
+        if ($request->has('tags')) {
+            $tagRequest = explode(',', $request->tags);
+            $tags = Tag::all();
+            $tagId = [];
+            foreach ($tagRequest as $key => $value) {
+                if ($tags->where('name', $value)->count()) {
+                    $tagId[] = $tags->where('name', $value)->first()->id;
+                } else {
+                    $tag = Tag::create([
+                        'name' => $value,
+                    ]);
+                    $tagId[] = $tag->id;
+                }
+            }
+            $question->tags()->attach($tagId);
+        }
+
+        if ($request->has('question_poll')) {
+            foreach ($request->ask as $key => $value) {
+                $poll = Poll::create([
+                    'question_id' => $question->id,
+                    'title' => $value['title'],
+                ]);
+            }
+        }
+
         return $question;
     }
 
@@ -57,5 +85,13 @@ class QuestionRepository extends BaseRepository implements QuestionRepositoryInt
         $question->save();
 
         return $question;
+    }
+
+    public function relate(Question $question, $limit)
+    {
+        $questions = $this->model->where('category_id', $question->category_id)->orderBy('id', 'DESC');
+        $questions = $questions->where('id', '<>', $question->id)->limit($limit)->get();
+
+        return $questions;
     }
 }

@@ -726,7 +726,7 @@ jQuery(document).ready(function ($) {
 	}
 
 	jQuery("#add_poll").click(function () {
-		jQuery('#question_poll_item').append('<li id="poll_li_' + nextli + '"><div class="poll-li"><p><input id="ask[' + nextli + '][title]" class="ask" name="ask[' + nextli + '][title]" value="" type="text"></p><input id="ask[' + nextli + '][value]" name="ask[' + nextli + '][value]" value="" type="hidden"><input id="ask[' + nextli + '][id]" name="ask[' + nextli + '][id]" value="' + nextli + '" type="hidden"><div class="del-poll-li"><i class="icon-remove"></i></div><div class="move-poll-li"><i class="icon-fullscreen"></i></div></div></li>');
+		jQuery('#question_poll_item').append('<li id="poll_li_' + nextli + '"><div class="poll-li"><p><input id="ask[' + nextli + '][title]" class="ask" name="ask[' + nextli + '][title]" value="" type="text"></p><div class="del-poll-li"><i class="icon-remove"></i></div><div class="move-poll-li"><i class="icon-fullscreen"></i></div></div></li>');
 		jQuery('#poll_li_' + nextli).hide().fadeIn();
 		nextli++;
 		jQuery(".del-poll-li").click(function () {
@@ -736,6 +736,19 @@ jQuery(document).ready(function ($) {
 		});
 		return false;
 	});
+
+	jQuery("#publish-question").click(function (event) {
+		if(jQuery("#question_poll").prop("checked") == false) {
+			return true;
+		}
+		jQuery(".poll-li input").each(function () {
+			if($(this).val() == '') {
+				jQuery('.poll-error').html('Poll is required');
+				event.preventDefault();
+				window.scrollTo(0, 200);
+			}
+		});
+	})
 
 	/* single question */
 

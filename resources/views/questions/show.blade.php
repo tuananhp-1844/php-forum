@@ -33,7 +33,21 @@
             <div class="question-type-main"><i class="icon-question-sign"></i>{{ __('Question') }}</div>
         @endif
         <div class="question-inner">
-            <div class="clearfix"></div>
+            <div class="poll_2">
+                @if ($question->is_poll)
+                <form class="form-style form-style-3">
+                    <div class="form-inputs clearfix">
+                        @foreach ($question->polls as $item)
+                            <p>
+                            <input id="poll-{{ $item->id }}" name="poll-radio" type="radio">
+                            <label for="poll-{{ $item->id }}">{{ $item->title }}  ({{ __('3 lượt chọn') }})</label>
+                            </p>
+                        @endforeach
+                    </div>
+                </form>
+                @endif
+            </div>
+            <div class="clearfix height_10"></div>
             <div class="question-desc">
                 {{ $question->content }}
             </div>
@@ -62,7 +76,11 @@
 
     <div class="share-tags page-content">
         <div class="question-tags"><i class="icon-tags"></i>
-            <a href="#">{{ __('wordpress') }}</a>, <a href="#">{{ __('question') }}</a>, <a href="#">{{ __('developer') }}</a>
+            @foreach ($question->tags as $tag)
+                <a href="#">{{ $tag->name }}</a>
+                @if (!$loop->last), 
+                @endif
+            @endforeach
         </div>
         <div class="share-inside-warp">
             <ul>
@@ -216,15 +234,6 @@
             </p>
         </form>
     </div>
-
-    <div class="post-next-prev clearfix">
-        <p class="prev-post">
-            <a href="#"><i class="icon-double-angle-left"></i>&nbsp;{{ __('Prev question') }}</a>
-        </p>
-        <p class="next-post">
-            <a href="#">{{ __('Next question') }}&nbsp;<i class="icon-double-angle-right"></i></a>
-        </p>
-    </div><!-- End post-next-prev -->
 </div><!-- End main -->
 @endsection
 
@@ -233,20 +242,15 @@
     @include('layouts.statistic')
 
     <div class="widget">
-        <h3 class="widget_title">{{ __('Recent Questions') }}</h3>
+        <h3 class="widget_title">{{ __('Relate Questions') }}</h3>
         <ul class="related-posts">
-            <li class="related-item">
-                <h3><a href="#">{{ __('This is my first Question') }}</a></h3>
-                <p>{{ __('Lorem ipsum dolor sit amet, consectetur adipiscing elit.') }}</p>
-                <div class="clear"></div>
-                <span>{{ __('Feb 22, 2014') }}</span>
-            </li>
-            <li class="related-item">
-                <h3><a href="#">{{ __('This Is My Second Poll Question') }}</a></h3>
-                <p>{{ __('Lorem ipsum dolor sit amet, consectetur adipiscing elit.') }}</p>
-                <div class="clear"></div>
-                <span>{{ __('Feb 22, 2014') }}</span>
-            </li>
+            @foreach ($relate as $question)
+                <li class="related-item">
+                    <h3><a href="#">{{ $question->title }}</a></h3>
+                    <div class="clear"></div>
+                    <span>{{ $question->created_at->diffForHumans() }}</span>
+                </li>
+            @endforeach
         </ul>
     </div>
 </aside>

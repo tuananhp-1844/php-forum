@@ -25,7 +25,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'role_id' => config('role.member'),
-            'avatar' => config('asset.logo'),
+            'avatar' => config('asset.avatar'),
         ]);
     }
     
