@@ -11,7 +11,7 @@ interface BaseRepositoryInterface
      /**
      * Find data by id
      */
-    public function find($id, $columns = ['*']);
+    public function findOrFail($id, $columns = ['*']);
 
     public function paginate($limit = null, $columns = ['*']);
     /**

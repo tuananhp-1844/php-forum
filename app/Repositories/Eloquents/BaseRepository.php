@@ -44,7 +44,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * Find data by id
      */
-    public function find($id, $columns = ['*'])
+    public function findOrFail($id, $columns = ['*'])
     {
         return $this->model->findOrFail($id, $columns);
     }
