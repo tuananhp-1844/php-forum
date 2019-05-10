@@ -28,4 +28,11 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             'avatar' => config('asset.logo'),
         ]);
     }
+    
+    public function getHighestPoint($limit)
+    {
+        $users = $this->model->where('status', 1)->orderBy('point', 'DESC')->limit($limit)->get();
+
+        return $users;
+    }
 }

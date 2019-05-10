@@ -4,19 +4,22 @@ namespace App\Http\Controllers\Questions;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\Contracts\QuestionRepositoryInterface;
-use App\Repositories\Contracts\CategoryRepositoryInterface;
+use App\Repositories\Contracts\QuestionRepositoryInterface as QuestionInterface;
+use App\Repositories\Contracts\CategoryRepositoryInterface as CategoryInterface;
+use App\Repositories\Contracts\UserRepositoryInterface as UserInterface;
 use App\Http\Requests\Questions\CreateQuestionRequest;
 
 class QuestionController extends Controller
 {
     private $questionRepository;
     private $categoryRepository;
+    private $userRepository;
 
-    public function __construct(QuestionRepositoryInterface $question, CategoryRepositoryInterface $category)
+    public function __construct(QuestionInterface $question, CategoryInterface $category, UserInterface $user)
     {
         $this->questionRepository = $question;
         $this->categoryRepository = $category;
+        $this->userReponsitory = $user;
         $this->middleware('auth')->except('index', 'show');
     }
     /**
@@ -26,7 +29,7 @@ class QuestionController extends Controller
      */
     public function index(Request $request)
     {
-        $questions = $this->questionRepository->with(['user', 'answers', 'votes']);
+        $questions = $this->questionRepository;
         switch ($request->tag) {
             case 'unresolve':
                 $questions = $questions->unResolve();
@@ -41,9 +44,11 @@ class QuestionController extends Controller
                 $questions = $questions->newest();
                 break;
         }
+        $questions = $questions->with(['category', 'user', 'answers', 'votes']);
         $questions = $questions->paginate(config('pagination.question'));
+        $userHightPoint = $this->userReponsitory->getHighestPoint(config('pagination.user_hight_point'));
 
-        return view('home', compact('questions'));
+        return view('home', compact('questions', 'userHightPoint'));
     }
 
     /**
@@ -79,7 +84,8 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        $question = $this->questionRepository->find($id);
+        $question = $this->questionRepository->findOrFail($id)->load(['user', 'answers.user', 'votes']);
+        $this->questionRepository->increaseView($id);
 
         return view('questions.show', compact('question'));
     }

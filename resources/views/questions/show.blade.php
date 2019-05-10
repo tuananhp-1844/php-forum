@@ -131,8 +131,8 @@
             </a>
         </div>
         <div class="author-bio">
-            <h4>{{ __('About the Author') }}</h4>
-            {{ __('Lorem') }}
+            <h4>{{ $question->user->fullname }}</h4>
+            <a href="">{{ $question->user->point }} {{ __('Points') }}</a> <br/>
         </div>
     </div><!-- End about-author -->
 
@@ -141,12 +141,13 @@
             <h2>{{ __('Answers') }} ( <span class="color">{{ $question->answers->count() }}</span> )</h2>
         </div>
         <ol class="commentlist clearfix">
+            @foreach ($question->answers as $comment)
             <li class="comment">
                 <div class="comment-body comment-body-answered clearfix">
-                    <div class="avatar"><img alt="" src=""></div>
+                    <div class="avatar"><img alt="" src="{{ asset($comment->user->avatar) }}"></div>
                     <div class="comment-text">
                         <div class="author clearfix">
-                            <div class="comment-author"><a href="#">{{ __('admin') }}</a></div>
+                            <div class="comment-author"><a href="#">{{ $comment->user->fullname }}</a></div>
                             <div class="comment-vote">
                                 <ul class="question-vote">
                                     <li><a href="#" class="question-vote-up" title="Like"></a></li>
@@ -155,12 +156,13 @@
                             </div>
                             <span class="question-vote-result">+1</span>
                             <div class="comment-meta">
-                                <div class="date"><i class="icon-time"></i>{{ __('January 15 , 2014 at 10:00 pm') }}</div>
+                                <div class="date"><i class="icon-time"></i>{{ $comment->created_at->diffForHumans() }}
+                                </div>
                             </div>
                             <a class="comment-reply" href="#"><i class="icon-reply"></i>{{ __('Reply') }}</a>
                         </div>
                         <div class="text">
-                            <p>{{ __('Lorem') }}</p>
+                            <p>{{ $comment->content }}</p>
                         </div>
                         <div class="question-answered question-answered-done"><i class="icon-ok"></i>{{ __('Best Answer') }}
                         </div>
@@ -194,6 +196,7 @@
                     </li>
                 </ul><!-- End children -->
             </li>
+            @endforeach
         </ol><!-- End commentlist -->
     </div><!-- End page-content -->
 
@@ -205,7 +208,7 @@
             <div id="respond-textarea">
                 <p>
                     <label class="required" for="comment">{{ __('Comment') }}<span>*</span></label>
-                    <textarea id="comment" name="comment" aria-required="true" cols="58" rows="8"></textarea>
+                    <textarea id="question-details" name="comment" aria-required="true" cols="58" rows="8" id = ""></textarea>
                 </p>
             </div>
             <p class="form-submit">
@@ -227,88 +230,25 @@
 
 @section('sidebar')
 <aside class="col-md-3 sidebar">
+    @include('layouts.statistic')
 
-        <div class="widget widget_login">
-            <h3 class="widget_title">{{ __('Login') }}</h3>
-            <div class="form-style form-style-2">
-                <form>
-                    <div class="form-inputs clearfix">
-                        <p class="login-text">
-                            <input type="text" value="Username" onfocus="if (this.value == 'Username') { this.value = ''; }" onblur="if (this.value == '') { this.value = 'Username'; }">
-                            <i class="icon-user"></i>
-                        </p>
-                        <p class="login-password">
-                            <input type="password" value="Password" onfocus="if (this.value == 'Password') { this.value = ''; }" onblur="if (this.value == '') { this.value = 'Password'; }">
-                            <i class="icon-lock"></i>
-                            <a href="#">{{ __('Forget') }}</a>
-                        </p>
-                    </div>
-                    <p class="form-submit login-submit">
-                        <input type="submit" value="Log in" class="button color small login-submit submit">
-                    </p>
-                    <div class="rememberme">
-                        <label><input type="checkbox" checked="checked">{{ __('Remember Me') }}</label>
-                    </div>
-                </form>
-                <ul class="login-links login-links-r">
-                    <li><a href="#">{{ __('Register') }}</a></li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-    
-        <div class="widget widget_stats">
-            <h3 class="widget_title">{{ __('Stats') }}</h3>
-            <div class="ul_list ul_list-icon-ok">
-                <ul>
-                    <li><i class="icon-question-sign"></i>{{ __('Questions') }} ( <span>20</span> )</li>
-                    <li><i class="icon-comment"></i>{{ __('Answers') }} ( <span>50</span> )</li>
-                </ul>
-            </div>
-        </div>
-    
-        <div class="widget widget_highest_points">
-            <h3 class="widget_title">{{ __('Highest points') }}</h3>
-            <ul>
-                <li>
-                    <div class="author-img">
-                    <a href="#"><img width="60" height="60" src="{{ asset(config('asset.logo')) }}" alt=""></a>
-                    </div>
-                    <h6><a href="#">{{ __('admin') }}</a></h6>
-                    <span class="comment">12 {{ __('Points') }}</span>
-                </li>
-            </ul>
-        </div>
-    
-        <div class="widget widget_tag_cloud">
-            <h3 class="widget_title">{{ __('Tags') }}</h3>
-            <a href="#">{{ __('projects') }}</a>
-            <a href="#">{{ __('Portfolio') }}</a>
-            <a href="#">{{ __('Wordpress') }}</a>
-            <a href="#">{{ __('Html') }}</a>
-            <a href="#">{{ __('Css') }}</a>
-            <a href="#">{{ __('jQuery') }}</a>
-            <a href="#">{{ __('2code') }}</a>
-            <a href="#">{{ __('vbegy') }}</a>
-        </div>
-    
-        <div class="widget">
-            <h3 class="widget_title">{{ __('Recent Questions') }}</h3>
-            <ul class="related-posts">
-                <li class="related-item">
-                    <h3><a href="#">{{ __('This is my first Question') }}</a></h3>
-                    <p>{{ __('Lorem ipsum dolor sit amet, consectetur adipiscing elit.') }}</p>
-                    <div class="clear"></div>
-                    <span>{{ __('Feb 22, 2014') }}</span>
-                </li>
-                <li class="related-item">
-                    <h3><a href="#">{{ __('This Is My Second Poll Question') }}</a></h3>
-                    <p>{{ __('Lorem ipsum dolor sit amet, consectetur adipiscing elit.') }}</p>
-                    <div class="clear"></div>
-                    <span>{{ __('Feb 22, 2014') }}</span>
-                </li>
-            </ul>
-        </div>
-    </aside>
+    <div class="widget">
+        <h3 class="widget_title">{{ __('Recent Questions') }}</h3>
+        <ul class="related-posts">
+            <li class="related-item">
+                <h3><a href="#">{{ __('This is my first Question') }}</a></h3>
+                <p>{{ __('Lorem ipsum dolor sit amet, consectetur adipiscing elit.') }}</p>
+                <div class="clear"></div>
+                <span>{{ __('Feb 22, 2014') }}</span>
+            </li>
+            <li class="related-item">
+                <h3><a href="#">{{ __('This Is My Second Poll Question') }}</a></h3>
+                <p>{{ __('Lorem ipsum dolor sit amet, consectetur adipiscing elit.') }}</p>
+                <div class="clear"></div>
+                <span>{{ __('Feb 22, 2014') }}</span>
+            </li>
+        </ul>
+    </div>
+</aside>
 <!-- End sidebar
 @endsection

@@ -49,4 +49,13 @@ class QuestionRepository extends BaseRepository implements QuestionRepositoryInt
 
         return $question;
     }
+
+    public function increaseView($id)
+    {
+        $question = $this->model->findOrFail($id);
+        $question->view += 1;
+        $question->save();
+
+        return $question;
+    }
 }

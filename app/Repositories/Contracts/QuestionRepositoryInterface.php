@@ -7,4 +7,5 @@ interface QuestionRepositoryInterface
     public function unResolve();
     public function isPoll();
     public function noAnswer();
+    public function increaseView($id);
 }

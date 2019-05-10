@@ -86,55 +86,20 @@
 @section('sidebar')
 <aside class="col-md-3 sidebar">
 
-    <div class="widget widget_login">
-        <h3 class="widget_title">{{ __('Login') }}</h3>
-        <div class="form-style form-style-2">
-            <form>
-                <div class="form-inputs clearfix">
-                    <p class="login-text">
-                        <input type="text" value="Username" onfocus="if (this.value == 'Username') { this.value = ''; }" onblur="if (this.value == '') { this.value = 'Username'; }">
-                        <i class="icon-user"></i>
-                    </p>
-                    <p class="login-password">
-                        <input type="password" value="Password" onfocus="if (this.value == 'Password') { this.value = ''; }" onblur="if (this.value == '') { this.value = 'Password'; }">
-                        <i class="icon-lock"></i>
-                        <a href="#">{{ __('Forget') }}</a>
-                    </p>
-                </div>
-                <p class="form-submit login-submit">
-                    <input type="submit" value="Log in" class="button color small login-submit submit">
-                </p>
-                <div class="rememberme">
-                    <label><input type="checkbox" checked="checked">{{ __('Remember Me') }}</label>
-                </div>
-            </form>
-            <ul class="login-links login-links-r">
-                <li><a href="#">{{ __('Register') }}</a></li>
-            </ul>
-            <div class="clearfix"></div>
-        </div>
-    </div>
-
-    <div class="widget widget_stats">
-        <h3 class="widget_title">{{ __('Stats') }}</h3>
-        <div class="ul_list ul_list-icon-ok">
-            <ul>
-                <li><i class="icon-question-sign"></i>{{ __('Questions') }} ( <span>20</span> )</li>
-                <li><i class="icon-comment"></i>{{ __('Answers') }} ( <span>50</span> )</li>
-            </ul>
-        </div>
-    </div>
+    @include('layouts.statistic')
 
     <div class="widget widget_highest_points">
         <h3 class="widget_title">{{ __('Highest points') }}</h3>
         <ul>
+            @foreach ($userHightPoint as $user)
             <li>
                 <div class="author-img">
-                <a href="#"><img width="60" height="60" src="{{ asset(config('asset.logo')) }}" alt=""></a>
+                <a href="#"><img width="60" height="60" src="{{ asset($user->avatar) }}" alt="{{ $user->fullname }}"></a>
                 </div>
-                <h6><a href="#">{{ __('admin') }}</a></h6>
-                <span class="comment">12 {{ __('Points') }}</span>
+                <h6><a href="#">{{ $user->fullname }}</a></h6>
+                <span class="comment">{{ $user->point }} {{ __('Points') }}</span>
             </li>
+            @endforeach
         </ul>
     </div>
 

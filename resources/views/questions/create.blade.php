@@ -104,5 +104,4 @@
     </div>
 </div><!-- End page-content -->
 </div>
-<input type="file" id="hidden-input-file"/>
 @endsection
