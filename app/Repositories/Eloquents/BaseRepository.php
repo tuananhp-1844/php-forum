@@ -84,7 +84,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     public function with(array $relationship)
     {
         $this->model->with($relationship);
-        
+
         return $this;
     }
 }

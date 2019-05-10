@@ -32,7 +32,7 @@ class LanguageRequest extends FormRequest
     {
         $data = parent::all($keys);
         $data['lang'] = $this->route('lang');
-        
+
         return $data;
     }
 }
