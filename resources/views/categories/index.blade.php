@@ -27,12 +27,11 @@
                 @foreach ($categories as $category)
                 <li><i class="icon-list"></i><a href="{{ route('categories.questions.index', ['category' => $category->id]) }}">{{ $category->name }}<span> ( <span>{{ $category->questions->count() }}</span> ) </span></a></li>
                 @endforeach
-                <div>
-                    {{ $categories->render('paginations.paginate') }}
-                </div>
             </ul>
         </div>
         </div><!-- End user-profile-widget -->
     </div><!-- End page-content -->
+    <div class="height_20"></div>
+    {{ $categories->render('paginations.paginate') }}
 </div><!-- End col-md-12 -->
 @endsection

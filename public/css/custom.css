@@ -7,3 +7,6 @@
 #hidden-input-file {
     display: none;
 }
+.edit {
+    float: right;
+}

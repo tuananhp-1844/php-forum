@@ -7,4 +7,5 @@ interface UserRepositoryInterface
 {
     public function register(array $data);
     public function getHighestPoint($limit);
+    public function getQuestion($id, $limit);
 }

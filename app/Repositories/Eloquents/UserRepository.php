@@ -35,4 +35,13 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
         return $users;
     }
+
+    public function getQuestion($id, $limit)
+    {
+        $user = $this->model->findOrFail($id);
+        $questions = $user->questions()->with(['category', 'votes', 'answers']);
+        $questions = $questions->orderBy('id', 'DESC')->paginate($limit);
+
+        return $questions;
+    }
 }
