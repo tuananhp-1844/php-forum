@@ -55,7 +55,7 @@
                     <div class="question-author">
                         <a href="#" original-title="{{ $question->user->fullname }}" class="question-author-img tooltip-n">
                             <span></span>
-                        <img alt="" src="{{ asset($question->user->avatar) }}">
+                        <img alt="" src="{{ asset(config('asset.avatar_path') . $question->user->avatar) }}">
                         </a>
                     </div>
                     <div class="question-inner">
