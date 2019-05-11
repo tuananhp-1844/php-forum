@@ -23,4 +23,6 @@ Route::resource('tags', 'Tags\TagController')->only('index');
 
 Route::resource('tags.questions', 'Questions\QuestionTagController')->only('index');
 
-Route::resource('categories', 'Category\CategoryController');
+Route::resource('categories', 'Category\CategoryController')->only('index');
+
+Route::resource('categories.questions', 'Questions\QuestionCategoryController')->only('index');
