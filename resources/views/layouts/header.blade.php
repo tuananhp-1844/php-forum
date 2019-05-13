@@ -21,7 +21,8 @@
         <div class="clearfix"></div>
     </div>
 </div><!-- End lost-password -->
-
+<div class="panel-pop" id="report-modal">
+</div>
 <div id="header-top">
     <section class="container clearfix">
         <nav class="header-top-nav">

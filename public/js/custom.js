@@ -815,6 +815,19 @@ jQuery(document).ready(function ($) {
 		return false;
 	});
 
+	/* report */
+	jQuery('article').on('click', '#report', function () {
+		var question = $(this).data('question');
+		$.get("/questions/" + question + "/reports", function(data, status){
+			jQuery("#report-modal").html(data);
+			jQuery(".panel-pop").animate({ "top": "-100%" }, 10).hide();
+			jQuery("#report-modal").show().animate({ "top": "10%" }, 500);
+			jQuery("body").prepend("<div class='wrap-pop'></div>");
+			wrap_pop();
+			return false;
+		});
+	})
+
 	/* Panel pop */
 
 	jQuery(".panel-pop").each(function () {

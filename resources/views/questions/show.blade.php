@@ -26,7 +26,7 @@
         <h2>
             <a href="single_question.html">{{ $question->title }}</a>
         </h2>
-        <a class="question-report" href="#">{{ __('Report') }}</a>
+        <a class="question-report" id = "report" data-question="{{ $question->id }}">{{ __('Report') }}</a>
         @if ($question->is_poll)
             <div class="question-type-main"><i class="icon-signal"></i>{{ __('Poll') }}</div>
         @else
@@ -40,7 +40,7 @@
                         @foreach ($question->polls as $item)
                             <p>
                             <input id="poll-{{ $item->id }}" name="poll-radio" type="radio">
-                                <label for="poll-{{ $item->id }}">{{ $item->title }}  (3 lượt chọn)</label>
+                            <label for="poll-{{ $item->id }}">{{ $item->title }}  (3 lượt chọn)</label>
                             </p>
                         @endforeach
                     </div>
