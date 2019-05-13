@@ -9,11 +9,11 @@
                 <h2>
                     {{ Auth::user()->fullname }}
                     <span class="edit">
-                        <a href="{{ route('profile.edit', ['profile' => Auth::user()->id]) }}"><i class="icon-edit"></i> {{ __('Edit') }}</a>
+                        <a href="{{ route('profile.edit') }}"><i class="icon-edit"></i> {{ __('Edit') }}</a>
                     </span>
                 </h2>
                     <div class="user-profile-img">
-                    <img width="60" height="60" src="{{ asset(Auth::user()->avatar) }}" alt="{{ Auth::user()->fullname }}">
+                    <img id="avatar_preview" src="{{ asset(Auth::user()->avatar) }}" alt="{{ Auth::user()->fullname }}">
                     </div>
                     <div class="ul_list ul_list-icon-ok about-user">
                         <ul>

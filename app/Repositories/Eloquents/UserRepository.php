@@ -5,10 +5,12 @@ namespace App\Repositories\Eloquents;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Traits\Upload;
 use Hash;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
+    use Upload;
     /**
      * Specify Model class name
      */
@@ -43,5 +45,29 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $questions = $questions->orderBy('id', 'DESC')->paginate($limit);
 
         return $questions;
+    }
+
+    public function updateUser($id, Request $request)
+    {
+        $user  = $this->model->findOrFail($id);
+        $user->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'website' => $request->website,
+            'facebook' => $request->facebook,
+            'google' => $request->google,
+            'linker' => $request->linker,
+            'twitter' => $request->twitter,
+            'country' => $request->country,
+            'info' => $request->info,
+        ]);
+
+        $image = '';
+        if ($request->has('avatar')) {
+            $avatar = $this->upload($request->avatar, 'avatar');
+            $user->avatar = $avatar['image'];
+        }
+
+        return $user;
     }
 }

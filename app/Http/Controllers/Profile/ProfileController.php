@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Profile;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Http\Requests\Profile\EditProfile as EditProfileRequest;
 use Auth;
 
 class ProfileController extends Controller
@@ -66,9 +67,9 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        return view('profile.edit');
     }
 
     /**
@@ -78,9 +79,11 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditProfileRequest $request)
     {
-        //
+        $user = $this->userRepository->updateUser(Auth::user()->id, $request);
+
+        return redirect()->route('profile.index');
     }
 
     /**

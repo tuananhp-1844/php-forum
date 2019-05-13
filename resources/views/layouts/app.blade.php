@@ -52,7 +52,7 @@
         @include('layouts.footer')
     </div><!-- End wrap -->
     <div class="go-up"><i class="icon-chevron-up"></i></div>
-    <input type="file" id="hidden-input-file"/>
+    <input type="file" id="hidden-input-file" accept="image/*"/>
     <!-- js -->
     <script src="{{ asset(config('asset.asset_project').'/js/jquery.min.js') }}"></script>
     <script src="{{ asset(config('asset.asset_project').'/js/jquery-ui-1.10.3.custom.min.js') }}"></script>

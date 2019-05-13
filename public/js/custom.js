@@ -1124,11 +1124,20 @@ jQuery(document).ready(function ($) {
 		});
 	})
 
-	// jQuery("#publish-question").click(function () {
-	// 	var content = simplemde.value();
-	// 	console.log(content);
-	// 	return false;
-	// })
-	// $("div#my-awesome-dropzone").dropzone({ url: "/file/post" });
-	// var myDropzone = new Dropzone("div#my-awesome-dropzone", { url: "/file/post" });
+	$("#avatar").change(function() {
+		readURL(this);
+	});
 });
+
+function readURL(input) {
+
+	if (input.files && input.files[0]) {
+	  var reader = new FileReader();
+  
+	  reader.onload = function(e) {
+		$('#avatar_preview').attr('src', e.target.result);
+	  }
+  
+	  reader.readAsDataURL(input.files[0]);
+	}
+  }
