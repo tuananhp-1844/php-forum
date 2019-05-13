@@ -25,14 +25,13 @@
         <div class="ul_list ul_list-icon-ok">
             <ul>
                 @foreach ($tags as $tag)
-            <li><i class="icon-tags"></i><a href="{{ route('tags.questions.index', ['tag' => $tag->id]) }}">{{ $tag->name }}<span> ( <span>{{ $tag->questions->count() }}</span> ) </span></a></li>
+                <li><i class="icon-tags"></i><a href="{{ route('tags.questions.index', ['tag' => $tag->id]) }}">{{ $tag->name }}<span> ( <span>{{ $tag->questions->count() }}</span> ) </span></a></li>
                 @endforeach
-                <div>
-                    {{ $tags->render('paginations.paginate') }}
-                </div>
             </ul>
         </div>
         </div><!-- End user-profile-widget -->
     </div><!-- End page-content -->
+    <div class="height_20"></div>
+    {{ $tags->render('paginations.paginate') }}
 </div><!-- End col-md-12 -->
 @endsection

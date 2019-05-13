@@ -7,3 +7,10 @@
 #hidden-input-file {
     display: none;
 }
+.edit {
+    float: right;
+}
+#avatar_preview {
+    width: 100px !important;
+    height: 100px !important;
+}
