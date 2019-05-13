@@ -40,4 +40,9 @@ class Question extends Model
     {
         return $this->hasMany(Poll::class);
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany('App\Models\Tag', 'question_tags', 'question_id', 'tag_id');
+    }
 }

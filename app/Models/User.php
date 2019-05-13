@@ -19,6 +19,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'first_name',
+        'last_name',
+        'role_id',
+        'avatar',
     ];
 
     /**
@@ -42,6 +46,16 @@ class User extends Authenticatable
 
     public function getFullNameAttribute()
     {
-        return $this->last_name . ' ' . $this->first_name;
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
     }
 }
