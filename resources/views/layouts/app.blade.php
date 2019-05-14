@@ -69,6 +69,7 @@
     <script src="{{ asset(config('asset.asset_project').'/js/jquery.scrollTo.js') }}"></script>
     <script src="{{ asset(config('asset.asset_project').'/js/jquery.nav.js') }}"></script>
     <script src="{{ asset(config('asset.asset_project').'/js/tags.js') }}"></script>
+    <script src="{{ asset(config('asset.asset_project').'/js/notify.min.js') }}"></script>
     <script src="{{ asset(config('asset.asset_project').'/js/jquery.bxslider.min.js') }}"></script>
     <script src="{{ asset('bower_components/simplemde/dist/simplemde.min.js') }}"></script>
     {{-- <script src="{{ asset('bower_components/dropzone/dist/dropzone.js') }}"></script> --}}

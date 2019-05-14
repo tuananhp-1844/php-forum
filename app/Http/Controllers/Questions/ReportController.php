@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Contracts\ReportRepositoryInterface;
 use App\Repositories\Contracts\QuestionRepositoryInterface;
+use Auth;
 
 class ReportController extends Controller
 {
@@ -28,7 +29,7 @@ class ReportController extends Controller
     {
         $reports = $this->reportRepository->newest()->get();
 
-        return view('questions.report', compact('reports', 'question'))->render();
+        return view('questions.report', compact('reports', 'question'));
     }
 
     /**
@@ -47,9 +48,13 @@ class ReportController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Question $question)
     {
-        //
+        $question->reports()->attach($request->report, [
+            'user_id' => Auth::user()->id , 'comment' => $request->comment,
+        ]);
+
+        return 'true';
     }
 
     /**
