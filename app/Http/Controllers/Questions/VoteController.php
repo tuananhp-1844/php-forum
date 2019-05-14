@@ -2,24 +2,21 @@
 
 namespace App\Http\Controllers\Questions;
 
-use App\Models\Question;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Repositories\Contracts\ReportRepositoryInterface;
-use App\Repositories\Contracts\QuestionRepositoryInterface;
+use App\Models\Question;
 use Auth;
+use App\Http\Controllers\Controller;
+use App\Repositories\Contracts\QuestionRepositoryInterface;
 
-class ReportController extends Controller
+class VoteController extends Controller
 {
-    protected $reportRepository;
     protected $questionRepository;
-    public function __construct(ReportRepositoryInterface $report, QuestionRepositoryInterface $question)
+
+    public function __construct(QuestionRepositoryInterface $questionRepository)
     {
-        $this->reportRepository = $report;
-        $this->questionRepository = $question;
+        $this->questionRepository = $questionRepository;
         $this->middleware('auth');
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -27,9 +24,7 @@ class ReportController extends Controller
      */
     public function index(Question $question)
     {
-        $reports = $this->reportRepository->newest()->get();
-
-        return view('questions.report', compact('reports', 'question'));
+        return $this->questionRepository->checkUserVote(Auth::user()->id, $question);
     }
 
     /**
@@ -50,11 +45,19 @@ class ReportController extends Controller
      */
     public function store(Request $request, Question $question)
     {
-        $question->reports()->attach($request->report, [
-            'user_id' => Auth::user()->id, 'comment' => $request->comment,
-        ]);
+        $state = 0;
+        if ($this->questionRepository->checkUserUnVote(Auth::user()->id, $question)) {
+            $this->questionRepository->destroyVote(Auth::user()->id, $question);
+            $state = -1;
+        } elseif ($this->questionRepository->checkUserVote(Auth::user()->id, $question)) {
+            $this->questionRepository->destroyVote(Auth::user()->id, $question);
+            $state = 0;
+        } else {
+            $this->questionRepository->vote(Auth::user()->id, $question);
+            $state = 1;
+        }
 
-        return 'true';
+        return $state;
     }
 
     /**
@@ -97,8 +100,20 @@ class ReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Question $question, $id)
     {
-        //
+        $state = 0;
+        if ($this->questionRepository->checkUserUnVote(Auth::user()->id, $question)) {
+            $this->questionRepository->destroyVote(Auth::user()->id, $question);
+            $state = 0;
+        } elseif ($this->questionRepository->checkUserVote(Auth::user()->id, $question)) {
+            $this->questionRepository->destroyVote(Auth::user()->id, $question);
+            $state = 1;
+        } else {
+            $this->questionRepository->unVote(Auth::user()->id, $question);
+            $state = -1;
+        }
+
+        return $state;
     }
 }

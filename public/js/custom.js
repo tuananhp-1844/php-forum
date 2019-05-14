@@ -849,6 +849,54 @@ jQuery(document).ready(function ($) {
 		event.preventDefault();
 	})
 
+	// Vote question
+
+	jQuery('#like').click(function(event) {
+		event.preventDefault()
+		var question = $(this).data('question');
+		$.post("/questions/" + question + "/votes", function(data, status) {
+			if (data == 1) {
+				jQuery('#count-vote').html(parseInt(jQuery('#count-vote').html()) + 1);
+				jQuery('#like').addClass('active-like');
+				// $.notify("successfully liked!", "success");
+			} else if(data == -1) {
+				jQuery('#count-vote').html(parseInt(jQuery('#count-vote').html()) + 1);
+				jQuery('#dislike').removeClass('active-dislike');
+				jQuery('#like').removeClass('active-like');
+				// $.notify("successfully liked!", "success");
+			} else {
+				jQuery('#count-vote').html(parseInt(jQuery('#count-vote').html()) - 1);
+				jQuery('#like').removeClass('active-like');
+				// $.notify("successfully unliked!", "success");
+			}
+		})
+	})
+
+	jQuery('#dislike').click(function(event) {
+		event.preventDefault()
+		var question = $(this).data('question');
+		$.ajax({
+			url: "/questions/" + question + "/votes/1",
+			type: 'DELETE',
+			success: function(data, status) {
+				if (data == -1) {
+					jQuery('#count-vote').html(parseInt(jQuery('#count-vote').html()) - 1);
+					jQuery('#dislike').addClass('active-dislike');
+					// $.notify("successfully disliked!", "success");
+				} else if(data == 1) {
+					jQuery('#count-vote').html(parseInt(jQuery('#count-vote').html()) - 1);
+					jQuery('#dislike').removeClass('active-dislike');
+					jQuery('#like').removeClass('active-like');
+					// $.notify("successfully disliked!", "success");
+				} else {
+					jQuery('#count-vote').html(parseInt(jQuery('#count-vote').html()) + 1);
+					jQuery('#dislike').removeClass('active-dislike');
+					// $.notify("successfully undisliked!", "success");
+				}
+			}
+		});
+	})
+
 	/* Panel pop */
 
 	jQuery(".panel-pop").each(function () {

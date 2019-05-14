@@ -65,4 +65,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Answer::class);
     }
+
+    public function votes()
+    {
+        return $this->belongsToMany(Question::class, 'question_votes', 'user_id', 'question_id')->withPivot('state');
+    }
 }

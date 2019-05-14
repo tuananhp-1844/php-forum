@@ -89,4 +89,29 @@ class QuestionRepository extends BaseRepository implements QuestionRepositoryInt
 
         return $questions;
     }
+
+    public function checkUserVote($userId, Question $question)
+    {
+        return $question->votes()->wherePivot('state', 1)->get()->where('id', $userId)->count();
+    }
+
+    public function checkUserUnVote($userId, Question $question)
+    {
+        return $question->votes()->wherePivot('state', -1)->get()->where('id', $userId)->count();
+    }
+
+    public function vote($userId, Question $question)
+    {
+        return $question->votes()->attach($userId, ['state' => 1]);
+    }
+
+    public function unVote($userId, Question $question)
+    {
+        return $question->votes()->attach($userId, ['state' => -1]);
+    }
+
+    public function destroyVote($userId, Question $question)
+    {
+        return $question->votes()->detach($userId);
+    }
 }

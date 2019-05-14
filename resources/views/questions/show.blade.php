@@ -67,12 +67,22 @@
             <span class="question-date"><i class="icon-time"></i>{{ $question->created_at->diffForHumans() }}</span>
             <span class="question-comment"><a href="#"><i class="icon-comment"></i>{{ $question->answers->count() }} {{ __('Answer') }}</a></span>
             <span class="question-view"><i class="icon-user"></i>{{ $question->view }} {{ __('Views') }}</span>
-            <span class="single-question-vote-result">+ {{ $question->votes->count() }}</span>
+            <span class="single-question-vote-result" id="count-vote"> {{ $question->voteCount() }}</span>
             <ul class="single-question-vote">
-                <li><a href="#" class="single-question-vote-down" title="Dislike"><i class="icon-thumbs-down"></i></a>
+                @if (Auth::check())
+            <li><a href="" class="single-question-vote-down {{ Auth::user()->votes()->wherePivot('state', -1)->get()->where('id', $question->id)->count() ? 'active-dislike' : '' }}" title="Dislike" id="dislike" data-question = "{{ $question->id }}"><i class="icon-thumbs-down"></i></a>
                 </li>
-                <li><a href="#" class="single-question-vote-up" title="Like"><i class="icon-thumbs-up"></i></a>
+                @else
+                <li><a href="{{ route('login') }}" class="single-question-vote-down" title="Dislike"><i class="icon-thumbs-down"></i></a>
                 </li>
+                @endif
+                @if (Auth::check())
+                <li><a href="" class="single-question-vote-up {{ Auth::user()->votes()->wherePivot('state', 1)->get()->where('id', $question->id)->count() ? 'active-like' : '' }}" title="Like" id="like" data-question = "{{ $question->id }}"><i class="icon-thumbs-up"></i></a>
+                </li>
+                @else
+                <li><a href="{{ route('login') }}" class="single-question-vote-up" title="Like"><i class="icon-thumbs-up"></i></a>
+                </li>
+                @endif
             </ul>
             <div class="clearfix"></div>
         </div>
@@ -199,8 +209,16 @@
                                     <div class="comment-author"><a href="#">{{ __('vbegy') }}</a></div>
                                     <div class="comment-vote">
                                         <ul class="question-vote">
+                                            @if (Auth::check())
                                             <li><a href="#" class="question-vote-up" title="Like"></a></li>
+                                            @else
+                                            <li><a href="{{ route('login') }}" class="question-vote-up" title="Like"></a></li>
+                                            @endif
+                                            @if (Auth::check())
                                             <li><a href="#" class="question-vote-down" title="Dislike"></a></li>
+                                            @else
+                                            <li><a href="{{ route('login') }}" class="question-vote-down" title="Dislike"></a></li>
+                                            @endif
                                         </ul>
                                     </div>
                                     <span class="question-vote-result">+1</span>

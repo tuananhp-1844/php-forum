@@ -32,7 +32,7 @@ class Question extends Model
 
     public function votes()
     {
-        return $this->belongsToMany(User::class, 'question_votes');
+        return $this->belongsToMany(User::class, 'question_votes', 'question_id', 'user_id')->withPivot('state');
     }
 
 
@@ -49,5 +49,15 @@ class Question extends Model
     public function reports()
     {
         return $this->belongsToMany('App\Models\Report', 'report_users', 'question_id', 'report_id');
+    }
+
+    public function voteCount()
+    {
+        $count = 0;
+        foreach ($this->votes as $key => $value) {
+            $count += $value->pivot->state;
+        }
+
+        return $count;
     }
 }
