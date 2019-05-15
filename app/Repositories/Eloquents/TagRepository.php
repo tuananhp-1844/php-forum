@@ -14,9 +14,4 @@ class TagRepository extends BaseRepository implements TagRepositoryInterface
     {
         return Tag::class;
     }
-
-    public function newest()
-    {
-        return $this->model->orderBy('created_at', 'DESC');
-    }
 }

@@ -1,29 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Tags;
+namespace App\Http\Controllers\Questions;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
 use App\Http\Controllers\Controller;
-use App\Repositories\Contracts\TagRepositoryInterface;
 
-class TagController extends Controller
+class QuestionCategoryController extends Controller
 {
-    private $tagRespository;
-    public function __construct(TagRepositoryInterface $tagRespository)
-    {
-        $this->tagRespository = $tagRespository;
-    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Category $category)
     {
-        $tags = $this->tagRespository->newest()->with(['questions']);
-        $tags = $tags->paginate(config('pagination.tag'));
+        $questions = $category->questions()->with(['category', 'user', 'answers', 'votes']);
+        $questions = $questions->paginate(config('pagination.question'));
 
-        return view('tags.index', compact('tags'));
+        return view('questions.category', compact('questions', 'category'));
     }
 
     /**
