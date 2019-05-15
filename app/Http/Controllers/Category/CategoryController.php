@@ -4,9 +4,16 @@ namespace App\Http\Controllers\Category;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\Contracts\CategoryRepositoryInterface;
 
 class CategoryController extends Controller
 {
+    private $categoryRepository;
+
+    public function __construct(CategoryRepositoryInterface $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = $this->categoryRepository->newest()->with('questions');
+        $categories = $categories->paginate(config('pagination.category'));
+
+        return view('categories.index', compact('categories'));
     }
 
     /**

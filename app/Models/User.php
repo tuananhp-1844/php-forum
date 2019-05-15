@@ -23,6 +23,13 @@ class User extends Authenticatable
         'last_name',
         'role_id',
         'avatar',
+        'website',
+        'facebook',
+        'google',
+        'linker',
+        'twitter',
+        'country',
+        'info',
     ];
 
     /**

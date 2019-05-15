@@ -18,11 +18,6 @@ class QuestionRepository extends BaseRepository implements QuestionRepositoryInt
     {
         return Question::class;
     }
-
-    public function newest()
-    {
-        return $this->model->orderBy('created_at', 'DESC');
-    }
     
     public function unResolve()
     {

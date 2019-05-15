@@ -1,17 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Tags;
+namespace App\Http\Controllers\Profile;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\Contracts\TagRepositoryInterface;
+use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Http\Requests\Profile\EditProfile as EditProfileRequest;
+use Auth;
 
-class TagController extends Controller
+class ProfileController extends Controller
 {
-    private $tagRespository;
-    public function __construct(TagRepositoryInterface $tagRespository)
+    private $userRepository;
+
+    public function __construct(UserRepositoryInterface $userRepository)
     {
-        $this->tagRespository = $tagRespository;
+        $this->userRepository = $userRepository;
+        $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -20,10 +24,9 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = $this->tagRespository->newest()->with(['questions']);
-        $tags = $tags->paginate(config('pagination.tag'));
-
-        return view('tags.index', compact('tags'));
+        $questions = $this->userRepository->getQuestion(Auth::user()->id, config('pagination.question'));
+        
+        return view('profile.index', compact('questions'));
     }
 
     /**
@@ -64,9 +67,9 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        return view('profile.edit');
     }
 
     /**
@@ -76,9 +79,11 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditProfileRequest $request)
     {
-        //
+        $user = $this->userRepository->updateUser(Auth::user()->id, $request);
+
+        return redirect()->route('profile.index');
     }
 
     /**

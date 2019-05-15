@@ -45,7 +45,11 @@
                     <h2>
                         <a href="{{ route('questions.show', ['id' => $question->id]) }}">{{ $question->title }}</a>
                     </h2>
-                    <a class="question-report" href="#">{{ __('Report') }}</a>
+                    @if (Auth::check())
+                    <a class="question-report" id = "report" data-question="{{ $question->id }}">{{ __('Report') }}</a>
+                    @else
+                    <a class="question-report" href="{{ route('login') }}">{{ __('Report') }}</a>
+                    @endif
                     @if ($question->is_poll)
                     <div class="question-type-main"><i class="icon-signal"></i>{{ __('Poll') }}</div>
                     @else
@@ -55,7 +59,7 @@
                     <div class="question-author">
                         <a href="#" original-title="{{ $question->user->fullname }}" class="question-author-img tooltip-n">
                             <span></span>
-                        <img alt="" src="{{ asset($question->user->avatar) }}">
+                        <img alt="" src="{{ asset(config('asset.avatar_path') . $question->user->avatar) }}">
                         </a>
                     </div>
                     <div class="question-inner">

@@ -1,29 +1,35 @@
 <?php
 
-namespace App\Http\Controllers\Tags;
+namespace App\Http\Controllers\Questions;
 
+use App\Models\Question;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\Contracts\TagRepositoryInterface;
+use App\Repositories\Contracts\ReportRepositoryInterface;
+use App\Repositories\Contracts\QuestionRepositoryInterface;
+use Auth;
 
-class TagController extends Controller
+class ReportController extends Controller
 {
-    private $tagRespository;
-    public function __construct(TagRepositoryInterface $tagRespository)
+    protected $reportRepository;
+    protected $questionRepository;
+    public function __construct(ReportRepositoryInterface $report, QuestionRepositoryInterface $question)
     {
-        $this->tagRespository = $tagRespository;
+        $this->reportRepository = $report;
+        $this->questionRepository = $question;
+        $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Question $question)
     {
-        $tags = $this->tagRespository->newest()->with(['questions']);
-        $tags = $tags->paginate(config('pagination.tag'));
+        $reports = $this->reportRepository->newest()->get();
 
-        return view('tags.index', compact('tags'));
+        return view('questions.report', compact('reports', 'question'));
     }
 
     /**
@@ -42,9 +48,13 @@ class TagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Question $question)
     {
-        //
+        $question->reports()->attach($request->report, [
+            'user_id' => Auth::user()->id, 'comment' => $request->comment,
+        ]);
+
+        return 'true';
     }
 
     /**

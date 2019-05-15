@@ -24,4 +24,6 @@ interface BaseRepositoryInterface
     public function delete($id);
 
     public function with(array $relationship);
+
+    public function newest();
 }
