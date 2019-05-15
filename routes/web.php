@@ -34,3 +34,5 @@ Route::get('profile/edit', 'Profile\ProfileController@edit')->name('profile.edit
 Route::put('profile/update', 'Profile\ProfileController@update')->name('profile.update');
 
 Route::post('upload', 'Questions\UploadController')->name('upload');
+
+Route::resource('questions.reports', 'Questions\ReportController');

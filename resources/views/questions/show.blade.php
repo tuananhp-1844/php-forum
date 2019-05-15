@@ -26,11 +26,15 @@
         <h2>
             <a href="single_question.html">{{ $question->title }}</a>
         </h2>
-        <a class="question-report" href="#">{{ __('Report') }}</a>
-        @if ($question->is_poll)
-            <div class="question-type-main"><i class="icon-signal"></i>{{ __('Poll') }}</div>
+        @if (Auth::check())
+        <a class="question-report" id = "report" data-question="{{ $question->id }}">{{ __('Report') }}</a>
         @else
-            <div class="question-type-main"><i class="icon-question-sign"></i>{{ __('Question') }}</div>
+        <a class="question-report" href="{{ route('login') }}">{{ __('Report') }}</a>
+        @endif
+        @if ($question->is_poll)
+        <div class="question-type-main"><i class="icon-signal"></i>{{ __('Poll') }}</div>
+        @else
+        <div class="question-type-main"><i class="icon-question-sign"></i>{{ __('Question') }}</div>
         @endif
         <div class="question-inner">
             <div class="poll_2">
