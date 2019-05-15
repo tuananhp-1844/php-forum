@@ -85,4 +85,9 @@ abstract class BaseRepository implements BaseRepositoryInterface
     {
         return $this->model->with($relationship);
     }
+
+    public function newest()
+    {
+        return $this->model->orderBy('created_at', 'DESC');
+    }
 }

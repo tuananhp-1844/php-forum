@@ -23,4 +23,14 @@ Route::resource('tags', 'Tags\TagController')->only('index');
 
 Route::resource('tags.questions', 'Questions\QuestionTagController')->only('index');
 
-Route::resource('categories', 'Category\CategoryController');
+Route::resource('categories', 'Category\CategoryController')->only('index');
+
+Route::resource('categories.questions', 'Questions\QuestionCategoryController')->only('index');
+
+Route::get('profile', 'Profile\ProfileController@index')->name('profile.index');
+
+Route::get('profile/edit', 'Profile\ProfileController@edit')->name('profile.edit');
+
+Route::put('profile/update', 'Profile\ProfileController@update')->name('profile.update');
+
+Route::post('upload', 'Questions\UploadController')->name('upload');

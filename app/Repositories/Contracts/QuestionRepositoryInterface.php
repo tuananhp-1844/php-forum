@@ -5,7 +5,6 @@ use App\Models\Question;
 
 interface QuestionRepositoryInterface
 {
-    public function newest();
     public function unResolve();
     public function isPoll();
     public function noAnswer();

@@ -15,7 +15,8 @@ class QuestionTagController extends Controller
      */
     public function index(Tag $tag)
     {
-        $questions = $tag->questions()->paginate(config('pagination.question'));
+        $questions = $tag->questions()->with(['category', 'user', 'answers', 'votes']);
+        $questions = $questions->paginate(config('pagination.question'));
 
         return view('questions.tag', compact('questions', 'tag'));
     }

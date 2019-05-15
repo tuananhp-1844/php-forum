@@ -4,7 +4,7 @@
     <section class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1><i class="icon-tags"></i> {{ $tag->name }}</h1>
+                <h1><i class="icon-list"></i> {{ $category->name }}</h1>
             </div>
             <div class="col-md-12">
                 <div class="crumbs">
@@ -12,7 +12,7 @@
                     <span class="crumbs-span">/</span>
                     <span class="crumbs-span">{{ __('Tags') }}</span>
                     <span class="crumbs-span">/</span>
-                    <span class="current">{{ $tag->name }}</span>
+                    <span class="current">{{ $category->name }}</span>
                 </div>
             </div>
         </div><!-- End row -->
