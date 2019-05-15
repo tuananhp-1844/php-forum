@@ -75,12 +75,9 @@
                 <li>
                     <a href="user_profile.html">{{ __('Profile') }}</a>
                     <ul>
-                        <li><a href="user_profile.html">{{ __('User Profile') }}</a></li>
-                        <li><a href="user_questions.html">{{ __('User Questions') }}</a></li>
-                        <li><a href="user_answers.html">{{ __('User Answers') }}</a></li>
-                        <li><a href="user_favorite_questions.html">{{ __('User Favorite Questions') }}</a></li>
-                        <li><a href="user_points.html">{{ __('User Points') }}</a></li>
-                        <li><a href="edit_profile.html">{{ __('Edit Profile') }}</a></li>
+                        <li><a href="{{ route('profile.index') }}">{{ __('User Profile') }}</a></li>
+                        <li><a href="{{ route('profile.edit') }}">{{ __('Edit Profile') }}</a></li>
+                        <li><a href="edit_profile.html">{{ __('Logout') }}</a></li>
                     </ul>
                 </li>
                 @endif
