@@ -815,6 +815,40 @@ jQuery(document).ready(function ($) {
 		return false;
 	});
 
+	/* report */
+	jQuery('article').on('click', '#report', function () {
+		var question = $(this).data('question');
+		$.get("/questions/" + question + "/reports", function(data, status){
+			jQuery("#list-report").html('');
+			jQuery("#list-report").append(data);
+			jQuery(".panel-pop").animate({ "top": "-100%" }, 10).hide();
+			jQuery("#report-modal").show().animate({ "top": "30%" }, 500);
+			jQuery("body").prepend("<div class='wrap-pop'></div>");
+			wrap_pop();
+			return false;
+		});
+	})
+
+	jQuery('#submit_report').click(function(event) {
+		var question = $('#question').data('question');
+		var radioValue = $("input[name='poll-radio']:checked").val();
+        if(radioValue){
+			$(this).attr('disabled', true)
+			$.post("/questions/" + question + "/reports",{
+				report: radioValue,
+				comment: $("textarea[name='comment']").val() ? $("textarea[name='comment']").val() : "No comment",
+			}, function( data ) {
+				jQuery("#report-modal").hide();
+				$.notify("Content successfully reported!", "success");
+				$(this).removeAttr('disabled');
+				jQuery('.icon-remove').click();
+			});
+		} else {
+			jQuery('.report-error').html('Field is required')
+		}
+		event.preventDefault();
+	})
+
 	/* Panel pop */
 
 	jQuery(".panel-pop").each(function () {
@@ -1130,7 +1164,6 @@ jQuery(document).ready(function ($) {
 });
 
 function readURL(input) {
-
 	if (input.files && input.files[0]) {
 	  var reader = new FileReader();
   
@@ -1140,4 +1173,4 @@ function readURL(input) {
   
 	  reader.readAsDataURL(input.files[0]);
 	}
-  }
+}
