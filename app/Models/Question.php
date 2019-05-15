@@ -60,4 +60,9 @@ class Question extends Model
 
         return $count;
     }
+
+    public function clips()
+    {
+        return $this->belongsToMany('App\Models\User', 'clips', 'question_id', 'user_id');
+    }
 }

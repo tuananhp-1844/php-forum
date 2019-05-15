@@ -897,6 +897,24 @@ jQuery(document).ready(function ($) {
 		});
 	})
 
+	jQuery('#clip').click(function(event) {
+		event.preventDefault()
+		var question = $(this).data('question');
+		$.ajax({
+			url: "/questions/" + question + "/clips",
+			type: 'GET',
+			success: function(data, status) {
+				if (data == 1) {
+					$('#clip').addClass('active-clip');
+					$.notify("successfully clip this question!", "success");
+				} else {
+					$('#clip').removeClass('active-clip');
+					// $.notify("successfully clip this question!!", "success");
+				}
+			}
+		});
+	})
+
 	/* Panel pop */
 
 	jQuery(".panel-pop").each(function () {
