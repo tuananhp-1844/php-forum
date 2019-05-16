@@ -8,6 +8,7 @@ use App\Repositories\Contracts\QuestionRepositoryInterface as QuestionInterface;
 use App\Repositories\Contracts\CategoryRepositoryInterface as CategoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface as UserInterface;
 use App\Http\Requests\Questions\CreateQuestionRequest;
+use Auth;
 
 class QuestionController extends Controller
 {
@@ -88,8 +89,12 @@ class QuestionController extends Controller
         $question = $question->load(['user', 'answers.user', 'votes', 'tags', 'polls']);
         $this->questionRepository->increaseView($id);
         $relate = $this->questionRepository->relate($question, config('pagination.question'));
+        $questionClips = [];
+        if (Auth::check()) {
+            $questionClips = Auth::user()->clips->sortBy('id')->take(config('paginate.question'));
+        }
 
-        return view('questions.show', compact('question', 'relate'));
+        return view('questions.show', compact('question', 'relate', 'questionClips'));
     }
 
     /**

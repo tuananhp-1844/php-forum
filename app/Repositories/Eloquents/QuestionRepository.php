@@ -44,7 +44,7 @@ class QuestionRepository extends BaseRepository implements QuestionRepositoryInt
             'is_poll' => $request->has('question_poll') ? 1 : 0,
         ]);
 
-        if ($request->has('tags')) {
+        if ($request->has('tags') && $request->tags === '') {
             $tagRequest = explode(',', $request->tags);
             $tags = Tag::all();
             $tagId = [];
@@ -127,7 +127,22 @@ class QuestionRepository extends BaseRepository implements QuestionRepositoryInt
     {
         $question->is_resolve = 0;
         $question->save();
-        
+
         return $question;
+    }
+
+    public function checkUserClip($userId, Question $question)
+    {
+        return $question->clips->where('id', $userId)->count();
+    }
+
+    public function clip($userId, Question $question)
+    {
+        return $question->clips()->attach($userId);
+    }
+    
+    public function destroyClip($userId, Question $question)
+    {
+        return $question->clips()->detach($userId);
     }
 }

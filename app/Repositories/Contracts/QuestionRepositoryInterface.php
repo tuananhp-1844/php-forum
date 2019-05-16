@@ -17,4 +17,7 @@ interface QuestionRepositoryInterface
     public function destroyVote($userId, Question $question);
     public function resolve(Question $question);
     public function progress(Question $question);
+    public function checkUserClip($userId, Question $question);
+    public function clip($userId, Question $question);
+    public function destroyClip($userId, Question $question);
 }
