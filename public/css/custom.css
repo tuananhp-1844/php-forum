@@ -14,3 +14,11 @@
     width: 100px !important;
     height: 100px !important;
 }
+.active-like {
+    background-color: #338338;
+    color: #fff;
+}
+.active-dislike {
+    background-color: #990707;
+    color: #fff;
+}
