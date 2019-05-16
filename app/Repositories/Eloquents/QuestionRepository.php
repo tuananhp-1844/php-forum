@@ -114,4 +114,20 @@ class QuestionRepository extends BaseRepository implements QuestionRepositoryInt
     {
         return $question->votes()->detach($userId);
     }
+
+    public function resolve(Question $question)
+    {
+        $question->is_resolve = 1;
+        $question->save();
+
+        return $question;
+    }
+
+    public function progress(Question $question)
+    {
+        $question->is_resolve = 0;
+        $question->save();
+        
+        return $question;
+    }
 }

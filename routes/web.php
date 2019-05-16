@@ -38,3 +38,7 @@ Route::post('upload', 'Questions\UploadController')->name('upload');
 Route::resource('questions.reports', 'Questions\ReportController');
 
 Route::resource('questions.votes', 'Questions\VoteController');
+
+Route::resource('questions.resolve', 'Questions\ResolveController')->only('index');
+
+Route::resource('questions.progress', 'Questions\ProgressController')->only('index');

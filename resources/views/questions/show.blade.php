@@ -57,9 +57,45 @@
             </div>
             <div class="question-details">
                 @if ($question->is_resolve == 0)
-                    <span class="question-answered"><i class="icon-ok"></i>{{ __('in progress') }}</span>
+                @can('setResolve', $question)
+                <div class="share-inside-warp">
+                    <ul>
+                        <li>
+                            <a href="#">
+                            <span class="icon_i">
+                            <span class="icon_square" icon_size="20" span_bg="#3498Db" span_hover="#666">
+                            <i i_color="#FFF" class="icon-ok"></i>
+                            </span>
+                            </span>
+                            </a>
+                            <a href="{{ route('questions.resolve.index', ['question' => $question->id]) }}">{{ __('Set resolve') }}</a>
+                        </li>
+                    </ul>
+                    <span class="share-inside-f-arrow"></span>
+                    <span class="share-inside-l-arrow"></span>
+                </div><!-- End share-inside-warp -->
+                @endcan
+                <span class="question-answered share-inside" ><i class="icon-remove"></i>{{ __('in progress') }}</span>
                 @else
-                    <span class="question-answered question-answered-done"><i class="icon-ok"></i>{{ __('solved') }}</span>
+                @can('setProgress', $question)
+                <div class="share-inside-warp">
+                    <ul>
+                        <li>
+                            <a href="#">
+                            <span class="icon_i">
+                            <span class="icon_square" icon_size="20" span_bg="#c7151a" span_hover="#666">
+                            <i i_color="#FFF" class="icon-remove"></i>
+                            </span>
+                            </span>
+                            </a>
+                            <a href="{{ route('questions.progress.index', ['question' => $question->id]) }}">{{ __('in progress') }}</a>
+                        </li>
+                    </ul>
+                    <span class="share-inside-f-arrow"></span>
+                    <span class="share-inside-l-arrow"></span>
+                </div><!-- End share-inside-warp -->
+                @endcan
+                <span class="question-answered question-answered-done share-inside"><i class="icon-ok"></i>{{ __('solved') }}</span>
                 @endif
                 {{-- <span class="question-favorite"><i class="icon-star"></i>{{ $question->votes->count() }}</span> --}}
             </div>
@@ -92,74 +128,19 @@
         <div class="question-tags"><i class="icon-tags"></i>
             @foreach ($question->tags as $tag)
                 <a href="#">{{ $tag->name }}</a>
-            @if (!$loop->last), 
-            @endif
+                @if (!$loop->last), 
+                @endif
             @endforeach
         </div>
-        <div class="share-inside-warp">
-            <ul>
-                <li>
-                    <a href="#" original-title="Facebook">
-                        <span class="icon_i">
-                            <span class="icon_square" icon_size="20" span_bg="#3b5997" span_hover="#666">
-                                <i i_color="#FFF" class="social_icon-facebook"></i>
-                            </span>
-                        </span>
-                    </a>
-                    <a href="#" target="_blank">{{ __('Facebook') }}</a>
-                </li>
-                <li>
-                    <a href="#" target="_blank">
-                        <span class="icon_i">
-                            <span class="icon_square" icon_size="20" span_bg="#00baf0" span_hover="#666">
-                                <i i_color="#FFF" class="social_icon-twitter"></i>
-                            </span>
-                        </span>
-                    </a>
-                    <a target="_blank" href="#">{{ __('Twitter') }}</a>
-                </li>
-                <li>
-                    <a href="#" target="_blank">
-                        <span class="icon_i">
-                            <span class="icon_square" icon_size="20" span_bg="#ca2c24" span_hover="#666">
-                                <i i_color="#FFF" class="social_icon-gplus"></i>
-                            </span>
-                        </span>
-                    </a>
-                    <a href="#" target="_blank">{{ __('Google plus') }}</a>
-                </li>
-                <li>
-                    <a href="#" target="_blank">
-                        <span class="icon_i">
-                            <span class="icon_square" icon_size="20" span_bg="#e64281" span_hover="#666">
-                                <i i_color="#FFF" class="social_icon-dribbble"></i>
-                            </span>
-                        </span>
-                    </a>
-                    <a href="#" target="_blank">{{ __('Dribbble') }}</a>
-                </li>
-                <li>
-                    <a target="_blank" href="#">
-                        <span class="icon_i">
-                            <span class="icon_square" icon_size="20" span_bg="#c7151a" span_hover="#666">
-                                <i i_color="#FFF" class="icon-pinterest"></i>
-                            </span>
-                        </span>
-                    </a>
-                    <a href="#" target="_blank">{{ __('Pinterest') }}</a>
-                </li>
-            </ul>
-            <span class="share-inside-f-arrow"></span>
-            <span class="share-inside-l-arrow"></span>
-        </div><!-- End share-inside-warp -->
-        <div class="share-inside"><i class="icon-share-alt"></i>{{ __('Share') }}</div>
+        
+        <a href="#"><i class="icon-share-alt"></i> {{ __('Share') }}</a>
         <div class="clearfix"></div>
     </div><!-- End share-tags -->
 
     <div class="about-author clearfix">
         <div class="author-image">
             <a href="#" original-title="{{ $question->user->fullname }}" class="tooltip-n">
-                <img alt="" src="{{ asset(config('asset.avatar_path') . $question->user->avatar) }}">
+                <img alt="" src="{{ config('asset.avatar_path') . asset($question->user->avatar) }}">
             </a>
         </div>
         <div class="author-bio">
@@ -176,7 +157,7 @@
             @foreach ($question->answers as $comment)
             <li class="comment">
                 <div class="comment-body comment-body-answered clearfix">
-                    <div class="avatar"><img alt="" src="{{ asset(config('asset.avatar_path') . $question->user->avatar) }}"></div>
+                    <div class="avatar"><img alt="" src="{{ config('asset.avatar_path') . asset($comment->user->avatar) }}"></div>
                     <div class="comment-text">
                         <div class="author clearfix">
                             <div class="comment-author"><a href="#">{{ $comment->user->fullname }}</a></div>

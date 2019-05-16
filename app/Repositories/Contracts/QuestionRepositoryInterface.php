@@ -15,4 +15,6 @@ interface QuestionRepositoryInterface
     public function vote($userId, Question $question);
     public function unVote($userId, Question $question);
     public function destroyVote($userId, Question $question);
+    public function resolve(Question $question);
+    public function progress(Question $question);
 }
