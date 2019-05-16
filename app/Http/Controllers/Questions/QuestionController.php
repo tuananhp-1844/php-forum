@@ -86,7 +86,7 @@ class QuestionController extends Controller
     public function show($id)
     {
         $question = $this->questionRepository->findOrFail($id);
-        $question = $question->load(['user', 'answers.user', 'votes', 'tags', 'polls']);
+        $question = $question->load(['user', 'answers.user', 'votes', 'tags', 'polls.users']);
         $this->questionRepository->increaseView($id);
         $relate = $this->questionRepository->relate($question, config('pagination.question'));
         $questionClips = [];

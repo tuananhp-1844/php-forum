@@ -831,10 +831,10 @@ jQuery(document).ready(function ($) {
 
 	jQuery('#submit_report').click(function(event) {
 		var question = $('#question').data('question');
-		var radioValue = $("input[name='poll-radio']:checked").val();
+		var radioValue = $("input[name='report-radio']:checked").val();
         if(radioValue){
-			$(this).attr('disabled', true)
-			$.post("/questions/" + question + "/reports",{
+			$(this).attr('disabled', true);
+			$.post("/questions/" + question + "/reports", {
 				report: radioValue,
 				comment: $("textarea[name='comment']").val() ? $("textarea[name='comment']").val() : "No comment",
 			}, function( data ) {
@@ -848,7 +848,24 @@ jQuery(document).ready(function ($) {
 		}
 		event.preventDefault();
 	})
-	
+
+	var oldRadioValue = $("input[name='poll-radio']:checked");
+	// poll question
+	$('input[type=radio][name=poll-radio]').change(function() {
+		var radio = $(this);
+		var poll = radio.val();
+		$.post("/polls/" + poll + "/users", function( data ) {
+			if (oldRadioValue) {
+				var old_poll_count = oldRadioValue.parent().find('.poll-count');
+				old_poll_count.html(parseInt(old_poll_count.html()) - 1);
+				var poll_count = radio.parent().find('.poll-count');
+				poll_count.html(parseInt(poll_count.html()) + 1);
+				oldRadioValue = radio;
+				$.notify("successfully Voted!", "success");
+			}
+		});
+	});
+
 	// Vote question
 
 	jQuery('#like').click(function(event) {
@@ -896,7 +913,7 @@ jQuery(document).ready(function ($) {
 			}
 		});
 	})
-	
+
 	jQuery('#clip').click(function(event) {
 		event.preventDefault()
 		var question = $(this).data('question');
@@ -914,7 +931,7 @@ jQuery(document).ready(function ($) {
 			}
 		});
 	})
-	
+
 	/* Panel pop */
 
 	jQuery(".panel-pop").each(function () {
@@ -1230,14 +1247,11 @@ jQuery(document).ready(function ($) {
 });
 
 function readURL(input) {
-
 	if (input.files && input.files[0]) {
-	  var reader = new FileReader();
-  
-	  reader.onload = function(e) {
-		$('#avatar_preview').attr('src', e.target.result);
-	  }
-  
-	  reader.readAsDataURL(input.files[0]);
+		var reader = new FileReader();
+		reader.onload = function(e) {
+			$('#avatar_preview').attr('src', e.target.result);
+		}
+		reader.readAsDataURL(input.files[0]);
 	}
-  }
+}
