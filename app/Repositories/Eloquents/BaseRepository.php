@@ -88,6 +88,6 @@ abstract class BaseRepository implements BaseRepositoryInterface
 
     public function newest()
     {
-        return $this->model->orderBy('created_at', 'DESC');
+        return $this->model->orderBy('id', 'DESC');
     }
 }

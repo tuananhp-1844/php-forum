@@ -45,4 +45,9 @@ class Question extends Model
     {
         return $this->belongsToMany('App\Models\Tag', 'question_tags', 'question_id', 'tag_id');
     }
+
+    public function reports()
+    {
+        return $this->belongsToMany('App\Models\Report', 'report_users', 'question_id', 'report_id');
+    }
 }
