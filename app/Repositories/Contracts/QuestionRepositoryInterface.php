@@ -10,4 +10,9 @@ interface QuestionRepositoryInterface
     public function noAnswer();
     public function increaseView($id);
     public function relate(Question $question, $limit);
+    public function checkUserVote($userId, Question $question);
+    public function checkUserUnVote($userId, Question $question);
+    public function vote($userId, Question $question);
+    public function unVote($userId, Question $question);
+    public function destroyVote($userId, Question $question);
 }

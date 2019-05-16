@@ -71,7 +71,7 @@
                             @else
                             <span class="question-answered question-answered-done"><i class="icon-ok"></i>{{ __('solved') }}</span>
                             @endif
-                            <span class="question-favorite"><i class="icon-thumbs-up"></i>{{ $question->votes->count() }}</span>
+                            <span class="question-favorite"><i class="icon-thumbs-up"></i>{{ $question->voteCount() }}</span>
                         </div>
                         <span class="question-category"><a href="#"><i class="icon-folder-close"></i>{{ $question->category->name }}</a></span>
                         <span class="question-date"><i class="icon-time"></i>{{ $question->created_at->diffForHumans() }}</span>

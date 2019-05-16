@@ -32,9 +32,9 @@
         <a class="question-report" href="{{ route('login') }}">{{ __('Report') }}</a>
         @endif
         @if ($question->is_poll)
-        <div class="question-type-main"><i class="icon-signal"></i>{{ __('Poll') }}</div>
+            <div class="question-type-main"><i class="icon-signal"></i>{{ __('Poll') }}</div>
         @else
-        <div class="question-type-main"><i class="icon-question-sign"></i>{{ __('Question') }}</div>
+            <div class="question-type-main"><i class="icon-question-sign"></i>{{ __('Question') }}</div>
         @endif
         <div class="question-inner">
             <div class="poll_2">
@@ -43,8 +43,8 @@
                     <div class="form-inputs clearfix">
                         @foreach ($question->polls as $item)
                             <p>
-                                <input id="poll-{{ $item->id }}" name="poll-radio" type="radio">
-                                <label for="poll-{{ $item->id }}">{{ $item->title }}  ({{ __('3 lượt chọn') }})</label>
+                            <input id="poll-{{ $item->id }}" name="poll-radio" type="radio">
+                            <label for="poll-{{ $item->id }}">{{ $item->title }}  {{ __('Vote') }}</label>
                             </p>
                         @endforeach
                     </div>
@@ -67,12 +67,22 @@
             <span class="question-date"><i class="icon-time"></i>{{ $question->created_at->diffForHumans() }}</span>
             <span class="question-comment"><a href="#"><i class="icon-comment"></i>{{ $question->answers->count() }} {{ __('Answer') }}</a></span>
             <span class="question-view"><i class="icon-user"></i>{{ $question->view }} {{ __('Views') }}</span>
-            <span class="single-question-vote-result">+ {{ $question->votes->count() }}</span>
+            <span class="single-question-vote-result" id="count-vote"> {{ $question->voteCount() }}</span>
             <ul class="single-question-vote">
-                <li><a href="#" class="single-question-vote-down" title="Dislike"><i class="icon-thumbs-down"></i></a>
+                @if (Auth::check())
+                <li><a href="" class="single-question-vote-down {{ Auth::user()->votes()->wherePivot('state', -1)->get()->where('id', $question->id)->count() ? 'active-dislike' : '' }}" title="Dislike" id="dislike" data-question = "{{ $question->id }}"><i class="icon-thumbs-down"></i></a>
                 </li>
-                <li><a href="#" class="single-question-vote-up" title="Like"><i class="icon-thumbs-up"></i></a>
+                @else
+                <li><a href="{{ route('login') }}" class="single-question-vote-down" title="Dislike"><i class="icon-thumbs-down"></i></a>
                 </li>
+                @endif
+                @if (Auth::check())
+                <li><a href="" class="single-question-vote-up {{ Auth::user()->votes()->wherePivot('state', 1)->get()->where('id', $question->id)->count() ? 'active-like' : '' }}" title="Like" id="like" data-question = "{{ $question->id }}"><i class="icon-thumbs-up"></i></a>
+                </li>
+                @else
+                <li><a href="{{ route('login') }}" class="single-question-vote-up" title="Like"><i class="icon-thumbs-up"></i></a>
+                </li>
+                @endif
             </ul>
             <div class="clearfix"></div>
         </div>
@@ -82,8 +92,8 @@
         <div class="question-tags"><i class="icon-tags"></i>
             @foreach ($question->tags as $tag)
                 <a href="#">{{ $tag->name }}</a>
-                @if (!$loop->last), 
-                @endif
+            @if (!$loop->last), 
+            @endif
             @endforeach
         </div>
         <div class="share-inside-warp">
@@ -149,7 +159,7 @@
     <div class="about-author clearfix">
         <div class="author-image">
             <a href="#" original-title="{{ $question->user->fullname }}" class="tooltip-n">
-                <img alt="" src="{{ asset($question->user->avatar) }}">
+                <img alt="" src="{{ asset(config('asset.avatar_path') . $question->user->avatar) }}">
             </a>
         </div>
         <div class="author-bio">
@@ -166,7 +176,7 @@
             @foreach ($question->answers as $comment)
             <li class="comment">
                 <div class="comment-body comment-body-answered clearfix">
-                    <div class="avatar"><img alt="" src="{{ asset($comment->user->avatar) }}"></div>
+                    <div class="avatar"><img alt="" src="{{ asset(config('asset.avatar_path') . $question->user->avatar) }}"></div>
                     <div class="comment-text">
                         <div class="author clearfix">
                             <div class="comment-author"><a href="#">{{ $comment->user->fullname }}</a></div>
@@ -199,8 +209,16 @@
                                     <div class="comment-author"><a href="#">{{ __('vbegy') }}</a></div>
                                     <div class="comment-vote">
                                         <ul class="question-vote">
+                                            @if (Auth::check())
                                             <li><a href="#" class="question-vote-up" title="Like"></a></li>
+                                            @else
+                                            <li><a href="{{ route('login') }}" class="question-vote-up" title="Like"></a></li>
+                                            @endif
+                                            @if (Auth::check())
                                             <li><a href="#" class="question-vote-down" title="Dislike"></a></li>
+                                            @else
+                                            <li><a href="{{ route('login') }}" class="question-vote-down" title="Dislike"></a></li>
+                                            @endif
                                         </ul>
                                     </div>
                                     <span class="question-vote-result">+1</span>
