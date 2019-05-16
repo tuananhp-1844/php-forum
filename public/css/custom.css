@@ -22,3 +22,7 @@
     background-color: #990707;
     color: #fff;
 }
+.active-clip {
+    color: #3498Db;
+    font-weight: 700;
+}

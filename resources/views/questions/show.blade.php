@@ -132,8 +132,12 @@
                 @endif
             @endforeach
         </div>
-        
-        <a href="#"><i class="icon-share-alt"></i> {{ __('Share') }}</a>
+        <a href="#"><i class="icon-share-alt"></i> {{ __('Share') }}</a> &nbsp; &nbsp;
+        @if (Auth::check())
+        <a href="#" class="{{ $question->clips->where('id', Auth::user()->id)->count() ? 'active-clip' : '' }}" id = "clip" data-question="{{ $question->id }}"><i class="fa fa-paperclip"></i> {{ __('Clip question') }}</a>
+        @else
+        <a href="{{ route('login') }}"><i class="fa fa-paperclip"></i> {{ __('Clip question') }}</a>
+        @endif
         <div class="clearfix"></div>
     </div><!-- End share-tags -->
 
@@ -256,6 +260,20 @@
             @endforeach
         </ul>
     </div>
+    @if (Auth::check())
+    <div class="widget">
+        <h3 class="widget_title">{{ __('Clip Questions') }}</h3>
+        <ul class="related-posts">
+            @foreach ($questionClips as $question)
+                <li class="related-item">
+                    <h3><a href="#">{{ $question->title }}</a></h3>
+                    <div class="clear"></div>
+                    <span>{{ $question->created_at->diffForHumans() }}</span>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
 </aside>
 <!-- End sidebar
 @endsection
