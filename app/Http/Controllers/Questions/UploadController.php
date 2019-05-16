@@ -17,8 +17,8 @@ class UploadController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $image = $this->upload($request->file, config('asset.question_path'));
+        $image = $this->upload($request->file, config('asset.question_folder'));
 
-        return $image['image'];
+        return $image;
     }
 }

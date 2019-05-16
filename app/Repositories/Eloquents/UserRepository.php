@@ -64,9 +64,10 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         ]);
 
         $image = '';
-        if ($request->has('avatar')) {
-            $avatar = $this->upload($request->avatar, config('asset.avatar_path'));
-            $user->avatar = $avatar['image'];
+        if ($request->hasFile('avatar')) {
+            $avatar = $this->upload($request->avatar, config('asset.avatar_folder'));
+            $user->avatar = $avatar;
+            $user->save();
         }
 
         return $user;
