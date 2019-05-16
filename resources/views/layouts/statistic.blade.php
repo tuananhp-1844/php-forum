@@ -42,7 +42,7 @@
         <ul>
             <li>
                 <div class="author-img">
-                <a href="#"><img width="60" height="60" src="{{ asset(Auth::user()->avatar) }}" alt="{{ Auth::user()->fullname }}"></a>
+                <a href="#"><img width="60" height="60" src="{{ asset(config('asset.avatar_path') . Auth::user()->avatar) }}" alt="{{ Auth::user()->fullname }}"></a>
                 </div>
                 <h6><a href="#">{{ Auth::user()->fullname }}</a></h6>
             </li>

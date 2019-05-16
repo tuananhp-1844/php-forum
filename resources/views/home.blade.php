@@ -98,7 +98,7 @@
             @foreach ($userHightPoint as $user)
             <li>
                 <div class="author-img">
-                <a href="#"><img width="60" height="60" src="{{ asset($user->avatar) }}" alt="{{ $user->fullname }}"></a>
+                <a href="#"><img width="60" height="60" src="{{ asset(config('asset.avatar_path') . $question->user->avatar) }}" alt="{{ $user->fullname }}"></a>
                 </div>
                 <h6><a href="#">{{ $user->fullname }}</a></h6>
                 <span class="comment">{{ $user->point }} {{ __('Points') }}</span>
