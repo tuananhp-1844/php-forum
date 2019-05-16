@@ -39,13 +39,24 @@
         <div class="question-inner">
             <div class="poll_2">
                 @if ($question->is_poll)
+                @if (!Auth::check())
+                <span class="error">{{ __('You need to') }} <a href="{{ route('login') }}">{{ __('login') }}</a> {{ __('to vote !') }}</span>
+                <div class="clearfix height_10"></div>
+                @endif
                 <form class="form-style form-style-3">
                     <div class="form-inputs clearfix">
                         @foreach ($question->polls as $item)
+                        @if (Auth::check())
                             <p>
-                            <input id="poll-{{ $item->id }}" name="poll-radio" type="radio">
-                            <label for="poll-{{ $item->id }}">{{ $item->title }}  (3 lượt chọn)</label>
+                            <input id="poll-{{ $item->id }}" value="{{ $item->id }}" name="poll-radio" type="radio" {{ $item->users->where('id', Auth::user()->id)->count() ? 'checked' : '' }}>
+                            <label for="poll-{{ $item->id }}">{{ $item->title }}  <span class="active-clip">(<span class="poll-count">{{ $item->users->count() }}</span> {{ __('Vote') }})</span></label>
                             </p>
+                        @else
+                            <p>
+                            <input id="poll-{{ $item->id }}" name="poll-radio" type="radio" disabled>
+                            <label for="poll-{{ $item->id }}">{{ $item->title }}  <span class="active-clip">({{ $item->users->count() }} {{ __('Vote') }})</span></label>
+                            </p>
+                        @endif   
                         @endforeach
                     </div>
                 </form>
@@ -75,7 +86,7 @@
                     <span class="share-inside-l-arrow"></span>
                 </div><!-- End share-inside-warp -->
                 @endcan
-                <span class="question-answered share-inside" ><i class="icon-remove"></i>{{ __('in progress') }}</span>
+                <span class="question-answered share-inside" >{{ __('in progress') }}</span>
                 @else
                 @can('setProgress', $question)
                 <div class="share-inside-warp">

@@ -4,6 +4,7 @@ namespace App\Repositories\Eloquents;
 
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Models\User;
+use App\Models\Poll;
 use Illuminate\Http\Request;
 use App\Http\Traits\Upload;
 use Hash;
@@ -69,5 +70,14 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         }
 
         return $user;
+    }
+
+    public function poll($userId, Poll $poll)
+    {
+        foreach ($poll->question->polls as $key => $value) {
+            $value->users()->detach($userId);
+        }
+
+        return $poll->users()->attach($userId);
     }
 }
