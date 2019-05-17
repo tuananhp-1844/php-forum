@@ -98,7 +98,9 @@
                     <ul>
                         <li><a href="{{ route('profile.index') }}">{{ __('User Profile') }}</a></li>
                         <li><a href="{{ route('profile.edit') }}">{{ __('Edit Profile') }}</a></li>
-                        <li><a href="edit_profile.html">{{ __('Logout') }}</a></li>
+                        <li>
+                            <a onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                        </li>
                     </ul>
                 </li>
                 @endif

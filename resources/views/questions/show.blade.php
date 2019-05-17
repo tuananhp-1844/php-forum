@@ -64,7 +64,7 @@
             </div>
             <div class="clearfix height_10"></div>
             <div class="question-desc">
-                {{ $question->content }}
+                @markdown($question->content)
             </div>
             <div class="question-details">
                 @if ($question->is_resolve == 0)
@@ -186,7 +186,7 @@
                                 </div>
                             </div>
                             <div class="text">
-                                <p>{{ $bestComment->content }}</p>
+                                @markdown($bestComment->content)
                             </div>
                         </div>
                     </div>
@@ -236,9 +236,9 @@
                             @endif
                         </div>
                         <div class="text">
-                            <p>{{ $comment->content }}</p>
+                            @markdown($comment->content)
                         </div>
-                        @can('setBestAnswer', $question)
+                        @can('setBestAnswer', $comment)
                         <div class="question-answered"><a href="{{ route('answers.setbest.index', ['answer' => $comment->id]) }}"><i class="icon-ok"></i>{{ __('Set best answer') }}</a></div>
                         @endcan
                     </div>
