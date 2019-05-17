@@ -100,10 +100,11 @@ class QuestionController extends Controller
         if (Auth::check()) {
             $questionClips = Auth::user()->clips->sortBy('id')->take(config('paginate.question'));
         }
-        $comments = $question->answers()->orderBy('id', 'DESC')->where('parent_id', 0);
-        $comments = $comments->with('user', 'childs')->paginate(config('pagination.comment'));
+        $comments = $question->answers()->orderBy('id', 'DESC')->where('parent_id', 0)->where('is_best', 0);
+        $comments = $comments->with('user', 'childs', 'votes')->paginate(config('pagination.comment'));
+        $bestComment = $question->answers()-> where('is_best', 1)->first();
 
-        return view('questions.show', compact('question', 'relate', 'questionClips', 'comments'));
+        return view('questions.show', compact('question', 'relate', 'questionClips', 'comments', 'bestComment'));
     }
 
     /**

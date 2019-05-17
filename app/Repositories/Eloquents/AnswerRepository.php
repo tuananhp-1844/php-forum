@@ -27,4 +27,37 @@ class AnswerRepository extends BaseRepository implements AnswerRepositoryInterfa
             'question_id' => $question->id,
         ]);
     }
+
+    public function checkUserVote($userId, Answer $answer)
+    {
+        return $answer->votes()->wherePivot('state', 1)->get()->where('id', $userId)->count();
+    }
+
+    public function checkUserUnVote($userId, Answer $answer)
+    {
+        return $answer->votes()->wherePivot('state', -1)->get()->where('id', $userId)->count();
+    }
+
+    public function vote($userId, Answer $answer)
+    {
+        return $answer->votes()->attach($userId, ['state' => 1]);
+    }
+
+    public function unVote($userId, Answer $answer)
+    {
+        return $answer->votes()->attach($userId, ['state' => -1]);
+    }
+    
+    public function destroyVote($userId, Answer $answer)
+    {
+        return $answer->votes()->detach($userId);
+    }
+
+    public function setBest(Answer $answer)
+    {
+        $answer->is_best = 1;
+        $answer->save();
+
+        return $answer;
+    }
 }

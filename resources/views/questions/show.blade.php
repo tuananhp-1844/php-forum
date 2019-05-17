@@ -112,7 +112,7 @@
             </div>
             <span class="question-category"><a href="#"><i class="icon-folder-close"></i>{{ $question->category->name }}</a></span>
             <span class="question-date"><i class="icon-time"></i>{{ $question->created_at->diffForHumans() }}</span>
-            <span class="question-comment"><a href="#"><i class="icon-comment"></i>{{ $question->answers->count() }} {{ __('Answer') }}</a></span>
+            <span class="question-comment"><a href="#" id="answer"><i class="icon-comment"></i>{{ $question->answers->count() }} {{ __('Answer') }}</a></span>
             <span class="question-view"><i class="icon-user"></i>{{ $question->view }} {{ __('Views') }}</span>
             <span class="single-question-vote-result" id="count-vote"> {{ $question->voteCount() }}</span>
             <ul class="single-question-vote">
@@ -152,54 +152,100 @@
         
         <div class="clearfix"></div>
     </div><!-- End share-tags -->
-
-    <div class="about-author clearfix">
-        <div class="author-image">
-            <a href="#" original-title="{{ $question->user->fullname }}" class="tooltip-n">
-                <img alt="" src="{{ asset(config('asset.avatar_path') . $question->user->avatar) }}">
-            </a>
+    
+    @if ($bestComment)
+    <div id="commentlist" class="page-content">
+        <div class="boxedtitle page-title">
+            <h2><i class="icon-ok"></i> {{ __('Best answer') }}</h2>
+            <ol class="commentlist clearfix">
+                <li class="comment">
+                    <div class="comment-body comment-body-answered clearfix">
+                        <div class="avatar">
+                            <img alt="{{ $bestComment->user->fullname }}" src="{{ asset(config('asset.avatar_path') . $bestComment->user->avatar) }}">
+                        </div>
+                        <div class="comment-text">
+                            <div class="author clearfix">
+                                <div class="comment-author"><a href="#">{{ $bestComment->user->fullname }}</a></div>
+                                <div class="comment-vote">
+                                @if (Auth::check())
+                                    <ul class="question-vote">
+                                        <li><a href="#" class="like-comment question-vote-up {{ Auth::user()->voteAnswers()->wherePivot('state', 1)->get()->where('id', $bestComment->id)->count() ? 'active-like-comment' : '' }}" title="Like" data-comment="{{ $bestComment->id }}"></a></li>
+                                        <li><a href="#" class="dislike-comment question-vote-down {{ Auth::user()->voteAnswers()->wherePivot('state', -1)->get()->where('id', $bestComment->id)->count() ? 'active-like-comment' : '' }}" title="Dislike" data-comment="{{ $bestComment->id }}"></a></li>
+                                    </ul>
+                                @else
+                                    <ul class="question-vote">
+                                        <li><a href="{{ route('login') }}" class="question-vote-up" title="Like"></a></li>
+                                        <li><a href="{{ route('login') }}" class="question-vote-down" title="Dislike"></a></li>
+                                    </ul>
+                                @endif        
+                                </div>
+                                <span class="question-vote-result count-vote-comment"> {{ $bestComment->voteCount() }} </span>
+                                <div class="comment-meta">
+                                    <div class="date"><i class="icon-time"></i>{{ $bestComment->created_at->diffForHumans() }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text">
+                                <p>{{ $bestComment->content }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ol>
         </div>
-        <div class="author-bio">
-            <h4>{{ $question->user->fullname }}</h4>
-            <a href="">{{ $question->user->point }} {{ __('Points') }}</a> <br/>
-        </div>
-    </div><!-- End about-author -->
+    </div>
+    @endif
 
     <div id="commentlist" class="page-content">
         <div class="boxedtitle page-title">
-            <h2>{{ __('Answers') }} ( <span class="color">{{ $question->answers->count() }}</span> )</h2>
+            <h2>{{ __('Answers') }}</h2>
         </div>
         <ol class="commentlist clearfix">
             @foreach ($comments as $comment)
             <li class="comment">
                 <div class="comment-body comment-body-answered clearfix">
-                    <div class="avatar"><img alt="{{ $comment->user->fullname }}" src="{{ asset(config('asset.avatar_path') . $comment->user->avatar) }}"></div>
+                    <div class="avatar">
+                        <img alt="{{ $comment->user->fullname }}" src="{{ asset(config('asset.avatar_path') . $comment->user->avatar) }}">
+                    </div>
                     <div class="comment-text">
                         <div class="author clearfix">
                             <div class="comment-author"><a href="#">{{ $comment->user->fullname }}</a></div>
                             <div class="comment-vote">
+                            @if (Auth::check())
                                 <ul class="question-vote">
-                                    <li><a href="#" class="question-vote-up" title="Like"></a></li>
-                                    <li><a href="#" class="question-vote-down" title="Dislike"></a></li>
+                                <li><a href="#" class="like-comment question-vote-up {{ Auth::user()->voteAnswers()->wherePivot('state', 1)->get()->where('id', $comment->id)->count() ? 'active-like-comment' : '' }}" title="Like" data-comment="{{ $comment->id }}"></a></li>
+                                <li><a href="#" class="dislike-comment question-vote-down {{ Auth::user()->voteAnswers()->wherePivot('state', -1)->get()->where('id', $comment->id)->count() ? 'active-like-comment' : '' }}" title="Dislike" data-comment="{{ $comment->id }}"></a></li>
                                 </ul>
+                            @else
+                                <ul class="question-vote">
+                                    <li><a href="{{ route('login') }}" class="question-vote-up" title="Like"></a></li>
+                                    <li><a href="{{ route('login') }}" class="question-vote-down" title="Dislike"></a></li>
+                                </ul>
+                            @endif
+                                
                             </div>
-                            <span class="question-vote-result">+1</span>
+                            <span class="question-vote-result count-vote-comment"> {{ $comment->voteCount() }} </span>
                             <div class="comment-meta">
                                 <div class="date"><i class="icon-time"></i>{{ $comment->created_at->diffForHumans() }}
                                 </div>
                             </div>
+                            @if (Auth::check())
                             <a class="comment-reply" href="#"><i class="icon-reply"></i>{{ __('Reply') }}</a>
+                            @else
+                            <a class="comment-reply" href="{{ route('login') }}"><i class="icon-reply"></i>{{ __('Reply') }}</a>
+                            @endif
                         </div>
                         <div class="text">
                             <p>{{ $comment->content }}</p>
                         </div>
-                        @if ($comment->is_best)
-                            <div class="question-answered question-answered-done"><i class="icon-ok"></i>{{ __('Best Answer') }}</div>
-                        @endif
+                        @can('setBestAnswer', $question)
+                        <div class="question-answered"><a href="{{ route('answers.setbest.index', ['answer' => $comment->id]) }}"><i class="icon-ok"></i>{{ __('Set best answer') }}</a></div>
+                        @endcan
                     </div>
                 </div>
-                @if ($comment->childs->count())
+                
                 <ul class="children">
+                @if ($comment->childs->count())
                     <li class="comment">
                         <div class="comment-body clearfix">
                             <div class="avatar"><img alt="" src="{{ asset(config('asset.avatar_path') . $comment->user->avatar) }}"></div>
@@ -233,8 +279,9 @@
                             </div>
                         </div>
                     </li>
-                </ul><!-- End children -->
                 @endif
+                {{-- <textarea aria-required="true" cols="58" rows="3" name="content" class="reply">{{ old('content') }}</textarea> --}}
+                </ul><!-- End children -->
             </li>
             @endforeach
         </ol><!-- End commentlist -->
@@ -253,7 +300,7 @@
                 <p>
                     <label class="required" for="comment">{{ __('Comment') }}<span>*</span>
                     @error('content')
-                        <span class="error form-description">{{ $message }}</span>
+                    <span class="error form-description">{{ $message }}</span>
                     @enderror
                     </label>
                     <textarea id="question-details" name="content" aria-required="true" cols="58" rows="8" id = ""></textarea>
@@ -278,8 +325,23 @@
 
 @section('sidebar')
 <aside class="col-md-3 sidebar">
-    @include('layouts.statistic')
-
+    <div class="widget widget_stats">
+        <h3 class="widget_title">{{ __('About author') }}</h3>
+        <div class="ul_list ul_list-icon-ok">
+            <ul>
+                <li>
+                    <div class="author-img">
+                        <a href="#"><img width="60" height="60" src="{{ asset(config('asset.avatar_path') . $question->user->avatar) }}" alt="{{ $question->user->fullname }}"></a>
+                    </div>
+                    <h6><a href="#">{{ $question->user->fullname }}</a></h6>
+                </li>
+                <li><i class="icon-question-sign"></i>{{ __('Questions') }} ( <span>{{ $question->user->questions->count() }}</span> )</li>
+                <li><i class="icon-comment"></i>{{ __('Answers') }} ( <span>{{ $question->user->answers->count() }}</span> )</li>
+                <li><i class="icon-btc"></i>{{ __('Points') }} ( <span>{{ $question->user->point }}</span> )</li>
+            </ul>
+        </div>
+    </div>
+    
     <div class="widget">
         <h3 class="widget_title">{{ __('Relate Questions') }}</h3>
         <ul class="related-posts">
