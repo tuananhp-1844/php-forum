@@ -20,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
             'User',
             'Tag',
             'Report',
+            'Answer',
         ];
         foreach ($models as $key => $model) {
             $this->app->bind(

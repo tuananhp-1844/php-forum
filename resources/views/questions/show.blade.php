@@ -170,10 +170,10 @@
             <h2>{{ __('Answers') }} ( <span class="color">{{ $question->answers->count() }}</span> )</h2>
         </div>
         <ol class="commentlist clearfix">
-            @foreach ($question->answers as $comment)
+            @foreach ($comments as $comment)
             <li class="comment">
                 <div class="comment-body comment-body-answered clearfix">
-                    <div class="avatar"><img alt="" src="{{ asset($comment->user->avatar) }}"></div>
+                    <div class="avatar"><img alt="{{ $comment->user->fullname }}" src="{{ asset(config('asset.avatar_path') . $comment->user->avatar) }}"></div>
                     <div class="comment-text">
                         <div class="author clearfix">
                             <div class="comment-author"><a href="#">{{ $comment->user->fullname }}</a></div>
@@ -193,14 +193,16 @@
                         <div class="text">
                             <p>{{ $comment->content }}</p>
                         </div>
-                        <div class="question-answered question-answered-done"><i class="icon-ok"></i>{{ __('Best Answer') }}
-                        </div>
+                        @if ($comment->is_best)
+                            <div class="question-answered question-answered-done"><i class="icon-ok"></i>{{ __('Best Answer') }}</div>
+                        @endif
                     </div>
                 </div>
+                @if ($comment->childs->count())
                 <ul class="children">
                     <li class="comment">
                         <div class="comment-body clearfix">
-                            <div class="avatar"><img alt="" src=""></div>
+                            <div class="avatar"><img alt="" src="{{ asset(config('asset.avatar_path') . $comment->user->avatar) }}"></div>
                             <div class="comment-text">
                                 <div class="author clearfix">
                                     <div class="comment-author"><a href="#">{{ __('vbegy') }}</a></div>
@@ -232,20 +234,29 @@
                         </div>
                     </li>
                 </ul><!-- End children -->
+                @endif
             </li>
             @endforeach
         </ol><!-- End commentlist -->
+        {{ $comments->render('paginations.paginate') }}
     </div><!-- End page-content -->
-
+    
+    @if (Auth::check())
     <div id="respond" class="comment-respond page-content clearfix">
         <div class="boxedtitle page-title">
             <h2>{{ __('Leave a reply') }}</h2>
         </div>
-        <form action="#" method="post" id="commentform" class="comment-form">
+        <form action="{{ route('questions.answers.store', ['questions' => $question->id]) }}" method="post" id="commentform" class="comment-form">
+            @csrf
+            <input type="hidden" name="parent_id" value="0">
             <div id="respond-textarea">
                 <p>
-                    <label class="required" for="comment">{{ __('Comment') }}<span>*</span></label>
-                    <textarea id="question-details" name="comment" aria-required="true" cols="58" rows="8" id = ""></textarea>
+                    <label class="required" for="comment">{{ __('Comment') }}<span>*</span>
+                    @error('content')
+                        <span class="error form-description">{{ $message }}</span>
+                    @enderror
+                    </label>
+                    <textarea id="question-details" name="content" aria-required="true" cols="58" rows="8" id = ""></textarea>
                 </p>
             </div>
             <p class="form-submit">
@@ -253,6 +264,15 @@
             </p>
         </form>
     </div>
+    @else
+    <div id="respond" class="comment-respond page-content clearfix">
+        <p class="form-submit">
+            <form action="{{ route('login') }}">
+                <input name="submit" type="submit" id="submit" value="Login to answer" class="button small color">
+            </form>
+        </p>
+    </div>
+    @endif
 </div><!-- End main -->
 @endsection
 

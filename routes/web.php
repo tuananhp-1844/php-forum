@@ -46,3 +46,5 @@ Route::resource('questions.progress', 'Questions\ProgressController')->only('ind
 Route::resource('questions.clips', 'Questions\ClipController')->only('index');
 
 Route::resource('polls.users', 'Users\PollController')->only('store');
+
+Route::resource('questions.answers', 'Questions\AnswerController');

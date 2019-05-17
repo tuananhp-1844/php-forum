@@ -25,8 +25,7 @@ trait Upload
         // } catch (\Exception $e) {
         // }
         Storage::disk('public')->putFileAs($path, $file, $filename);
-        $data['image'] = 'storage/' . $path . '/' . $filename;
 
-        return $data;
+        return $filename;
     }
 }
