@@ -35,9 +35,9 @@ Route::put('profile/update', 'Profile\ProfileController@update')->name('profile.
 
 Route::post('upload', 'Questions\UploadController')->name('upload');
 
-Route::resource('questions.reports', 'Questions\ReportController');
+Route::resource('questions.reports', 'Questions\ReportController')->only('store', 'index');
 
-Route::resource('questions.votes', 'Questions\VoteController');
+Route::resource('questions.votes', 'Questions\VoteController')->only('store', 'destroy');
 
 Route::resource('questions.resolve', 'Questions\ResolveController')->only('index');
 
@@ -47,4 +47,8 @@ Route::resource('questions.clips', 'Questions\ClipController')->only('index');
 
 Route::resource('polls.users', 'Users\PollController')->only('store');
 
-Route::resource('questions.answers', 'Questions\AnswerController');
+Route::resource('questions.answers', 'Questions\AnswerController')->only('store');
+
+Route::resource('answers.votes', 'Answers\VoteController')->only('store', 'destroy');
+
+Route::resource('answers.setbest', 'Answers\SetBestController')->only('index');

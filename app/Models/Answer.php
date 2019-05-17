@@ -17,4 +17,24 @@ class Answer extends Model
     {
         return $this->hasMany($this, 'parent_id', 'id');
     }
+
+    public function votes()
+    {
+        return $this->belongsToMany(User::class, 'answer_votes', 'answer_id', 'user_id')->withPivot('state');
+    }
+
+    public function voteCount()
+    {
+        $count = 0;
+        foreach ($this->votes as $key => $value) {
+            $count += $value->pivot->state;
+        }
+        
+        return $count;
+    }
+
+    public function question()
+    {
+        return $this->belongsTo(Question::class);
+    }
 }

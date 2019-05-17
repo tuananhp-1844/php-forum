@@ -26,3 +26,10 @@
     color: #3498Db;
     font-weight: 700;
 }
+.reply {
+    width: 100%;
+    margin-bottom: 10px;
+}
+.active-like-comment{
+    color: #3498Db !important;
+}
