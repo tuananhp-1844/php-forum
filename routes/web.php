@@ -52,3 +52,7 @@ Route::resource('questions.answers', 'Questions\AnswerController')->only('store'
 Route::resource('answers.votes', 'Answers\VoteController')->only('store', 'destroy');
 
 Route::resource('answers.setbest', 'Answers\SetBestController')->only('index');
+
+Route::get('/redirect/{social}', 'Social\SocialAuthController@redirect')->name('redirect-social');
+
+Route::get('/callback/{social}', 'Social\SocialAuthController@callback')->name('callback');

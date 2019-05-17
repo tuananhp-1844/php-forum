@@ -83,6 +83,6 @@ class AnswerPolicy
 
     public function setBestAnswer(User $user, Answer $answer)
     {
-        return $answer->user_id === $user->id;
+        return $answer->question->user_id === $user->id;
     }
 }
