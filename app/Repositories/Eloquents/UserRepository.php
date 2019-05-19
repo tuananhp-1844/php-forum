@@ -10,6 +10,7 @@ use App\Models\Poll;
 use Hash;
 use Laravel\Socialite\Contracts\User as ProviderUser;
 use Storage;
+use Auth;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -106,6 +107,36 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             $user->avatar = $filename;
             $user->save();
         }
+
+        return $user;
+    }
+
+    public function addPoint(User $user, $typePoint)
+    {
+        if (Auth::check() && Auth::user()->id === $user->id) {
+            return $user;
+        }
+        switch ($typePoint) {
+            case 'best_answer':
+                $user->point += config('point.best_answer');
+                break;
+            case 'like_answer':
+                $user->point += config('point.like_answer');
+                break;
+            case 'like_question':
+                $user->point += config('point.like_question');
+                break;
+            case 'dislike_answer':
+                $user->point += config('point.dislike_answer');
+                break;
+            case 'dislike_question':
+                $user->point += config('point.dislike_question');
+                break;
+            default:
+                $user->point += config('point.like_question');
+                break;
+        }
+        $user->save();
 
         return $user;
     }

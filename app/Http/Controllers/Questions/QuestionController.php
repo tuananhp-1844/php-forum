@@ -10,6 +10,7 @@ use App\Repositories\Contracts\UserRepositoryInterface as UserInterface;
 use App\Repositories\Contracts\AnswerRepositoryInterface as AnswerInterface;
 use App\Http\Requests\Questions\CreateQuestionRequest;
 use Auth;
+use App\Models\Tag;
 
 class QuestionController extends Controller
 {
@@ -55,8 +56,10 @@ class QuestionController extends Controller
         $questions = $questions->with(['category', 'user', 'answers', 'votes']);
         $questions = $questions->paginate(config('pagination.question'));
         $userHightPoint = $this->userReponsitory->getHighestPoint(config('pagination.user_hight_point'));
+        $hotTag = Tag::withCount('questions')->orderBy('questions_count', 'desc');
+        $hotTag = $hotTag->with('questions')->limit(config('pagination.hot_tag'))->get();
 
-        return view('home', compact('questions', 'userHightPoint'));
+        return view('home', compact('questions', 'userHightPoint', 'hotTag'));
     }
 
     /**

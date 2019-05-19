@@ -6,13 +6,16 @@ use Illuminate\Http\Request;
 use App\Models\Answer;
 use App\Http\Controllers\Controller;
 use App\Repositories\Contracts\AnswerRepositoryInterface;
+use App\Repositories\Contracts\UserRepositoryInterface as UserInterface;
 
 class SetBestController extends Controller
 {
     protected $answerRepository;
-    public function __construct(AnswerRepositoryInterface $answerRepository)
+    protected $userRepository;
+    public function __construct(AnswerRepositoryInterface $answerRepository, UserInterface $userRepository)
     {
         $this->answerRepository = $answerRepository;
+        $this->userRepository = $userRepository;
         $this->middleware('can:setBestAnswer,answer')->only('index');
     }
     /**
@@ -23,6 +26,7 @@ class SetBestController extends Controller
     public function index(Answer $answer)
     {
         $this->answerRepository->setBest($answer);
+        $this->userRepository->addPoint($answer->user, 'best_answer');
 
         return redirect()->route('questions.show', ['question' => $answer->question->id]);
     }
