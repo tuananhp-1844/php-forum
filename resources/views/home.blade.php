@@ -57,7 +57,7 @@
                     @endif
 
                     <div class="question-author">
-                        <a href="#" original-title="{{ $question->user->fullname }}" class="question-author-img tooltip-n">
+                        <a href="{{ route('users.show', ['id' => $question->user->id]) }}" original-title="{{ $question->user->fullname }}" class="question-author-img tooltip-n">
                             <span></span>
                         <img alt="" src="{{ asset(config('asset.avatar_path') . $question->user->avatar) }}">
                         </a>
@@ -98,9 +98,9 @@
             @foreach ($userHightPoint as $user)
             <li>
                 <div class="author-img">
-                <a href="#"><img width="60" height="60" src="{{ asset(config('asset.avatar_path') . $question->user->avatar) }}" alt="{{ $user->fullname }}"></a>
+                    <a href="{{ route('users.show', ['id' => $user->id]) }}"><img src="{{ asset(config('asset.avatar_path') . $user->avatar) }}" alt="{{ $user->fullname }}"></a>
                 </div>
-                <h6><a href="#">{{ $user->fullname }}</a></h6>
+                <h6><a href="{{ route('users.show', ['id' => $user->id]) }}">{{ $user->fullname }}</a></h6>
                 <span class="comment">{{ $user->point }} {{ __('Points') }}</span>
             </li>
             @endforeach

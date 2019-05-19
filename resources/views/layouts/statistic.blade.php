@@ -30,7 +30,7 @@
             </div>
         </form>
         <ul class="login-links">
-            <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
+            <li><a href="{{ route('redirect-social', ['social' => 'facebook']) }}"><i class="icon-facebook"></i>{{ __('facebook') }}</a></li>
         </ul>
         <div class="clearfix"></div>
     </div>
@@ -42,13 +42,14 @@
         <ul>
             <li>
                 <div class="author-img">
-                <a href="#"><img width="60" height="60" src="{{ asset(config('asset.avatar_path') . Auth::user()->avatar) }}" alt="{{ Auth::user()->fullname }}"></a>
+                <a href="{{ route('profile.index') }}"><img src="{{ asset(config('asset.avatar_path') . Auth::user()->avatar) }}" alt="{{ Auth::user()->fullname }}"></a>
                 </div>
-                <h6><a href="#">{{ Auth::user()->fullname }}</a></h6>
+                <h6><a href="{{ route('profile.index') }}">{{ Auth::user()->fullname }}</a></h6>
             </li>
         <li><i class="icon-question-sign"></i>{{ __('Questions') }} ( <span>{{ Auth::user()->questions->count() }}</span> )</li>
         <li><i class="icon-comment"></i>{{ __('Answers') }} ( <span>{{ Auth::user()->answers->count() }}</span> )</li>
         <li><i class="icon-btc"></i>{{ __('Points') }} ( <span>{{ Auth::user()->point }}</span> )</li>
+        <li><i class="fa fa-paperclip"></i>{{ __('Clip question') }} ( <span>{{ Auth::user()->clips->count() }}</span> )</li>
         </ul>
     </div>
 </div>

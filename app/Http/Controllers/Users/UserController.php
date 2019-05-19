@@ -1,22 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Profile;
+namespace App\Http\Controllers\Users;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\Contracts\UserRepositoryInterface;
-use App\Http\Requests\Profile\EditProfile as EditProfileRequest;
+use App\Models\User;
 use Auth;
 
-class ProfileController extends Controller
+class UserController extends Controller
 {
-    private $userRepository;
-
-    public function __construct(UserRepositoryInterface $userRepository)
-    {
-        $this->userRepository = $userRepository;
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -24,9 +16,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $questions = $this->userRepository->getQuestion(Auth::user()->id, config('pagination.question'));
-        
-        return view('profile.index', compact('questions'));
+        //
     }
 
     /**
@@ -56,9 +46,14 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        if (Auth::check() && Auth::user()->id === $user->id) {
+            return redirect()->route('profile.index');
+        }
+        $questions = $user->questions()->with('votes', 'answers', 'category')->paginate(config('pagination.question'));
+
+        return view('users.show', compact('user', 'questions'));
     }
 
     /**
@@ -67,9 +62,9 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
-        return view('profile.edit');
+        //
     }
 
     /**
@@ -79,11 +74,9 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EditProfileRequest $request)
+    public function update(Request $request, $id)
     {
-        $user = $this->userRepository->updateUser(Auth::user()->id, $request);
-
-        return redirect()->route('profile.index');
+        //
     }
 
     /**
@@ -95,13 +88,5 @@ class ProfileController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function clip()
-    {
-        $questions = Auth::user()->clips()->with('votes', 'category', 'answers', 'user');
-        $questions = $questions->paginate(config('pagination.question'));
-
-        return view('profile.clip', compact('questions'));
     }
 }

@@ -205,7 +205,9 @@
             <li class="comment">
                 <div class="comment-body comment-body-answered clearfix">
                     <div class="avatar">
-                        <img alt="{{ $comment->user->fullname }}" src="{{ asset(config('asset.avatar_path') . $comment->user->avatar) }}">
+                        <a href="{{ route('users.show', ['id' => $comment->user->id]) }}">
+                            <img alt="{{ $comment->user->fullname }}" src="{{ asset(config('asset.avatar_path') . $comment->user->avatar) }}">
+                        </a>
                     </div>
                     <div class="comment-text">
                         <div class="author clearfix">
@@ -331,9 +333,9 @@
             <ul>
                 <li>
                     <div class="author-img">
-                        <a href="#"><img width="60" height="60" src="{{ asset(config('asset.avatar_path') . $question->user->avatar) }}" alt="{{ $question->user->fullname }}"></a>
+                        <a href="{{ route('users.show', ['user' => $question->user->id]) }}"><img src="{{ asset(config('asset.avatar_path') . $question->user->avatar) }}" alt="{{ $question->user->fullname }}"></a>
                     </div>
-                    <h6><a href="#">{{ $question->user->fullname }}</a></h6>
+                    <h6><a href="{{ route('users.show', ['user' => $question->user->id]) }}">{{ $question->user->fullname }}</a></h6>
                 </li>
                 <li><i class="icon-question-sign"></i>{{ __('Questions') }} ( <span>{{ $question->user->questions->count() }}</span> )</li>
                 <li><i class="icon-comment"></i>{{ __('Answers') }} ( <span>{{ $question->user->answers->count() }}</span> )</li>

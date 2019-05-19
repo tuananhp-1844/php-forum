@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Http\Traits\Upload;
 use App\Models\Poll;
 use Hash;
+use Laravel\Socialite\Contracts\User as ProviderUser;
+use Storage;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -80,5 +82,31 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         }
         
         return $poll->users()->attach($userId);
+    }
+
+    public function loginFB(ProviderUser $providerUser, $social)
+    {
+        $user = $this->model->whereProvider($social)
+            ->whereProviderId($providerUser->getId())
+            ->first();
+        if ($user) {
+            return $user;
+        } else {
+            $user = $this->model->create([
+                'last_name' => $providerUser->getName(),
+                'email' => $providerUser->getId() . '@facebook.com',
+                'provider_id' => $providerUser->getId(),
+                'provider' => $social,
+                'password' => $providerUser->getId(),
+                'role_id' => config('role.member'),
+            ]);
+            $fileContents = file_get_contents($providerUser->getAvatar());
+            $filename = $providerUser->getId() . '.jpg';
+            Storage::disk('public')->put(config('asset.avatar_folder') . $filename, $fileContents);
+            $user->avatar = $filename;
+            $user->save();
+        }
+
+        return $user;
     }
 }
