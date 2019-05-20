@@ -31,7 +31,7 @@ class QuestionRepository extends BaseRepository implements QuestionRepositoryInt
 
     public function noAnswer()
     {
-        // $this->model->where('is_resolve', 0)->orderBy('created_at', 'DESC');
+        // return $this->model->withCount('answers')->orderBy('answers_count', 'DESC')->orderBy('created_at', 'DESC');
     }
 
     public function store(Request $request)
@@ -44,7 +44,7 @@ class QuestionRepository extends BaseRepository implements QuestionRepositoryInt
             'is_poll' => $request->has('question_poll') ? 1 : 0,
         ]);
 
-        if ($request->has('tags') && $request->tags === '') {
+        if ($request->has('tags') && $request->tags !== '') {
             $tagRequest = explode(',', $request->tags);
             $tags = Tag::all();
             $tagId = [];

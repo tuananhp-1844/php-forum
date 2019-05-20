@@ -108,15 +108,10 @@
     </div>
 
     <div class="widget widget_tag_cloud">
-        <h3 class="widget_title">{{ __('Tags') }}</h3>
-        <a href="#">{{ __('projects') }}</a>
-        <a href="#">{{ __('Portfolio') }}</a>
-        <a href="#">{{ __('Wordpress') }}</a>
-        <a href="#">{{ __('Html') }}</a>
-        <a href="#">{{ __('Css') }}</a>
-        <a href="#">{{ __('jQuery') }}</a>
-        <a href="#">{{ __('2code') }}</a>
-        <a href="#">{{ __('vbegy') }}</a>
+        <h3 class="widget_title">{{ __('Hot Tags') }}</h3>
+        @foreach ($hotTag as $tag)
+            <a href="{{ route('tags.questions.index', ['id' => $tag->id]) }}u">{{ $tag->name }} ({{ $tag->questions->count() }})</a>
+        @endforeach
     </div>
 
     <div class="widget widget_social">

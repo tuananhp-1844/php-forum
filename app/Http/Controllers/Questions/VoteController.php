@@ -6,13 +6,16 @@ use App\Models\Question;
 use Auth;
 use App\Http\Controllers\Controller;
 use App\Repositories\Contracts\QuestionRepositoryInterface;
+use App\Repositories\Contracts\UserRepositoryInterface as UserInterface;
 
 class VoteController extends Controller
 {
     protected $questionRepository;
-    public function __construct(QuestionRepositoryInterface $questionRepository)
+    protected $userRepository;
+    public function __construct(QuestionRepositoryInterface $questionRepository, UserInterface $userRepository)
     {
         $this->questionRepository = $questionRepository;
+        $this->userRepository = $userRepository;
         $this->middleware('auth');
     }
     /**
@@ -44,12 +47,15 @@ class VoteController extends Controller
         $state = 0;
         if ($this->questionRepository->checkUserUnVote(Auth::user()->id, $question)) {
             $this->questionRepository->destroyVote(Auth::user()->id, $question);
+            $this->userRepository->addPoint($question->user, 'dislike_question');
             $state = -1;
         } elseif ($this->questionRepository->checkUserVote(Auth::user()->id, $question)) {
             $this->questionRepository->destroyVote(Auth::user()->id, $question);
+            $this->userRepository->addPoint($question->user, 'dislike_question');
             $state = 0;
         } else {
             $this->questionRepository->vote(Auth::user()->id, $question);
+            $this->userRepository->addPoint($question->user, 'like_question');
             $state = 1;
         }
 
@@ -105,6 +111,7 @@ class VoteController extends Controller
             $this->questionRepository->unVote(Auth::user()->id, $question);
             $state = -1;
         }
+        $this->userRepository->addPoint($question->user, 'dislike_question');
         
         return $state;
     }

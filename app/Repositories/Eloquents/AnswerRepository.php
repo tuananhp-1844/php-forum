@@ -55,9 +55,15 @@ class AnswerRepository extends BaseRepository implements AnswerRepositoryInterfa
 
     public function setBest(Answer $answer)
     {
-        $answer->is_best = 1;
-        $answer->save();
-
+        $oldBest = $answer->question->answers->where('is_best', 1);
+        if ($oldBest->count()) {
+            $oldBest->first()->is_best = 1;
+            $oldBest->save();
+        } else {
+            $answer->is_best = 1;
+            $answer->save();
+        }
+        
         return $answer;
     }
 }
