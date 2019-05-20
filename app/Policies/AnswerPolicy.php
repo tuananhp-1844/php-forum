@@ -42,7 +42,7 @@ class AnswerPolicy
      */
     public function update(User $user, Answer $answer)
     {
-        //
+        return $answer->user_id === $user->id;
     }
 
     /**
@@ -54,7 +54,7 @@ class AnswerPolicy
      */
     public function delete(User $user, Answer $answer)
     {
-        //
+        return $answer->user_id === $user->id;
     }
 
     /**

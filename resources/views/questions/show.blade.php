@@ -11,7 +11,9 @@
                 <div class="crumbs">
                     <a href="{{ route('home') }}">{{ __('Home') }}</a>
                     <span class="crumbs-span">/</span>
-                    <span class="current">{{ $question->title }}</span>
+                    <span class="current">
+                        {{ $question->title }}
+                    </span>
                 </div>
             </div>
         </div><!-- End row -->
@@ -24,7 +26,9 @@
 <div class="col-md-9">
     <article class="question single-question question-type-normal">
         <h2>
-            <a href="single_question.html">{{ $question->title }}</a>
+            <a href="">
+                {{ $question->title }}
+            </a>
         </h2>
         @if (Auth::check())
         <a class="question-report" id = "report" data-question="{{ $question->id }}">{{ __('Report') }}</a>
@@ -145,11 +149,20 @@
         </div>
         <a href="#"><i class="icon-share-alt"></i> {{ __('Share') }}</a> &nbsp; &nbsp;
         @if (Auth::check())
-        <a href="#" class="{{ $question->clips->where('id', Auth::user()->id)->count() ? 'active-clip' : '' }}" id = "clip" data-question="{{ $question->id }}"><i class="fa fa-paperclip"></i> {{ __('Clip question') }}</a>
+        <a href="#" class="{{ $question->clips->where('id', Auth::user()->id)->count() ? 'active-clip' : '' }}" id = "clip" data-question="{{ $question->id }}"><i class="fa fa-paperclip"></i> {{ __('Clip question') }}</a>&nbsp; &nbsp;
         @else
         <a href="{{ route('login') }}"><i class="fa fa-paperclip"></i> {{ __('Clip question') }}</a>
         @endif
-        
+        @can('update', $question)
+            <a href="{{ route('questions.edit', ['question' => $question->id]) }}"><i class="fa fa-edit"></i> {{ __('Edit') }}</a>&nbsp; &nbsp;
+        @endcan
+        @can('delete', $question)
+            <a href="#" id="question_id"><i class="fa fa-times"></i> {{ __('delete') }}</a>
+            <form id="delete-form" action="{{ route('questions.destroy', ['question' => $question->id]) }}" method="POST">
+                <input type="hidden" name="_method" value="delete">
+                {{ csrf_field() }}
+            </form>
+        @endcan
         <div class="clearfix"></div>
     </div><!-- End share-tags -->
     
@@ -165,7 +178,7 @@
                         </div>
                         <div class="comment-text">
                             <div class="author clearfix">
-                                <div class="comment-author"><a href="#">{{ $bestComment->user->fullname }}</a></div>
+                                <div class="comment-author"><a href="{{ route('users.show', ['id' => $bestComment->user->id]) }}">{{ $bestComment->user->fullname }}</a></div>
                                 <div class="comment-vote">
                                 @if (Auth::check())
                                     <ul class="question-vote">

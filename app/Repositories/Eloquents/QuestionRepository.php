@@ -145,4 +145,45 @@ class QuestionRepository extends BaseRepository implements QuestionRepositoryInt
     {
         return $question->clips()->detach($userId);
     }
+
+    public function updateQuestion($request, Question $question)
+    {
+        $question->update([
+            'user_id' => Auth::user()->id,
+            'category_id' => $request->category,
+            'title' => $request->title,
+            'content' => $request->content,
+            'is_poll' => $request->has('question_poll') ? 1 : 0,
+        ]);
+
+        if ($request->has('tags') && $request->tags !== '') {
+            $tagRequest = explode(',', $request->tags);
+            $tags = Tag::all();
+            $tagId = [];
+            foreach ($tagRequest as $key => $value) {
+                if ($tags->where('name', $value)->count()) {
+                    $tagId[] = $tags->where('name', $value)->first()->id;
+                } else {
+                    $tag = Tag::create([
+                        'name' => $value,
+                    ]);
+                    $tagId[] = $tag->id;
+                }
+            }
+            $question->tags()->sync($tagId);
+        }
+
+        $polls = Poll::whereQuestionId($question->id)->delete();
+
+        if ($request->has('question_poll')) {
+            foreach ($request->ask as $key => $value) {
+                $poll = Poll::create([
+                    'question_id' => $question->id,
+                    'title' => $value['title'],
+                ]);
+            }
+        }
+
+        return $question;
+    }
 }

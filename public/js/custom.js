@@ -701,8 +701,6 @@ jQuery(document).ready(function ($) {
         return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
 
-    jQuery("#question-title").val(getParameterByName("question_title"));
-
     jQuery('#question_tags').tag();
 
     var question_poll = jQuery("#question_poll:checked").length;
@@ -1222,41 +1220,41 @@ jQuery(document).ready(function ($) {
 
     /* Twitter */
 
-    jQuery(".tweet_1").tweet({
-        join_text: false,
-        username: "envato", // Username
-        modpath: "./js/twitter/",
-        avatar_size: false,
-        count: 2,
-        template: "{text} <br> {time}",
-        loading_text: "loading twitter feed...",
-        seconds_ago_text: "about %d seconds ago",
-        a_minutes_ago_text: "about a minute ago",
-        minutes_ago_text: "about %d minutes ago",
-        a_hours_ago_text: "about an hour ago",
-        hours_ago_text: "about %d hours ago",
-        a_day_ago_text: "about a day ago",
-        days_ago_text: "about %d days ago",
-        view_text: "view tweet on twitter"
-    });
+    // jQuery(".tweet_1").tweet({
+    //     join_text: false,
+    //     username: "envato", // Username
+    //     modpath: "./js/twitter/",
+    //     avatar_size: false,
+    //     count: 2,
+    //     template: "{text} <br> {time}",
+    //     loading_text: "loading twitter feed...",
+    //     seconds_ago_text: "about %d seconds ago",
+    //     a_minutes_ago_text: "about a minute ago",
+    //     minutes_ago_text: "about %d minutes ago",
+    //     a_hours_ago_text: "about an hour ago",
+    //     hours_ago_text: "about %d hours ago",
+    //     a_day_ago_text: "about a day ago",
+    //     days_ago_text: "about %d days ago",
+    //     view_text: "view tweet on twitter"
+    // });
 
-    jQuery(".tweet_2").tweet({
-        join_text: false,
-        username: "envato", // Username
-        modpath: "./js/twitter/",
-        avatar_size: false,
-        count: 2,
-        template: "{text} <br> {time}",
-        loading_text: "loading twitter feed...",
-        seconds_ago_text: "about %d seconds ago",
-        a_minutes_ago_text: "about a minute ago",
-        minutes_ago_text: "about %d minutes ago",
-        a_hours_ago_text: "about an hour ago",
-        hours_ago_text: "about %d hours ago",
-        a_day_ago_text: "about a day ago",
-        days_ago_text: "about %d days ago",
-        view_text: "view tweet on twitter"
-    });
+    // jQuery(".tweet_2").tweet({
+    //     join_text: false,
+    //     username: "envato", // Username
+    //     modpath: "./js/twitter/",
+    //     avatar_size: false,
+    //     count: 2,
+    //     template: "{text} <br> {time}",
+    //     loading_text: "loading twitter feed...",
+    //     seconds_ago_text: "about %d seconds ago",
+    //     a_minutes_ago_text: "about a minute ago",
+    //     minutes_ago_text: "about %d minutes ago",
+    //     a_hours_ago_text: "about an hour ago",
+    //     hours_ago_text: "about %d hours ago",
+    //     a_day_ago_text: "about a day ago",
+    //     days_ago_text: "about %d days ago",
+    //     view_text: "view tweet on twitter"
+    // });
 
     /* Flickr */
 
@@ -1303,6 +1301,14 @@ jQuery(document).ready(function ($) {
 
     $("#avatar").change(function() {
         readURL(this);
+    });
+
+    $('#question_id').click(function(event) {
+        event.preventDefault();
+        var $result = confirm("Want to delete?");
+        if ($result) {
+            $('#delete-form').submit();
+        }
     });
 });
 
