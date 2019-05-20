@@ -60,3 +60,5 @@ Route::get('/callback/{social}', 'Social\SocialAuthController@callback')->name('
 Route::resource('users', 'Users\UserController')->only('show');
 
 Route::get('profile/clips', 'Profile\ProfileController@clip')->name('profile.clip');
+
+Route::resource('notifications', 'Notifications\NotificationController');

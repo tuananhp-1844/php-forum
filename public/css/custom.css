@@ -33,3 +33,12 @@
 .active-like-comment{
     color: #3498Db !important;
 }
+.notify {
+    float:right;
+    color: red;
+    font-weight: bold;
+}
+.notifi_massage {
+    color: black;
+    font-weight: 400;
+}

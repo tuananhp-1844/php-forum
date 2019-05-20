@@ -114,6 +114,7 @@
                 </div>
             </article>
             @endforeach
+            {{ $questions->render('paginations.paginate') }}
         </div>
     </div>
 
