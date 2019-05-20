@@ -19,6 +19,6 @@ class UploadController extends Controller
     {
         $image = $this->upload($request->file, config('asset.question_folder'));
 
-        return $image;
+        return env('APP_URL') . config('asset.question_path') . $image;
     }
 }

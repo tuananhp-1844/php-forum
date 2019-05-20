@@ -50,6 +50,10 @@
                     <label><input type="checkbox" checked="checked" name="remember_me"> {{ __('Remember Me') }}</label>
                 </div>
             </form>
+            <ul class="login-links">
+                <li><a href="{{ route('redirect-social', ['social' => 'facebook']) }}"><i class="icon-facebook"></i>{{ __('facebook') }}</a></li>
+            </ul>
+            <div class="clearfix"></div>
         </div>
     </div><!-- End page-content -->
 </div><!-- End col-md-6 -->

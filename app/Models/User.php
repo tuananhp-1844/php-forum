@@ -30,6 +30,8 @@ class User extends Authenticatable
         'twitter',
         'country',
         'info',
+        'provider_id',
+        'provider',
     ];
 
     /**

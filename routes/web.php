@@ -56,3 +56,7 @@ Route::resource('answers.setbest', 'Answers\SetBestController')->only('index');
 Route::get('/redirect/{social}', 'Social\SocialAuthController@redirect')->name('redirect-social');
 
 Route::get('/callback/{social}', 'Social\SocialAuthController@callback')->name('callback');
+
+Route::resource('users', 'Users\UserController')->only('show');
+
+Route::get('profile/clips', 'Profile\ProfileController@clip')->name('profile.clip');

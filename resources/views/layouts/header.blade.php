@@ -51,7 +51,7 @@
                 <li><a href="#"><i class="icon-headphones"></i>{{ __('support') }}</a></li>
                 @if (Auth::check())
                 <li>
-                    <a href="#"><i class="icon-user"></i> {{ __('Wellcome') }}: {{ Auth::user()->full_name }}</a>
+                    <a href="{{ route('profile.index') }}"><i class="icon-user"></i> {{ __('Wellcome') }}: {{ Auth::user()->full_name }}</a>
                 </li>
                 <li>
                     <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
@@ -98,6 +98,7 @@
                     <ul>
                         <li><a href="{{ route('profile.index') }}">{{ __('User Profile') }}</a></li>
                         <li><a href="{{ route('profile.edit') }}">{{ __('Edit Profile') }}</a></li>
+                        <li><a href="{{ route('profile.clip') }}">{{ __('Clip question') }}</a></li>
                         <li>
                             <a onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
                         </li>
