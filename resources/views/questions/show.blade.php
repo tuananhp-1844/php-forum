@@ -211,7 +211,7 @@
                     </div>
                     <div class="comment-text">
                         <div class="author clearfix">
-                            <div class="comment-author"><a href="#">{{ $comment->user->fullname }}</a></div>
+                            <div class="comment-author"><a href="{{ route('users.show', ['id' => $comment->user->id]) }}">{{ $comment->user->fullname }}</a></div>
                             <div class="comment-vote">
                             @if (Auth::check())
                                 <ul class="question-vote">
@@ -327,6 +327,7 @@
 
 @section('sidebar')
 <aside class="col-md-3 sidebar">
+    @include('layouts.statistic')
     <div class="widget widget_stats">
         <h3 class="widget_title">{{ __('About author') }}</h3>
         <div class="ul_list ul_list-icon-ok">

@@ -1,24 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Questions;
+namespace App\Http\Controllers\Notifications;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Question;
-use App\Http\Requests\Answers\CreateAnswerRequest;
-use App\Repositories\Contracts\AnswerRepositoryInterface as AnswerInterface;
-use App\Notifications\AnswerQuestion;
 use Auth;
 
-class AnswerController extends Controller
+class NotificationController extends Controller
 {
-    private $answerRepository;
-
-    public function __construct(AnswerInterface $answerRepository)
+    public function __construct()
     {
         $this->middleware('auth');
-        $this->answerRepository = $answerRepository;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +20,12 @@ class AnswerController extends Controller
      */
     public function index()
     {
-        //
+        $notifications = Auth::user()->notifications()->paginate(config('pagination.notification'));
+        foreach (Auth::user()->unreadNotifications as $notification) {
+            $notification->markAsRead();
+        }
+        
+        return view('notifications.index', compact('notifications'));
     }
 
     /**
@@ -45,14 +44,9 @@ class AnswerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateAnswerRequest $request, Question $question)
+    public function store(Request $request)
     {
-        $this->answerRepository->store($request, $question);
-        if (Auth::user()->id !== $question->user_id) {
-            $question->user->notify(new AnswerQuestion(Auth::user(), $question));
-        }
-
-        return redirect()->route('questions.show', ['question' => $question->id]);
+        //
     }
 
     /**

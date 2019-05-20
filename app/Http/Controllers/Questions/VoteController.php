@@ -7,6 +7,7 @@ use Auth;
 use App\Http\Controllers\Controller;
 use App\Repositories\Contracts\QuestionRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface as UserInterface;
+use App\Notifications\VoteQuestion;
 
 class VoteController extends Controller
 {
@@ -57,6 +58,9 @@ class VoteController extends Controller
             $this->questionRepository->vote(Auth::user()->id, $question);
             $this->userRepository->addPoint($question->user, 'like_question');
             $state = 1;
+            if (Auth::user()->id !== $question->user_id) {
+                $question->user->notify(new VoteQuestion(Auth::user(), $question));
+            }
         }
 
         return $state;
