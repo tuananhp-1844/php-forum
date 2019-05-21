@@ -18,6 +18,8 @@ class AnswerController extends Controller
     {
         $this->middleware('auth');
         $this->answerRepository = $answerRepository;
+        $this->middleware('can:update,answer')->only('update', 'edit');
+        $this->middleware('can:delete,answer')->only('destroy');
     }
     /**
      * Display a listing of the resource.
@@ -72,7 +74,7 @@ class AnswerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Answer $answer)
     {
         //
     }
@@ -84,7 +86,7 @@ class AnswerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Answer $answer)
     {
         //
     }
@@ -95,7 +97,7 @@ class AnswerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Answer $answer)
     {
         //
     }

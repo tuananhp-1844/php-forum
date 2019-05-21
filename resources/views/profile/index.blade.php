@@ -19,7 +19,7 @@
                         <ul>
                         <li><i class="icon-plus"></i>{{ __('Registerd') }} : <span>{{ Auth::user()->created_at->diffForHumans() }}</span></li>
                             <li><i class="icon-map-marker"></i>{{ __('Country') }} : <span>{{ __('Việt Nam') }}</span></li>
-                            <li><i class="icon-globe"></i>{{ __('Website') }} : <a target="_blank" href="https://2code.info/">{{ __('view') }}</a></li>
+                        <li><i class="icon-globe"></i>{{ __('Website') }} : <a target="_blank" href="{{ Auth::user()->website }}">{{ __('view') }}</a></li>
                         </ul>
                     </div>
                     <p>
@@ -27,38 +27,31 @@
                     </p>
                     <div class="clearfix"></div>
                     <span class="user-follow-me">{{ __('Follow Me') }}</span>
-                    <a href="#" original-title="Facebook" class="tooltip-n">
+                    <a target="_blank" href="{{ Auth::user()->facebook }}" original-title="Facebook" class="tooltip-n">
                         <span class="icon_i">
                             <span class="icon_square" icon_size="30" span_bg="#3b5997" span_hover="#2f3239">
                                 <i class="social_icon-facebook"></i>
                             </span>
                         </span>
                     </a>
-                    <a href="#" original-title="Twitter" class="tooltip-n">
+                    <a target="_blank" href="{{ Auth::user()->twitter }}" original-title="Twitter" class="tooltip-n">
                         <span class="icon_i">
                             <span class="icon_square" icon_size="30" span_bg="#00baf0" span_hover="#2f3239">
                                 <i class="social_icon-twitter"></i>
                             </span>
                         </span>
                     </a>
-                    <a href="#" original-title="Linkedin" class="tooltip-n">
+                    <a target="_blank" href="{{ Auth::user()->linker }}" original-title="Linkedin" class="tooltip-n">
                         <span class="icon_i">
                             <span class="icon_square" icon_size="30" span_bg="#006599" span_hover="#2f3239">
                                 <i class="social_icon-linkedin"></i>
                             </span>
                         </span>
                     </a>
-                    <a href="#" original-title="Google plus" class="tooltip-n">
+                    <a target="_blank" href="{{ Auth::user()->google }}" original-title="Google plus" class="tooltip-n">
                         <span class="icon_i">
                             <span class="icon_square" icon_size="30" span_bg="#c43c2c" span_hover="#2f3239">
                                 <i class="social_icon-gplus"></i>
-                            </span>
-                        </span>
-                    </a>
-                    <a href="#" original-title="Email" class="tooltip-n">
-                        <span class="icon_i">
-                            <span class="icon_square" icon_size="30" span_bg="#000" span_hover="#2f3239">
-                                <i class="social_icon-email"></i>
                             </span>
                         </span>
                     </a>

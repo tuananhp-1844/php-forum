@@ -9,8 +9,10 @@ use App\Repositories\Contracts\CategoryRepositoryInterface as CategoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface as UserInterface;
 use App\Repositories\Contracts\AnswerRepositoryInterface as AnswerInterface;
 use App\Http\Requests\Questions\CreateQuestionRequest;
+use App\Http\Requests\Questions\UpdateQuestion;
 use Auth;
 use App\Models\Tag;
+use App\Models\Question;
 
 class QuestionController extends Controller
 {
@@ -30,6 +32,8 @@ class QuestionController extends Controller
         $this->userReponsitory = $user;
         $this->answerRepository = $answerRepository;
         $this->middleware('auth')->except('index', 'show');
+        $this->middleware('can:update,question')->only(['update', 'edit']);
+        $this->middleware('can:delete,question')->only('destroy');
     }
     /**
      * Display a listing of the resource.
@@ -116,9 +120,11 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Question $question)
     {
-        //
+        $categories = $this->categoryRepository->all();
+
+        return view('questions.edit', compact('question', 'categories'));
     }
 
     /**
@@ -128,9 +134,11 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateQuestion $request, Question $question)
     {
-        //
+        $question = $this->questionRepository->updateQuestion($request, $question);
+
+        return redirect()->route('questions.show', ['question' => $question->id]);
     }
 
     /**
@@ -139,8 +147,10 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Question $question)
     {
-        //
+        $question->delete();
+
+        return redirect()->route('home');
     }
 }

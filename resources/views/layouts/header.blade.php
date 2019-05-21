@@ -86,7 +86,7 @@
                 <li><a href="{{ route('home')}}">{{ __('home') }}</a></li>
                 <li class="ask_question"><a href="{{ route('questions.create')}}">{{ __('Ask Question') }}</a></li>
                 <li>
-                    <a href="cat_question.html">{{ __('Questions') }}</a>
+                    <a>{{ __('Questions') }}</a>
                     <ul>
                         <li><a href="{{ route('categories.index') }}">{{ __('Questions Category') }}</a></li>
                         <li><a href="{{ route('tags.index') }}">{{ __('Question Tag') }}</a></li>
@@ -94,7 +94,7 @@
                 </li>
                 @if (Auth::check())
                 <li>
-                    <a href="user_profile.html">{{ __('Profile') }}</a>
+                    <a>{{ __('Profile') }}</a>
                     <ul>
                         <li><a href="{{ route('profile.index') }}">{{ __('User Profile') }}</a></li>
                         <li><a href="{{ route('profile.edit') }}">{{ __('Edit Profile') }}</a></li>
