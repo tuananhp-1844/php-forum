@@ -8,4 +8,5 @@ return [
     'question' => 11,
     'user_hight_point' => 5,
     'notification' => 10,
+    'question_search' => 5,
 ];

@@ -62,3 +62,5 @@ Route::resource('users', 'Users\UserController')->only('show');
 Route::get('profile/clips', 'Profile\ProfileController@clip')->name('profile.clip');
 
 Route::resource('notifications', 'Notifications\NotificationController');
+
+Route::get('search', 'Search\SearchController@search')->name('search');

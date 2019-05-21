@@ -66,8 +66,8 @@
             </ul>
         </nav>
         <div class="header-search">
-            <form>
-                <input type="text" value="{{ __('search here') }}" onfocus="this.value=''"
+            <form method="GET" action="{{ route('search') }}">
+                <input name="search" type="text" value="{{ __('search here') }}" onfocus="this.value=''"
                     onblur="if(this.value=='')this.value='{{ __('search here') }}';">
                 <button type="submit" class="search-submit"></button>
             </form>

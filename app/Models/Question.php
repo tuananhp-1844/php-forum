@@ -4,9 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Markdown;
+use App\Http\Traits\FullTextSearch;
 
 class Question extends Model
 {
+    use FullTextSearch;
+
+    protected $searchable = [
+        'title',
+        'content',
+    ];
+
     protected $fillable = [
         'title',
         'content',
