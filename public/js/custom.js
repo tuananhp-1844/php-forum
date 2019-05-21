@@ -453,39 +453,6 @@ jQuery(document).ready(function ($) {
         if (jQuery(this).attr('href') === tag) {
             jQuery(this).addClass("current")
         }
-        // //i_color
-        // var i_color = jQuery(this).parent().parent().attr("i_color");
-        // jQuery(this).find("a i").css({ "color": i_color });
-        // //i_click
-        // var i_click = jQuery(this).parent().parent().attr("i_click");
-        // jQuery(this).find("a.current i").css({ "color": i_click });
-
-        // jQuery(this).find("a").hover(function () {
-        // 	jQuery(this).find("i").css({ "color": i_click });
-        // }, function () {
-        // 	if (jQuery(this).hasClass("current")) {
-        // 		jQuery(this).find("i").css({ "color": i_click });
-        // 	} else {
-        // 		jQuery(this).find("i").css({ "color": i_color });
-        // 	}
-        // });
-
-        // jQuery(this).click(function () {
-        // 	//i_color
-        // 	var i_color = jQuery(this).parent().parent().attr("i_color");
-        // 	jQuery(this).parent().find("a i").css({ "color": i_color });
-        // 	//i_click
-        // 	var i_click = jQuery(this).parent().parent().attr("i_click");
-        // 	jQuery(this).find("a.current i").css({ "color": i_click });
-        // 	return false;
-        // });
-
-        // var tab_width = jQuery(this).parent().parent().attr("tab_width");
-        // if (jQuery(this).parent().parent().hasClass("tabs-vertical")) {
-        // 	jQuery(this).parent().css({ "width": tab_width + "px" });
-        // 	jQuery(this).parent().parent().find("div.tab-inner-warp").css({ "margin-left": tab_width + "px" });
-        // }
-
     });
 
     /* Button */
@@ -798,16 +765,6 @@ jQuery(document).ready(function ($) {
     jQuery(".signup,.login-links-r a").click(function () {
         jQuery(".panel-pop").animate({ "top": "-100%" }, 10).hide();
         jQuery("#signup").show().animate({ "top": "50%" }, 500);
-        jQuery("body").prepend("<div class='wrap-pop'></div>");
-        wrap_pop();
-        return false;
-    });
-
-    /* Lost password */
-
-    jQuery(".login-password a").click(function () {
-        jQuery(".panel-pop").animate({ "top": "-100%" }, 10).hide();
-        jQuery("#lost-password").show().animate({ "top": "50%" }, 500);
         jQuery("body").prepend("<div class='wrap-pop'></div>");
         wrap_pop();
         return false;
@@ -1217,44 +1174,6 @@ jQuery(document).ready(function ($) {
             }
         }
     }).scroll();
-
-    /* Twitter */
-
-    // jQuery(".tweet_1").tweet({
-    //     join_text: false,
-    //     username: "envato", // Username
-    //     modpath: "./js/twitter/",
-    //     avatar_size: false,
-    //     count: 2,
-    //     template: "{text} <br> {time}",
-    //     loading_text: "loading twitter feed...",
-    //     seconds_ago_text: "about %d seconds ago",
-    //     a_minutes_ago_text: "about a minute ago",
-    //     minutes_ago_text: "about %d minutes ago",
-    //     a_hours_ago_text: "about an hour ago",
-    //     hours_ago_text: "about %d hours ago",
-    //     a_day_ago_text: "about a day ago",
-    //     days_ago_text: "about %d days ago",
-    //     view_text: "view tweet on twitter"
-    // });
-
-    // jQuery(".tweet_2").tweet({
-    //     join_text: false,
-    //     username: "envato", // Username
-    //     modpath: "./js/twitter/",
-    //     avatar_size: false,
-    //     count: 2,
-    //     template: "{text} <br> {time}",
-    //     loading_text: "loading twitter feed...",
-    //     seconds_ago_text: "about %d seconds ago",
-    //     a_minutes_ago_text: "about a minute ago",
-    //     minutes_ago_text: "about %d minutes ago",
-    //     a_hours_ago_text: "about an hour ago",
-    //     hours_ago_text: "about %d hours ago",
-    //     a_day_ago_text: "about a day ago",
-    //     days_ago_text: "about %d days ago",
-    //     view_text: "view tweet on twitter"
-    // });
 
     /* Flickr */
 

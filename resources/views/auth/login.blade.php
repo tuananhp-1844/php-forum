@@ -40,7 +40,7 @@
                     <p class="login-password">
                         <input type="password" placeholder="{{ __('Password') }}" value="{{ old('password') }}" name="password" onfocus="if (this.value == 'Password') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Password';}">
                         <i class="icon-lock"></i>
-                        <a href="#">{{ __('Forget') }}</a>
+                        <a href="{{ route('password.request') }}">{{ __('Forget') }}</a>
                     </p>
                 </div>
                 <p class="form-submit login-submit">

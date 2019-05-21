@@ -16,7 +16,7 @@
                 <p class="login-password">
                     <input type="password" required name="password" placeholder="Password">
                     <i class="icon-lock"></i>
-                    <a href="#">{{ __('Forget') }}</a>
+                    <a href="{{ route('password.request') }}">{{ __('Forget') }}</a>
                 </p>
                 @error('password')
                     <span class="error">{{ $message }}</span>

@@ -45,6 +45,14 @@
         @yield('ask-me')
         <section class="container main-content">
             <div class="row">
+                @if (Auth::check() && !Auth::user()->hasVerifiedEmail())
+                <div class="col-md-12">
+                    <p>
+                    {{ __('Before proceeding, please check your email for a verification link.') }}
+                    {{ __('If you did not receive the email') }}, <a href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>.
+                    </p>
+                </div>
+                @endif
                 @yield('main')
                 @yield('sidebar')
             </div><!-- End row -->

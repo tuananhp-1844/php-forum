@@ -105,6 +105,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             $filename = $providerUser->getId() . '.jpg';
             Storage::disk('public')->put(config('asset.avatar_folder') . $filename, $fileContents);
             $user->avatar = $filename;
+            $user->email_verified_at = \Carbon\Carbon::now();
             $user->save();
         }
 
