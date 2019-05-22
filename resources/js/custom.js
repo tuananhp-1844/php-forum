@@ -448,9 +448,10 @@ jQuery(document).ready(function ($) {
     /* Tabs */
 
     // jQuery("ul.tabs").tabs(".tab-inner-warp", { effect: "slide", fadeInSpeed: 100 });
-    var tag = $(location).attr("href");
+    const urlHome = new URLSearchParams(window.location.search);
+    const tag = urlHome.get('tag');
     jQuery("ul.tabs li a").each(function () {
-        if (jQuery(this).attr('href') === tag) {
+        if (jQuery(this).data('tag') === tag) {
             jQuery(this).addClass("current")
         }
     });
@@ -1188,7 +1189,7 @@ jQuery(document).ready(function ($) {
     var simplemde = new SimpleMDE({
         element: document.getElementById("question-details"),
         spellChecker: false,
-        toolbar: ["bold", "italic", "heading", "|", "quote", "code", "preview", "fullscreen", "table", {
+        toolbar: ["bold", "italic", "heading", "|", "quote", "code", "preview", "side-by-side", "fullscreen", "table", "unordered-list", "ordered-list", "clean-block", "horizontal-rule", {
             name: "imageCustom",
             action: function drawImageCustom(editor) {
                 $('#hidden-input-file').click();
@@ -1229,23 +1230,6 @@ jQuery(document).ready(function ($) {
             $('#delete-form').submit();
         }
     });
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const myParam = urlParams.get('search');
-    var src_str = $(".question-desc").html();
-    var title = $(".title").html();
-    var term = myParam;
-    term = term.replace(/(\s+)/,"(<[^>]+>)*$1(<[^>]+>)*");
-    var pattern = new RegExp("("+term+")", "gi");
-
-    src_str = src_str.replace(pattern, "<mark>$1</mark>");
-    src_str = src_str.replace(/(<mark>[^<>]*)((<[^>]+>)+)([^<>]*<\/mark>)/,"$1</mark>$2<mark>$4");
-
-    title = title.replace(pattern, "<mark>$1</mark>");
-    title = title.replace(/(<mark>[^<>]*)((<[^>]+>)+)([^<>]*<\/mark>)/,"$1</mark>$2<mark>$4");
-
-    $(".question-desc").html(src_str);
-    $(".title").html(title);
 });
 
 function readURL(input) {

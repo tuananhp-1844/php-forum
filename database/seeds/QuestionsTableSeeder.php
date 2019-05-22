@@ -25,6 +25,7 @@ class QuestionsTableSeeder extends Seeder
                 'user_id' => $faker->randomElement($users),
                 'category_id' => $faker->randomElement($categories),
                 'content' => $faker->realText,
+                'is_answer' => 1,
             ]);
         }
     }

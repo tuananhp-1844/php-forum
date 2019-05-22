@@ -49,6 +49,9 @@ class AnswerController extends Controller
      */
     public function store(CreateAnswerRequest $request, Question $question)
     {
+        $question->is_answer = 1;
+        $question->save();
+        
         $this->answerRepository->store($request, $question);
         if (Auth::user()->id !== $question->user_id) {
             $question->user->notify(new AnswerQuestion(Auth::user(), $question));
