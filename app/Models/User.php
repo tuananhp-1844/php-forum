@@ -65,21 +65,21 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function answers()
     {
-        return $this->hasMany(Answer::class);
+        return $this->morphMany(Answer::class, 'answerable');
     }
 
     public function votes()
     {
-        return $this->belongsToMany(Question::class, 'question_votes', 'user_id', 'question_id')->withPivot('state');
+        return $this->morphedByMany(Question::class, 'votable')->withPivot('state');
     }
 
     public function clips()
     {
-        return $this->belongsToMany(Question::class, 'clips', 'user_id', 'question_id');
+        return $this->morphedByMany(Question::class, 'clippable');
     }
     
     public function voteAnswers()
     {
-        return $this->belongsToMany(Answer::class, 'answer_votes', 'user_id', 'answer_id')->withPivot('state');
+        return $this->morphedByMany(Answer::class, 'votable')->withPivot('state');
     }
 }

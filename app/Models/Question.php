@@ -36,12 +36,12 @@ class Question extends Model
 
     public function answers()
     {
-        return $this->hasMany(Answer::class);
+        return $this->morphMany(Answer::class, 'answerable');
     }
 
     public function votes()
     {
-        return $this->belongsToMany(User::class, 'question_votes', 'question_id', 'user_id')->withPivot('state');
+        return $this->morphToMany(User::class, 'votable')->withPivot('state');
     }
 
 
@@ -52,7 +52,7 @@ class Question extends Model
 
     public function tags()
     {
-        return $this->belongsToMany('App\Models\Tag', 'question_tags', 'question_id', 'tag_id');
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     public function reports()
@@ -72,6 +72,6 @@ class Question extends Model
 
     public function clips()
     {
-        return $this->belongsToMany('App\Models\User', 'clips', 'question_id', 'user_id');
+        return $this->morphToMany(User::class, 'clippable');
     }
 }

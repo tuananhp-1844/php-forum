@@ -6,7 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Answer extends Model
 {
-    protected $fillable = ['content', 'user_id', 'parent_id', 'question_id', 'is_best'];
+    protected $fillable = [
+        'content',
+        'user_id',
+        'parent_id',
+        'question_id',
+        'is_best',
+        'answerable_id',
+        'answerable_type',
+    ];
 
     public function user()
     {
@@ -20,7 +28,7 @@ class Answer extends Model
 
     public function votes()
     {
-        return $this->belongsToMany(User::class, 'answer_votes', 'answer_id', 'user_id')->withPivot('state');
+        return $this->morphToMany(User::class, 'votable')->withPivot('state');
     }
 
     public function voteCount()
@@ -33,8 +41,8 @@ class Answer extends Model
         return $count;
     }
 
-    public function question()
+    public function answerable()
     {
-        return $this->belongsTo(Question::class);
+        return $this->morphTo();
     }
 }

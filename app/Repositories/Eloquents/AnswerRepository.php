@@ -18,13 +18,14 @@ class AnswerRepository extends BaseRepository implements AnswerRepositoryInterfa
         return Answer::class;
     }
 
-    public function store(Request $request, Question $question)
+    public function store(Request $request, $model)
     {
         return Answer::create([
             'content' => $request->content,
             'parent_id' => $request->parent_id,
             'user_id' => Auth::user()->id,
-            'question_id' => $question->id,
+            'answerable_id' => $model->id,
+            'answerable_type' => get_class($model),
         ]);
     }
 
