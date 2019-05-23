@@ -32,10 +32,13 @@
 <div class="col-md-9">
     <div class="tabs-warp question-tab">
         <ul class="tabs">
-            <li class="tab"><a href="{{ route('questions.index', ['tag' => 'recent-question']) }}" data-tag="recent-question">{{ __('Recent Questions') }}</a></li>
+            <li class="tab"><a href="{{ route('questions.index', ['tag' => 'recent-question']) }}" data-tag="recent-question" id="recent-question">{{ __('Recent Questions') }}</a></li>
             <li class="tab"><a href="{{ route('questions.index', ['tag' => 'unresolve']) }}" data-tag="unresolve">{{ __('Unsolved') }}</a></li>
             <li class="tab"><a href="{{ route('questions.index', ['tag' => 'no-answer']) }}" data-tag="no-answer">{{ __('No answers') }}</a></li>
             <li class="tab"><a href="{{ route('questions.index', ['tag' => 'poll']) }}" data-tag="poll">{{ __('Poll') }}</a></li>
+            @if (Auth::check())
+            <li class="tab"><a href="{{ route('questions.index', ['tag' => 'my-clips']) }}" data-tag="my-clips">{{ __('My clips') }}</a></li>
+            @endif
         </ul>
         <div class="tab-inner-warp">
             <div class="tab-inner">

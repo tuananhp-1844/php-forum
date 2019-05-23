@@ -1,7 +1,7 @@
 <template>
     <div class="animated fadeIn">
         <b-row>
-            {{ __('dashboard') }}
+            {{ $t('dashboard') }}
         </b-row>
     </div>
 </template>

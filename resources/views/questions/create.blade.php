@@ -83,7 +83,6 @@
                     <script> var nextli = 2;</script>
                     <div class="clearfix"></div>
                 </div>
-
             </div>
             <div id="form-textarea">
                 <p>

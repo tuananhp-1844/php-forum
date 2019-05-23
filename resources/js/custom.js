@@ -450,6 +450,9 @@ jQuery(document).ready(function ($) {
     // jQuery("ul.tabs").tabs(".tab-inner-warp", { effect: "slide", fadeInSpeed: 100 });
     const urlHome = new URLSearchParams(window.location.search);
     const tag = urlHome.get('tag');
+    if (!tag) {
+        jQuery('#recent-question').addClass("current")
+    }
     jQuery("ul.tabs li a").each(function () {
         if (jQuery(this).data('tag') === tag) {
             jQuery(this).addClass("current")

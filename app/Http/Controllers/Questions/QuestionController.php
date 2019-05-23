@@ -29,7 +29,7 @@ class QuestionController extends Controller
     ) {
         $this->questionRepository = $question;
         $this->categoryRepository = $category;
-        $this->userReponsitory = $user;
+        $this->userRepository = $user;
         $this->answerRepository = $answerRepository;
         $this->middleware('auth')->except('index', 'show');
         $this->middleware('can:update,question')->only(['update', 'edit']);
@@ -53,6 +53,11 @@ class QuestionController extends Controller
             case 'no-answer':
                 $questions = $questions->noAnswer();
                 break;
+            case 'my-clips':
+                if (Auth::check()) {
+                    $questions = $this->userRepository->userClips(Auth::user());
+                }
+                break;
             default:
                 $questions = $questions->newest();
                 break;
@@ -60,7 +65,7 @@ class QuestionController extends Controller
         $questions = $questions->with(['category', 'user', 'answers', 'votes']);
         $questions = $questions->paginate(config('pagination.question'));
         $questions = $questions->appends(request()->input());
-        $userHightPoint = $this->userReponsitory->getHighestPoint(config('pagination.user_hight_point'));
+        $userHightPoint = $this->userRepository->getHighestPoint(config('pagination.user_hight_point'));
         $hotTag = Tag::withCount('questions')->orderBy('questions_count', 'desc');
         $hotTag = $hotTag->with('questions')->limit(config('pagination.hot_tag'))->get();
 

@@ -15,4 +15,5 @@ interface UserRepositoryInterface
     public function poll($userId, Poll $poll);
     public function loginFB(ProviderUser $user, $social);
     public function addPoint(User $user, $typePoint);
+    public function userClips(User $user);
 }

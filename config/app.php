@@ -227,7 +227,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
     ],
-
 ];

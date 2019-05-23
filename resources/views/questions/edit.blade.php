@@ -85,7 +85,7 @@
                         </li> 
                         @endforeach
                     </ul>
-                    <script> var nextli = 2;</script>
+                    <script> var nextli = {{ $question->polls->count() + 1 }};</script>
                     <div class="clearfix"></div>
                 </div>
 
