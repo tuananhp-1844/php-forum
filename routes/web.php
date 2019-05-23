@@ -10,6 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::domain('admin.localhost')->group(function ()
+{
+    Route::get('/', 'Admin\AdminController@index')->name('admin.index');
+});
 
 Auth::routes(['verify' => true]);
 

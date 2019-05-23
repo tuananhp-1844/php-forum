@@ -11,17 +11,10 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js(['resources/js/app.js'], 'public/js/')
-   .sass('resources/sass/app.scss', 'public/css');
+mix.js(['resources/js/main.js'], 'public/js/app.js').sass('resources/sass/app.scss', 'public/css');
 
-mix.styles([
-     'resources/sass/custom.css',
-  ], 'public/css/all.css');
+mix.styles('resources/sass/custom.css', 'public/css/all.css');
 
-mix.js([
-   'resources/js/search.js',
-], 'public/js/search.js');
+mix.js('resources/js/search.js', 'public/js/search.js');
 
-mix.js([
-   'resources/js/custom.js',
-], 'public/js/all.js');
+mix.js('resources/js/custom.js', 'public/js/all.js');
