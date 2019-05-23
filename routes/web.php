@@ -12,7 +12,7 @@
 */
 Route::domain('admin.localhost')->group(function ()
 {
-    Route::get('/', 'Admin\AdminController@index')->name('admin.index');
+    Route::get('/{all}', 'Admin\AdminController@index')->where(['all' => '.*'])->name('admin.index');
 });
 
 Auth::routes(['verify' => true]);
