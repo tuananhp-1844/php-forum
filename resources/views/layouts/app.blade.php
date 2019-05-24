@@ -29,7 +29,7 @@
     <!-- Favicons -->
     <link rel="shortcut icon" href="{{ asset(config('asset.asset_project').'/images/favicon.png') }}">
 
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/all.css') }}">
 
     <link rel="stylesheet" href="{{ asset('bower_components/simplemde/dist/simplemde.min.css') }}">
     {{-- <link rel="stylesheet" href="{{ asset('bower_components/dropzone/dist/dropzone.css') }}"> --}}
@@ -80,11 +80,9 @@
     <script src="{{ asset(config('asset.asset_project').'/js/notify.min.js') }}"></script>
     <script src="{{ asset(config('asset.asset_project').'/js/jquery.bxslider.min.js') }}"></script>
     <script src="{{ asset('bower_components/simplemde/dist/simplemde.min.js') }}"></script>
-    {{-- <script src="{{ asset('bower_components/dropzone/dist/dropzone.js') }}"></script> --}}
-    {{-- <script src="{{ asset('bower_components/taggle/src/taggle.js') }}"></script> --}}
-    <script src="{{ asset('js/custom.js') }}"></script>
+    <script src="{{ mix('js/all.js') }}"></script>
     <!-- End js -->
-
+    @stack('scripts')
 </body>
 
 </html>

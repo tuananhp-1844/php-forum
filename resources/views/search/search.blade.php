@@ -59,3 +59,6 @@
     </div><!-- End page-content -->
 </div><!-- End main -->
 @endsection
+@push('scripts')
+    <script src="{{ mix('js/search.js') }}"></script>
+@endpush

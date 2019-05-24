@@ -10,8 +10,8 @@
                     <h2>{{ __('Welcome to Ask me') }}</h2>
                     <p>{{ __('Duis dapibus aliquam mi, eget euismod sem scelerisque ut. Vivamus at elit quis urna adipiscing iaculis. Curabitur vitae velit in neque dictum blandit. Proin in iaculis neque.') }}</p>
                     <div class="clearfix"></div>
-                    <a class="color button dark_button medium" href="#">{{ __('About Us') }}</a>
-                    <a class="color button dark_button medium" href="#">{{ __('Join Now') }}</a>
+                    <a class="color button dark_button medium" href="{{ route('questions.create') }}">{{ __('About Us') }}</a>
+                    <a class="color button dark_button medium" href="{{ route('questions.create') }}">{{ __('Join Now') }}</a>
                 </div>
                 <div class="col-md-9">
                     <form class="form-style form-style-2" method="GET" action="{{ route('questions.create') }}">
@@ -32,10 +32,10 @@
 <div class="col-md-9">
     <div class="tabs-warp question-tab">
         <ul class="tabs">
-            <li class="tab"><a href="{{ route('questions.index') }}">{{ __('Recent Questions') }}</a></li>
-            <li class="tab"><a href="{{ route('questions.index', ['tag' => 'unresolve']) }}">{{ __('Unsolved') }}</a></li>
-            <li class="tab"><a href="{{ route('questions.index', ['tag' => 'no-answer']) }}">{{ __('No answers') }}</a></li>
-            <li class="tab"><a href="{{ route('questions.index', ['tag' => 'poll']) }}">{{ __('Poll') }}</a></li>
+            <li class="tab"><a href="{{ route('questions.index', ['tag' => 'recent-question']) }}" data-tag="recent-question">{{ __('Recent Questions') }}</a></li>
+            <li class="tab"><a href="{{ route('questions.index', ['tag' => 'unresolve']) }}" data-tag="unresolve">{{ __('Unsolved') }}</a></li>
+            <li class="tab"><a href="{{ route('questions.index', ['tag' => 'no-answer']) }}" data-tag="no-answer">{{ __('No answers') }}</a></li>
+            <li class="tab"><a href="{{ route('questions.index', ['tag' => 'poll']) }}" data-tag="poll">{{ __('Poll') }}</a></li>
         </ul>
         <div class="tab-inner-warp">
             <div class="tab-inner">
@@ -110,7 +110,7 @@
     <div class="widget widget_tag_cloud">
         <h3 class="widget_title">{{ __('Hot Tags') }}</h3>
         @foreach ($hotTag as $tag)
-            <a href="{{ route('tags.questions.index', ['id' => $tag->id]) }}u">{{ $tag->name }} ({{ $tag->questions->count() }})</a>
+            <a href="{{ route('tags.questions.index', ['id' => $tag->id]) }}">{{ $tag->name }} ({{ $tag->questions->count() }})</a>
         @endforeach
     </div>
 

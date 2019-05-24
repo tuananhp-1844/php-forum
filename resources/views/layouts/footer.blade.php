@@ -62,7 +62,7 @@
 </footer><!-- End footer -->
 <footer id="footer-bottom">
     <section class="container">
-        <div class="copyrights f_left">{{ __('Copyright 2014 Ask me') }} | <a href="#">{{ __('By 2code') }}</a></div>
+        <div class="copyrights f_left">{{ __('Copyright 2014 Ask me') }}</div>
         <div class="social_icons f_right">
             <ul>
                 <li class="twitter"><a original-title="Twitter" class="tooltip-n" href="#"><i class="social_icon-twitter font17"></i></a></li>

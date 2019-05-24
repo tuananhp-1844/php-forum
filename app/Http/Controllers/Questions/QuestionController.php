@@ -51,7 +51,7 @@ class QuestionController extends Controller
                 $questions = $questions->isPoll();
                 break;
             case 'no-answer':
-                $questions = $questions->newest();
+                $questions = $questions->noAnswer();
                 break;
             default:
                 $questions = $questions->newest();
@@ -59,6 +59,7 @@ class QuestionController extends Controller
         }
         $questions = $questions->with(['category', 'user', 'answers', 'votes']);
         $questions = $questions->paginate(config('pagination.question'));
+        $questions = $questions->appends(request()->input());
         $userHightPoint = $this->userReponsitory->getHighestPoint(config('pagination.user_hight_point'));
         $hotTag = Tag::withCount('questions')->orderBy('questions_count', 'desc');
         $hotTag = $hotTag->with('questions')->limit(config('pagination.hot_tag'))->get();
