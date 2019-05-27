@@ -12,12 +12,14 @@ import VueI18n from 'vue-i18n'
 import vnMessage from '@/langs/vi.json'
 import enMessage from '@/langs/en.json'
 import store from './store/index'
+import Paginate from 'vuejs-paginate'
 
 // todo
 // cssVars()
 
 Vue.use(BootstrapVue)
 Vue.use(VueI18n)
+Vue.component('paginate', Paginate)
 
 const messages = {
     vn: vnMessage,

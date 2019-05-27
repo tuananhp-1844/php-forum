@@ -1,4 +1,5 @@
 export default {
     users: [],
-    total: 0
+    total: 0,
+    last_page: 0
 }

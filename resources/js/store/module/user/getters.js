@@ -5,5 +5,9 @@ export default {
 
     getTotal(state) {
         return state.total
+    },
+
+    getLastPage(state) {
+        return state.last_page
     }
 }
