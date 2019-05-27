@@ -71,6 +71,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+<<<<<<< 512e52120d6554bc18ecdfd357554c380c67a64b
         $user = User::withTrashed()->where('id', $id)->first();
         if ($user->trashed()) {
             $user->restore();
@@ -79,5 +80,8 @@ class UserController extends Controller
         }
 
         return new UserResource($user);
+=======
+        //
+>>>>>>> user crud 1
     }
 }
