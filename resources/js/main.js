@@ -8,16 +8,31 @@ import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
 import App from './App'
 import router from './router'
+import VueI18n from 'vue-i18n'
+import vnMessage from '@/langs/vi.json'
+import enMessage from '@/langs/en.json'
 
 // todo
 // cssVars()
 
 Vue.use(BootstrapVue)
+Vue.use(VueI18n)
+
+const messages = {
+    vn: vnMessage,
+    en: enMessage,
+}
+const i18n = new VueI18n({
+    locale: 'vn', // set locale
+    messages,
+    fallbackLocale: 'vn',
+})
 
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
     router,
+    i18n,
     template: '<App/>',
     components: {
         App

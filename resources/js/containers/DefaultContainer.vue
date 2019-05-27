@@ -6,9 +6,9 @@
             </b-link>
             <SidebarToggler class="d-md-down-none" display="lg" />
             <b-navbar-nav class="d-md-down-none">
-                <b-nav-item class="px-3" to="/dashboard">{{ __('Dashboard') }}</b-nav-item>
-                <b-nav-item class="px-3" to="/users" exact>{{ __('Users') }}</b-nav-item>
-                <b-nav-item class="px-3">{{ __('Settings') }}</b-nav-item>
+                <b-nav-item class="px-3" to="/dashboard">{{ $t('Dashboard') }}</b-nav-item>
+                <b-nav-item class="px-3" to="/users" exact>{{ $t('Users') }}</b-nav-item>
+                <b-nav-item class="px-3">{{ $t('Settings') }}</b-nav-item>
             </b-navbar-nav>
             <b-navbar-nav class="ml-auto">
                 <b-nav-item class="d-md-down-none">
@@ -48,10 +48,10 @@
         <TheFooter>
             <!--footer-->
             <div>
-                <span class="ml-1">&copy; {{ __('2018 creativeLabs.') }}</span>
+                <span class="ml-1">&copy; {{ $t('2018 creativeLabs.') }}</span>
             </div>
             <div class="ml-auto">
-                <span class="mr-1">{{ __('Powered by') }}</span>
+                <span class="mr-1">{{ $t('Powered by') }}</span>
             </div>
         </TheFooter>
     </div>
