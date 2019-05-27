@@ -7,10 +7,13 @@ import Dashboard from '@/views/Dashboard'
 
 import User from '@/views/user'
 
+<<<<<<< df9cd6e7c46d3428ff42d1184ec615cf4d338ba3
 import Tag from '@/views/tag'
 
 import Category from '@/views/category'
 
+=======
+>>>>>>> 12675_users crud
 import Login from '@/views/pages/Login'
 
 import { checkToken } from '@/helper/local-storage'
@@ -38,6 +41,7 @@ const router = new Router({
                     path: 'user',
                     name: 'User',
                     component: User
+<<<<<<< df9cd6e7c46d3428ff42d1184ec615cf4d338ba3
                 },
                 {
                     path: 'tag',
@@ -48,6 +52,8 @@ const router = new Router({
                     path: 'category',
                     name: 'Category',
                     component: Category
+=======
+>>>>>>> 12675_users crud
                 }
             ]
         },
