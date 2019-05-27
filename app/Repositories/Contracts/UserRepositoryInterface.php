@@ -16,4 +16,5 @@ interface UserRepositoryInterface
     public function loginFB(ProviderUser $user, $social);
     public function addPoint(User $user, $typePoint);
     public function userClips(User $user);
+    public function userPostClips(User $user);
 }

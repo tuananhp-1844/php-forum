@@ -1143,7 +1143,7 @@ var debugs = {};
 var debugEnviron;
 exports.debuglog = function(set) {
   if (isUndefined(debugEnviron))
-    debugEnviron = Object({"MIX_PUSHER_APP_KEY":"","MIX_PUSHER_APP_CLUSTER":"mt1","NODE_ENV":"development"}).NODE_DEBUG || '';
+    debugEnviron = Object({"MIX_PUSHER_APP_CLUSTER":"mt1","MIX_PUSHER_APP_KEY":"","NODE_ENV":"development"}).NODE_DEBUG || '';
   set = set.toUpperCase();
   if (!debugs[set]) {
     if (new RegExp('\\b' + set + '\\b', 'i').test(debugEnviron)) {

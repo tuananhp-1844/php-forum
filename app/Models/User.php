@@ -78,6 +78,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->morphedByMany(Question::class, 'clippable');
     }
     
+    public function postClips()
+    {
+        return $this->morphedByMany(Post::class, 'clippable');
+    }
+
     public function voteAnswers()
     {
         return $this->morphedByMany(Answer::class, 'votable')->withPivot('state');

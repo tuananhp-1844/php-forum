@@ -26,4 +26,6 @@ mix.styles('resources/sass/custom.css', 'public/css/all.css');
 
 mix.js('resources/js/search.js', 'public/js/search.js');
 
+mix.js('resources/js/post.js', 'public/js/post.js');
+
 mix.js('resources/js/custom.js', 'public/js/all.js');

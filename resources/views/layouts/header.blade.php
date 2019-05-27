@@ -84,12 +84,13 @@
         <nav class="navigation">
             <ul>
                 <li><a href="{{ route('home')}}">{{ __('home') }}</a></li>
-                <li class="ask_question"><a href="{{ route('questions.create')}}">{{ __('Ask Question') }}</a></li>
+                <li class="ask_question"><a href="{{ route('posts.index')}}">{{ __('Post') }}</a></li>
+                <li class="ask_question"><a href="{{ route('questions.index')}}">{{ __('Question') }}</a></li>
                 <li>
-                    <a>{{ __('Questions') }}</a>
+                    <a>{{ __('Category & Tag') }}</a>
                     <ul>
-                        <li><a href="{{ route('categories.index') }}">{{ __('Questions Category') }}</a></li>
-                        <li><a href="{{ route('tags.index') }}">{{ __('Question Tag') }}</a></li>
+                        <li><a href="{{ route('categories.index') }}">{{ __('Category') }}</a></li>
+                        <li><a href="{{ route('tags.index') }}">{{ __('Tag') }}</a></li>
                     </ul>
                 </li>
                 @if (Auth::check())
