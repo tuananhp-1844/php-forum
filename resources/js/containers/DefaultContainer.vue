@@ -92,7 +92,17 @@
             },
             list() {
                 return this.$route.matched.filter((route) => route.name || route.meta.label)
+            },
+            profile() {
+                return this.$store.getters['Profile/getProfile'];
             }
+        },
+        mounted() {
+            Promise.all([this.$store.dispatch('Profile/getProfile')]).then(res => {
+
+            }).catch(err => {
+
+            })
         }
     }
 </script>
