@@ -11,6 +11,7 @@ use Hash;
 use Laravel\Socialite\Contracts\User as ProviderUser;
 use Storage;
 use Auth;
+use JWTAuth;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
