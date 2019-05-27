@@ -4,19 +4,28 @@ export default {
     props: [],
     data() {
         return {
-            items: [
-                { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-                { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-                { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-                { age: 38, first_name: 'Jami', last_name: 'Carney' }
-            ]
+            page: 0,
+            fields: [
+                { key: 'id', label: '#'},
+                { key: 'full_name', label: 'Full name'},
+                { key: 'email', label: 'Email'},
+                { key: 'provider', label: 'Provider'},
+                { key: 'avatar', label: 'Avatar' },
+                { key: 'active', label: 'Active' }
+            ],
         }
     },
     computed: {
-
+        items() {
+            return this.$store.getters['User/getUser']
+        }
     },
     mounted() {
+        this.$store.dispatch('User/getUser', this.page).then(res => {
 
+        }).catch(res => {
+            
+        })
     },
     methods: {
 

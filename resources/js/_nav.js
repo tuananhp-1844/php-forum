@@ -19,8 +19,13 @@ export default {
             }
         },
         {
-            name: 'Users',
+            name: 'Member',
             url: '/user',
+            icon: 'icon-user'
+        },
+        {
+            name: 'Admin',
+            url: '/admin',
             icon: 'icon-user'
         },
         {

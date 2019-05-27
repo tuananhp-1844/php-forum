@@ -10,4 +10,5 @@ return [
     'notification' => 10,
     'question_search' => 5,
     'post' => 5,
+    'user' => 20,
 ];
