@@ -5,6 +5,8 @@ import DefaultContainer from '@/containers/DefaultContainer'
 
 import Dashboard from '@/views/Dashboard'
 
+import User from '@/views/user'
+
 import Login from '@/views/pages/Login'
 
 import { checkToken } from '@/helper/local-storage'
@@ -27,6 +29,11 @@ const router = new Router({
                     path: 'dashboard',
                     name: 'Dashboard',
                     component: Dashboard
+                },
+                {
+                    path: 'user',
+                    name: 'User',
+                    component: User
                 }
             ]
         },

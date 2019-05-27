@@ -1,9 +1,10 @@
 <template>
     <AppHeaderDropdown right no-caret>
         <template slot="header">
+            <img :src="profile.avatar" class="img-avatar" :alt="profile.email" />
         </template>\
         <template slot="dropdown">
-            <b-dropdown-header tag="div" class="text-center"><strong>{{ $t('Account') }}</strong></b-dropdown-header>
+            <b-dropdown-header tag="div" class="text-center"><strong>{{ profile.fullname }}</strong></b-dropdown-header>
             <b-dropdown-item><i class="fa fa-bell-o" /> {{ $t('Updates') }}
                 <b-badge variant="info">{{ itemsCount }}</b-badge>
             </b-dropdown-item>
@@ -43,6 +44,9 @@
         },
         data: () => {
             return { itemsCount: 42 }
-        }
+        },
+        props: [
+            'profile'
+        ]
     }
 </script>
