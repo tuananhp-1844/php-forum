@@ -7,7 +7,7 @@ import 'core-js/es7/array'
 import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
 import App from './App'
-// import router from './router'
+import router from './router'
 
 // todo
 // cssVars()
@@ -17,7 +17,7 @@ Vue.use(BootstrapVue)
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
-  // router,
+    router,
     template: '<App/>',
     components: {
         App
