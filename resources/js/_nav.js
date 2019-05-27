@@ -11,7 +11,7 @@ export default {
         },
         {
             title: true,
-            name: 'Theme',
+            name: 'User',
             class: '',
             wrapper: {
                 element: '',
@@ -19,14 +19,9 @@ export default {
             }
         },
         {
-            name: 'Colors',
-            url: '/theme/colors',
-            icon: 'icon-drop'
-        },
-        {
-            name: 'Typography',
-            url: '/theme/typography',
-            icon: 'icon-pencil'
+            name: 'Users',
+            url: '/user',
+            icon: 'icon-user'
         },
         {
             title: true,
