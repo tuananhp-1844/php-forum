@@ -87,6 +87,13 @@
                 <li class="ask_question"><a href="{{ route('posts.index')}}">{{ __('Post') }}</a></li>
                 <li class="ask_question"><a href="{{ route('questions.index')}}">{{ __('Question') }}</a></li>
                 <li>
+                    <a><i class="fa fa-pencil"></i> {{ __('Write') }}</a>
+                    <ul>
+                        <li><a href="{{ route('posts.create') }}">{{ __('Post') }}</a></li>
+                        <li><a href="{{ route('questions.create') }}">{{ __('Question') }}</a></li>
+                    </ul>
+                </li>
+                <li>
                     <a>{{ __('Category & Tag') }}</a>
                     <ul>
                         <li><a href="{{ route('categories.index') }}">{{ __('Category') }}</a></li>
