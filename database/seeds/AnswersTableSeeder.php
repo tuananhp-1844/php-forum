@@ -18,7 +18,8 @@ class AnswersTableSeeder extends Seeder
         $questions = App\Models\Question::all()->pluck('id')->all();
         foreach (range(1, 200) as $index) {
             $company = App\Models\Answer::create([
-                'question_id' => $faker->randomElement($questions),
+                'answerable_id' => $faker->randomElement($questions),
+                'answerable_type' => 'App\Models\Question',
                 'user_id' => $faker->randomElement($users),
                 'content' => $faker->realText,
                 'parent_id' => 0,
