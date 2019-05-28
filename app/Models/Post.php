@@ -29,4 +29,9 @@ class Post extends Model
     {
         return $this->morphMany(Answer::class, 'answerable');
     }
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
 }

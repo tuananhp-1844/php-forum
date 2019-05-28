@@ -42,7 +42,7 @@
                 @foreach ($posts as $post)
                 <article class="post clearfix">
                     <div class="post-inner">
-                        <h2 class="post-title"><span class="post-type"><i class="icon-picture"></i></span><a href="{{ route('posts.show', ['id' => $post->id]) }}">{{ $post->title }}</a></h2>
+                        <h2 class="post-title"><span class="post-type"><i class="icon-pencil"></i></span><a href="{{ route('posts.show', ['id' => $post->id]) }}">{{ $post->title }}</a></h2>
                         <div class="post-meta">
                             <span class="meta-author"><i class="icon-user"></i><a href="#">{{ $post->user->fullname }}</a></span>
                             <span class="meta-date"><i class="icon-time"></i>{{ $post->created_at->diffForHumans() }}</span>
@@ -65,6 +65,24 @@
 @section('sidebar')
 <aside class="col-md-3 sidebar">
     @include('layouts.statistic')
+    <div class="widget">
+        <h3 class="widget_title">{{ __('New Questions') }}</h3>
+        <ul class="related-posts">
+            @foreach ($questions as $question)
+                <li class="related-item">
+                    <h3><a href="{{ route('questions.show', ['id' => $question->id]) }}">{{ $question->title }}</a></h3>
+                    <div class="clear"></div>
+                    <span>{{ $question->created_at->diffForHumans() }}</span>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+    <div class="widget widget_tag_cloud">
+        <h3 class="widget_title">{{ __('Hot Tags') }}</h3>
+        @foreach ($hotTag as $tag)
+            <a href="{{ route('tags.questions.index', ['id' => $tag->id]) }}">{{ $tag->name }} ({{ $tag->questions->count() }})</a>
+        @endforeach
+    </div>
 </aside>
 @endsection
 @push('scripts')
