@@ -68,3 +68,5 @@ Route::get('profile/clips', 'Profile\ProfileController@clip')->name('profile.cli
 Route::resource('notifications', 'Notifications\NotificationController');
 
 Route::get('search', 'Search\SearchController@search')->name('search');
+
+Route::resource('posts', 'Posts\PostController');

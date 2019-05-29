@@ -146,4 +146,9 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         return $user->clips();
     }
+
+    public function userPostClips(User $user)
+    {
+        return $user->postClips();
+    }
 }
