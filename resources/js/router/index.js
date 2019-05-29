@@ -5,9 +5,13 @@ import DefaultContainer from '@/containers/DefaultContainer'
 
 import Dashboard from '@/views/Dashboard'
 
+import Login from '@/views/pages/Login'
+
+import { checkToken } from '@/helper/local-storage'
+
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
     mode: 'history',
     linkActiveClass: 'open active',
     scrollBehavior: () => ({ y: 0 }),
@@ -17,6 +21,7 @@ export default new Router({
             redirect: '/dashboard',
             name: 'Home',
             component: DefaultContainer,
+            meta: { requiresAuth: true },
             children: [
                 {
                     path: 'dashboard',
@@ -24,6 +29,28 @@ export default new Router({
                     component: Dashboard
                 }
             ]
+        },
+        {
+            path: '/login',
+            name: 'Login',
+            component: Login,
         }
     ]
 })
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        console.log(checkToken());
+        if (!checkToken()) {
+            next({
+                path: '/login',
+                query: { redirect: to.fullPath }
+            })
+        } else {
+            next()
+        }
+    } else {
+        next()
+    }
+})
+
+export default router;
