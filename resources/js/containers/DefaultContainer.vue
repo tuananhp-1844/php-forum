@@ -21,7 +21,7 @@
                 <b-nav-item class="d-md-down-none">
                     <i class="icon-location-pin"></i>
                 </b-nav-item>
-                <DefaultHeaderDropdownAccnt />
+                <DefaultHeaderDropdownAccnt :profile = 'profile'/>
             </b-navbar-nav>
             <AsideToggler class="d-none d-lg-block" />
             <!--<AsideToggler class="d-lg-none" mobile />-->

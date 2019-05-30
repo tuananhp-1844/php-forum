@@ -39,4 +39,4 @@ new Vue({
     components: {
         App
     }
-})  
+})
