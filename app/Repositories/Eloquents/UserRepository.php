@@ -152,4 +152,9 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         return $user->postClips();
     }
+
+    public function getAllMenber()
+    {
+        return $this->model->where('role_id', config('role.member'))->orderBy('id', 'DESC');
+    }
 }

@@ -17,4 +17,5 @@ interface UserRepositoryInterface
     public function addPoint(User $user, $typePoint);
     public function userClips(User $user);
     public function userPostClips(User $user);
+    public function getAllMenber();
 }
