@@ -66,7 +66,8 @@
         methods: {
             login() {
                 login(this.email, this.password).then(res => {
-                    setToken(res.data.access_token)
+                    console.log(res)
+                    setToken(res.access_token)
                     this.$router.push('/')
                 }).catch(err => {
                     

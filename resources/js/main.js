@@ -11,6 +11,7 @@ import router from './router'
 import VueI18n from 'vue-i18n'
 import vnMessage from '@/langs/vi.json'
 import enMessage from '@/langs/en.json'
+import store from './store/index'
 
 // todo
 // cssVars()
@@ -33,6 +34,7 @@ new Vue({
     el: '#app',
     router,
     i18n,
+    store,
     template: '<App/>',
     components: {
         App
