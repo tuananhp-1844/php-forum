@@ -1,17 +1,28 @@
 <b-row>
     <b-col cols="12" lg="12">
         <b-card no-header>
-            <b-table striped hover :items="items" :fields="fields">
-                <template slot="avatar" slot-scope="data">
-                    <b-img :src="data.item.avatar" alt="" width="40" height="40" rounded="circle"></b-img>
+            <b-table striped hover :items="items" :fields="fields" selectable select-mode="single" @row-selected="selectRow">
+                <template slot="avatar" slot-scope="row">
+                    <b-img :src="row.item.avatar" alt="" width="40" height="40" rounded="circle"></b-img>
                 </template>
                 <template slot="provider" slot-scope="row">
-                    {{ row.item.provider && row.item.provider != '' ? row.item.provider : 'Local' }}
+                    <span v-bind:class="{ ban: !row.item.active }">{{ row.item.provider && row.item.provider != '' ? row.item.provider : 'Local' }}</span>
+                </template>
+                <template slot="email" slot-scope="row">
+                    <span v-bind:class="{ ban: !row.item.active }">{{ row.item.email }}</span>
+                </template>
+                <template slot="full_name" slot-scope="row">
+                    <span v-bind:class="{ ban: !row.item.active }">{{ row.item.full_name }}</span>
+                </template>
+                <template slot="id" slot-scope="row">
+                    <span v-bind:class="{ ban: !row.item.active }">{{ row.item.id }}</span>
                 </template>
                 <template slot="active" slot-scope="row">
-                    
+                    <b-form-checkbox :id="'checkbox '+ row.item.id" v-model="row.item.active" :name="'checkbox '+ row.item.id" @change="active(row.item.id)">
+                    </b-form-checkbox>
                 </template>
             </b-table>
+            <paginate :page-count="last_page" :click-handler="changePage" prev-text="prev" next-text="next" :container-class="'pagination'" class="pull-right"></paginate>
         </b-card>
     </b-col>
 </b-row>

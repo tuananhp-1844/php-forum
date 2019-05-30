@@ -7,3 +7,7 @@ export function getUser (page = 1) {
         }
     })
 }
+
+export function activeUser (user_id) {
+    return HTTP.delete('users/' + user_id)
+}

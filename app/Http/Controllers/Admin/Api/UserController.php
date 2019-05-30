@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Contracts\UserRepositoryInterface as UserInterface;
 use App\Http\Resources\Users\UserResource;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -70,6 +71,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::withTrashed()->where('id', $id)->first();
+        if ($user->trashed()) {
+            $user->restore();
+        } else {
+            $user->delete();
+        }
+
+        return new UserResource($user);
     }
 }
