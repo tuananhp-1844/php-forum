@@ -155,6 +155,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     public function getAllMenber()
     {
-        return $this->model->where('role_id', config('role.member'))->orderBy('id', 'DESC');
+        return $this->model->where('role_id', config('role.member'))->withTrashed()->orderBy('id', 'DESC');
     }
 }

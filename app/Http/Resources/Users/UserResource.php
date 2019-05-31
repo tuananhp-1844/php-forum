@@ -20,6 +20,7 @@ class UserResource extends JsonResource
             'avatar' => env('APP_URL') . config('asset.avatar_path') . $this->avatar,
             'email' => $this->email,
             'provider' => $this->provider,
+            'active' => !$this->trashed(),
         ];
     }
 }
