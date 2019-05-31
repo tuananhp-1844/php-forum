@@ -11,6 +11,7 @@ use Hash;
 use Laravel\Socialite\Contracts\User as ProviderUser;
 use Storage;
 use Auth;
+use JWTAuth;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -150,5 +151,10 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     public function userPostClips(User $user)
     {
         return $user->postClips();
+    }
+
+    public function getAllMenber()
+    {
+        return $this->model->where('role_id', config('role.member'))->orderBy('id', 'DESC');
     }
 }
