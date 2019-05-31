@@ -9,6 +9,8 @@ import User from '@/views/user'
 
 import Tag from '@/views/tag'
 
+import Category from '@/views/category'
+
 import Login from '@/views/pages/Login'
 
 import { checkToken } from '@/helper/local-storage'
@@ -41,6 +43,11 @@ const router = new Router({
                     path: 'tag',
                     name: 'Tag',
                     component: Tag
+                },
+                {
+                    path: 'category',
+                    name: 'Category',
+                    component: Category
                 }
             ]
         },

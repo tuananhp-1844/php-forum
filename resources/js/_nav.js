@@ -41,6 +41,11 @@ export default {
             name: 'Tag',
             url: '/tag',
             icon: 'icon-puzzle',
+        },
+        {
+            name: 'Category',
+            url: '/category',
+            icon: 'icon-list',
         }
     ]
 }

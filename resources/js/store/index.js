@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import Profile from '@/store/module/profile'
 import User from '@/store/module/user'
 import Tag from '@/store/module/tag'
+import Category from '@/store/module/category'
 
 Vue.use(Vuex)
 
@@ -10,6 +11,7 @@ export default new Vuex.Store({
     modules: {
         Profile,
         User,
-        Tag
+        Tag,
+        Category
     }
 })

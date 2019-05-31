@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Category;
+namespace App\Http\Controllers\Admin\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Contracts\CategoryRepositoryInterface;
+use App\Http\Resources\Categories\CategoryResource;
 
 class CategoryController extends Controller
 {
@@ -12,30 +13,21 @@ class CategoryController extends Controller
 
     public function __construct(CategoryRepositoryInterface $categoryRepository)
     {
+        $this->middleware('auth:api');
         $this->categoryRepository = $categoryRepository;
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    
     public function index()
     {
-        $categories = $this->categoryRepository->newest()->with('questions');
+        $categories = $this->categoryRepository->newest();
         $categories = $categories->paginate(config('pagination.category'));
 
-        return view('categories.index', compact('categories'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return CategoryResource::collection($categories);
     }
 
     /**
@@ -56,17 +48,6 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }
