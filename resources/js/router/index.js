@@ -13,6 +13,8 @@ import Category from '@/views/category'
 
 import Question from '@/views/question'
 
+import Post from '@/views/post'
+
 import Login from '@/views/pages/Login'
 
 import { checkToken } from '@/helper/local-storage'
@@ -55,6 +57,11 @@ const router = new Router({
                     path: 'question',
                     name: 'Question',
                     component: Question
+                },
+                {
+                    path: 'post',
+                    name: 'Post',
+                    component: Post
                 }
             ]
         },

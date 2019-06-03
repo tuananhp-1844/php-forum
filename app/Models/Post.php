@@ -6,6 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+
+    public function getStatusAttribute($status)
+    {
+        switch ($status) {
+            case config('post.editor_choice'):
+                return 'Editor choice';
+                break;
+            case config('post.trending'):
+                return 'Trending';
+                break;
+            default:
+                return 'Normal';
+                break;
+        }
+    }
+
     protected $fillable = [
         'title',
         'user_id',
@@ -17,7 +33,7 @@ class Post extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withTrashed();
     }
 
     public function category()

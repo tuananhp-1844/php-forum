@@ -24,11 +24,6 @@ export default {
             icon: 'icon-user'
         },
         {
-            name: 'Admin',
-            url: '/admin',
-            icon: 'icon-user'
-        },
-        {
             title: true,
             name: 'Content',
             class: '',

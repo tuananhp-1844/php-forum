@@ -5,6 +5,7 @@ import User from '@/store/module/user'
 import Tag from '@/store/module/tag'
 import Category from '@/store/module/category'
 import Question from '@/store/module/question'
+import Post from '@/store/module/post'
 
 Vue.use(Vuex)
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
         User,
         Tag,
         Category,
-        Question
+        Question,
+        Post
     }
 })
