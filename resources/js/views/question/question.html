@@ -1,0 +1,15 @@
+<b-row>
+  <b-col cols="12" lg="12">
+      <b-card no-header>
+          <b-table striped hover :items="items" :fields="fields" selectable select-mode="single">
+            <template slot="status" slot-scope="row">
+                <i class="fa fa-check"></i>
+            </template>  
+            <template slot="user" slot-scope="row">
+                <b-img :src="row.item.user.avatar" alt="" width="40" height="40" rounded="circle"></b-img> {{row.item.user.full_name}}
+              </template>
+          </b-table>
+          <paginate :page-count="last_page" :click-handler="changePage" prev-text="prev" next-text="next" :container-class="'pagination'" class="pull-right"></paginate>
+      </b-card>
+  </b-col>
+</b-row>

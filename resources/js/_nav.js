@@ -38,6 +38,16 @@ export default {
             }
         },
         {
+            name: 'Question',
+            url: '/question',
+            icon: 'icon-question',
+        },
+        {
+            name: 'Post',
+            url: '/post',
+            icon: 'icon-pencil',
+        },
+        {
             name: 'Tag',
             url: '/tag',
             icon: 'icon-puzzle',

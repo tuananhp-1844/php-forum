@@ -18,3 +18,4 @@ Route::get('profile', 'Admin\Api\AuthController@me');
 Route::resource('users', 'Admin\Api\UserController')->except(['edit', 'create']);
 Route::resource('tags', 'Admin\Api\TagController')->except(['edit', 'create']);
 Route::resource('categories', 'Admin\Api\CategoryController')->except(['edit', 'create']);
+Route::resource('questions', 'Admin\Api\QuestionController')->except(['edit', 'create']);
