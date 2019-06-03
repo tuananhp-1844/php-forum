@@ -7,3 +7,9 @@ export function getQuestion(page = 1) {
         }
     })
 }
+
+export function destroyQuestion (question_id, type) {
+    return HTTP.delete('questions/' + question_id, {
+        params: { type }
+    })
+}

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Questions\QuestionResource;
 use App\Repositories\Contracts\QuestionRepositoryInterface;
+use App\Models\Question;
 
 class QuestionController extends Controller
 {
@@ -24,7 +25,7 @@ class QuestionController extends Controller
     public function index()
     {
         $questions = $this->questionRepository->newest();
-        $questions = $questions->with(['category', 'user', 'tags']);
+        $questions = $questions->with(['category', 'user', 'tags', 'reports']);
         $questions = $questions->paginate(config('pagination.question'));
 
         return QuestionResource::collection($questions);
@@ -70,8 +71,12 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Question $question, Request $request)
     {
-        //
+        if($request->type == 'ban') {
+            $question->user->delete();
+        }
+        $question->delete();
+        return new QuestionResource($question);
     }
 }

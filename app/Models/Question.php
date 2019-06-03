@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Markdown;
 use App\Http\Traits\FullTextSearch;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Question extends Model
 {
-    use FullTextSearch;
+    use FullTextSearch, SoftDeletes;
 
     protected $searchable = [
         'title',
@@ -26,7 +27,7 @@ class Question extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withTrashed();
     }
 
     public function category()
@@ -57,7 +58,7 @@ class Question extends Model
 
     public function reports()
     {
-        return $this->belongsToMany('App\Models\Report', 'report_users', 'question_id', 'report_id');
+        return $this->belongsToMany('App\Models\Report', 'report_users', 'question_id', 'report_id')->withPivot('comment');
     }
 
     public function voteCount()

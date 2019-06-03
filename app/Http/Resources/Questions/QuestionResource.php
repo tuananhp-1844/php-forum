@@ -25,6 +25,8 @@ class QuestionResource extends JsonResource
             'category' => new CategoryResource($this->whenLoaded('category')),
             'created_at' => $this->created_at->diffForHumans(),
             'view' => $this->view,
+            'content' => $this->content,
+            'reports' => $this->whenLoaded('reports'),
         ];
     }
 }

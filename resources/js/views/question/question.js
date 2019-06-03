@@ -11,7 +11,13 @@ export default {
 				{ key: 'user', label: 'Author' },
 				{ key: 'created_at', label: 'Created at' },
 				{ key: 'status', label: 'status' }
-			]
+			],
+			questionSelect: {},
+			reportFields: [
+				{ key: 'title', label: 'Title' },
+				{ key: 'comment', label: 'Comment' }
+			],
+			reportItems: []
 		}
 	},
 	computed: {
@@ -40,6 +46,18 @@ export default {
             }).catch(res => {
     
             })
-        }
+		},
+		rowSelected(item) {
+			this.questionSelect = item[0]
+			this.reportItems = item[0].reports
+			this.$bvModal.show('detail')
+		},
+		destroy(type) {
+			this.$store.dispatch('Question/destroyQuestion', {question_id: this.questionSelect.id, type}).then(res => {
+                this.$bvModal.hide('detail')
+            }).catch(res => {
+    
+            })
+		}
 	}
 }

@@ -30,13 +30,17 @@
             </b-dropdown-item>
             <b-dropdown-divider />
             <b-dropdown-item><i class="fa fa-shield" /> {{ $t('Lock Account') }}</b-dropdown-item>
-            <b-dropdown-item><i class="fa fa-lock" /> {{ $t('Logout') }}</b-dropdown-item>
+            <b-dropdown-item @click="logout()"><i class="fa fa-lock" /> {{ $t('Logout') }}</b-dropdown-item>
         </template>
     </AppHeaderDropdown>
 </template>
 
 <script>
+    import { logout } from '@/service/auth';
+    import { clearLocalStorage } from '@/helper/local-storage'
     import { HeaderDropdown as AppHeaderDropdown } from '@coreui/vue'
+    import router from '@/router'
+
     export default {
         name: 'DefaultHeaderDropdownAccnt',
         components: {
@@ -47,6 +51,16 @@
         },
         props: [
             'profile'
-        ]
+        ],
+        methods: {
+            logout() {
+                logout().then(res => {
+                    clearLocalStorage()
+                    router.push('/login')
+                }).catch(err => {
+
+                })
+            }
+        }
     }
 </script>

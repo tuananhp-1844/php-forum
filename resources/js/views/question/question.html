@@ -1,15 +1,39 @@
 <b-row>
-  <b-col cols="12" lg="12">
-      <b-card no-header>
-          <b-table striped hover :items="items" :fields="fields" selectable select-mode="single">
-            <template slot="status" slot-scope="row">
-                <i class="fa fa-check"></i>
-            </template>  
-            <template slot="user" slot-scope="row">
-                <b-img :src="row.item.user.avatar" alt="" width="40" height="40" rounded="circle"></b-img> {{row.item.user.full_name}}
-              </template>
-          </b-table>
-          <paginate :page-count="last_page" :click-handler="changePage" prev-text="prev" next-text="next" :container-class="'pagination'" class="pull-right"></paginate>
-      </b-card>
-  </b-col>
+    <b-col cols="12" lg="12">
+        <b-card no-header>
+            <b-table striped hover :items="items" :fields="fields" selectable select-mode="single"
+                @row-selected="rowSelected">
+                <template slot="status" slot-scope="row">
+                    <i class="fa fa-flag report" v-if="row.item.reports.length"></i>
+                    <i class="fa fa-check check" v-else></i>
+                </template>
+                <template slot="user" slot-scope="row">
+                    <b-img :src="row.item.user.avatar" alt="" width="40" height="40" rounded="circle"></b-img>
+                    {{row.item.user.full_name}}
+                </template>
+            </b-table>
+            <paginate :page-count="last_page" :click-handler="changePage" prev-text="prev" next-text="next"
+                :container-class="'pagination'" class="pull-right"></paginate>
+        </b-card>
+    </b-col>
+    <b-modal id="detail" :title="questionSelect.title" size="lg" hide-footer=true>
+        <p class="my-4">{{questionSelect.content}}</p>
+        <hr>
+        <div v-if="questionSelect.reports && questionSelect.reports.length">
+            <p class="report">Report</p>
+            <b-table striped hover :items="reportItems" :fields="reportFields" selectable select-mode="single">
+                <template slot="comment" slot-scope="row">
+                    {{row.item.pivot.comment}}
+                </template>
+            </b-table>
+            <b-row class="mb-3">
+                <b-col cols="12" lg="12">
+                    <b-button variant="danger" class="pull-right" @click="destroy('destroy')"><i class="fa fa-ban"></i>
+                        {{ $t('Delete and ban Author') }}</b-button>
+                    <b-button variant="danger" class="pull-right mr-2" @click="destroy('ban')"><i class="fa fa-trash"></i> {{ $t('Delete') }}
+                    </b-button>
+                </b-col>
+            </b-row>
+        </div>
+    </b-modal>
 </b-row>
