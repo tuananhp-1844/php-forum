@@ -1233,6 +1233,14 @@ jQuery(document).ready(function ($) {
             $('#delete-form').submit();
         }
     });
+
+    $('#post_id').click(function(event) {
+        event.preventDefault();
+        var $result = confirm("Want to delete?");
+        if ($result) {
+            $('#delete-form').submit();
+        }
+    });
 });
 
 function readURL(input) {
