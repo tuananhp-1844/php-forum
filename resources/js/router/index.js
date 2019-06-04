@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 import DefaultContainer from '@/containers/DefaultContainer'
 
-import Dashboard from '@/views/Dashboard'
+import Dashboard from '@/views/dashboard'
 
 import User from '@/views/user'
 
@@ -17,7 +17,7 @@ import Post from '@/views/post'
 
 import Login from '@/views/pages/Login'
 
-import { checkToken } from '@/helper/local-storage'
+import { checkToken, checkExpires } from '@/helper/local-storage'
 
 Vue.use(Router)
 
@@ -74,8 +74,7 @@ const router = new Router({
 })
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        console.log(checkToken());
-        if (!checkToken()) {
+        if (!checkToken() || !checkExpires()) {
             next({
                 path: '/login',
                 query: { redirect: to.fullPath }

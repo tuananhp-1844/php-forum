@@ -53,7 +53,7 @@
 
 <script>
     import { login } from '@/service/auth';
-    import { setToken } from '@/helper/local-storage'
+    import { setToken, setExpires } from '@/helper/local-storage'
 
     export default {
         name: 'Login',
@@ -67,6 +67,7 @@
             login() {
                 login(this.email, this.password).then(res => {
                     setToken(res.access_token)
+                    setExpires(res.expires_in)
                     this.$router.push('/')
                 }).catch(err => {
                     

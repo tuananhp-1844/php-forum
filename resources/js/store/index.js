@@ -6,6 +6,7 @@ import Tag from '@/store/module/tag'
 import Category from '@/store/module/category'
 import Question from '@/store/module/question'
 import Post from '@/store/module/post'
+import Dashboard from '@/store/module/dashboard'
 
 Vue.use(Vuex)
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
         Tag,
         Category,
         Question,
-        Post
+        Post,
+        Dashboard
     }
 })
