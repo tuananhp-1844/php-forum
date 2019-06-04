@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Api;
+namespace App\Http\Controllers\Posts;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Posts\PostResource;
-use App\Repositories\Contracts\PostRepositoryInterface;
 use App\Models\Post;
+use App\Http\Requests\Answers\CreateAnswerRequest;
+use App\Repositories\Contracts\AnswerRepositoryInterface as AnswerInterface;
 
-class PostController extends Controller
+class CommentController extends Controller
 {
-    private $postRespository;
+    private $answerRepository;
 
-    public function __construct(PostRepositoryInterface $postRespository)
+    public function __construct(AnswerInterface $answerRepository)
     {
-        $this->middleware('auth:api');
-        $this->postRespository = $postRespository;
+        $this->middleware('auth');
+        $this->answerRepository = $answerRepository;
     }
 
     /**
@@ -25,10 +25,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = $this->postRespository->newest()->with(['category', 'user', 'tags']);
-        $posts = $posts->paginate(config('pagination.post_admin'));
-
-        return PostResource::collection($posts);
+        //
     }
 
     /**
@@ -37,9 +34,11 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateAnswerRequest $request, Post $post)
     {
-        //
+        $this->answerRepository->store($request, $post);
+
+        return redirect()->route('posts.show', ['post' => $post->id]);
     }
 
     /**
@@ -74,15 +73,5 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function changeStatus(Post $post, Request $request)
-    {
-        $post->update([
-            'status' => $request->status,
-        ]);
-        $post->load(['category', 'user', 'tags']);
-
-        return new PostResource($post);
     }
 }

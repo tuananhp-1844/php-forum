@@ -9,4 +9,5 @@ interface PostRepositoryInterface
     public function editorChoice();
     public function trending();
     public function store(Request $request);
+    public function updatePost(Request $request, Post $post);
 }

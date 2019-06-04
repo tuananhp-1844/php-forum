@@ -9,7 +9,7 @@ return [
     'user_hight_point' => 5,
     'notification' => 10,
     'question_search' => 5,
-    'post' => 5,
+    'post' => 10,
     'post_admin' => 20,
     'user' => 20,
 ];

@@ -49,10 +49,6 @@
                             <span class="meta-categories"><i class="icon-suitcase"></i><a href="#">{{ $post->category->name }}</a></span>
                             <span class="meta-comment"><i class="icon-comments-alt"></i><a href="#">{{ $post->comments->count() }} {{ __('comments') }}</a></span>
                         </div>
-                        <div class="post-content">
-                            <p>@markdown($post->content)</p>
-                        </div><!-- End post-content -->
-                        <a href="{{ route('posts.show', ['id' => $post->id]) }}" class="post-read-more button color small">{{ __('Continue reading') }}</a>
                     </div><!-- End post-inner -->
                 </article><!-- End article.post -->
                 @endforeach

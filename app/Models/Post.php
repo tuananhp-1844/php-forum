@@ -46,6 +46,11 @@ class Post extends Model
         return $this->morphMany(Answer::class, 'answerable');
     }
 
+    public function clips()
+    {
+        return $this->morphToMany(User::class, 'clippable');
+    }
+
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable');

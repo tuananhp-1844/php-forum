@@ -55,4 +55,31 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
 
         return $post;
     }
+     public function updatePost(Request $request, Post $post)
+     {
+        $post = $post->update([
+            'category_id' => $request->category,
+            'title' => $request->title,
+            'content' => $request->content
+        ]);
+
+        if ($request->tags && $request->tags !== '') {
+            $tagRequest = explode(',', $request->tags);
+            $tags = Tag::all();
+            $tagId = [];
+            foreach ($tagRequest as $key => $value) {
+                if ($tags->where('name', $value)->count()) {
+                    $tagId[] = $tags->where('name', $value)->first()->id;
+                } else {
+                    $tag = Tag::create([
+                        'name' => $value,
+                    ]);
+                    $tagId[] = $tag->id;
+                }
+            }
+            $post->tags()->sync($tagId);
+        }
+
+        return $post;
+     }
 }

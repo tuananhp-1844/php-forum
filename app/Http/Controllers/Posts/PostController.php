@@ -10,6 +10,8 @@ use App\Models\Tag;
 use App\Repositories\Contracts\CategoryRepositoryInterface as CategoryInterface;
 use App\Repositories\Contracts\QuestionRepositoryInterface as QuestionInterface;
 use App\Http\Requests\Posts\CreatePostRequest;
+use App\Http\Requests\Posts\UpdatePostRequest;
+use Auth;
 
 class PostController extends Controller
 {
@@ -26,6 +28,8 @@ class PostController extends Controller
         $this->categoryRepository = $categoryRepository;
         $this->questionRepository = $questionRepository;
         $this->middleware('auth')->except('index', 'show');
+        $this->middleware('can:update,post')->only(['update', 'edit']);
+        $this->middleware('can:delete,post')->only('destroy');
     }
     /**
      * Display a listing of the resource.
@@ -43,9 +47,9 @@ class PostController extends Controller
                 $posts = $posts->trending();
                 break;
             case 'my-clips':
-                if (Auth::check()) {
-                    $posts = $this->userRepository->userPostClips(Auth::user());
-                }
+                // if (Auth::check()) {
+                //     $posts = $this->userRepository->userPostClips(Auth::user());
+                // }
                 break;
             default:
                 $posts = $posts->newest();
@@ -94,8 +98,11 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $post->with(['category', 'user', 'comments']);
+        $comments = $post->comments()->orderBy('id', 'DESC')->where('parent_id', 0)->where('is_best', 0);
+        $comments = $comments->with('user', 'childs', 'votes', 'answerable');
+        $comments = $comments->paginate(config('pagination.comment'));
 
-        return view('posts.show', compact('post'));
+        return view('posts.show', compact('post', 'comments'));
     }
 
     /**
@@ -104,9 +111,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        $categories = $this->categoryRepository->all();
+
+        return view('posts.edit', compact('categories', 'post'));
     }
 
     /**
@@ -116,9 +125,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $this->postRepository->updatePost($request, $post);
+
+        return redirect()->route('posts.show', ['post' => $post->id]);
     }
 
     /**

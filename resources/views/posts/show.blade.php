@@ -70,26 +70,6 @@
                     <a target="_blank" href="#">Twitter</a>
                 </li>
                 <li>
-                    <a href="#" target="_blank">
-                        <span class="icon_i">
-                            <span class="icon_square" icon_size="20" span_bg="#ca2c24" span_hover="#666">
-                                <i i_color="#FFF" class="social_icon-gplus"></i>
-                            </span>
-                        </span>
-                    </a>
-                    <a href="#" target="_blank">Google plus</a>
-                </li>
-                <li>
-                    <a href="#" target="_blank">
-                        <span class="icon_i">
-                            <span class="icon_square" icon_size="20" span_bg="#e64281" span_hover="#666">
-                                <i i_color="#FFF" class="social_icon-dribbble"></i>
-                            </span>
-                        </span>
-                    </a>
-                    <a href="#" target="_blank">Dribbble</a>
-                </li>
-                <li>
                     <a target="_blank" href="#">
                         <span class="icon_i">
                             <span class="icon_square" icon_size="20" span_bg="#c7151a" span_hover="#666">
@@ -104,7 +84,6 @@
             <span class="share-inside-l-arrow"></span>
         </div><!-- End share-inside-warp -->
         <div class="share-inside"><i class="icon-share-alt"></i>Share</div>
-
         @can('update', $post)
             &nbsp; &nbsp;<a href="{{ route('posts.edit', ['post' => $post->id]) }}"><i class="fa fa-edit"></i> {{ __('Edit') }}</a>&nbsp; &nbsp;
         @endcan
@@ -115,9 +94,134 @@
                 {{ csrf_field() }}
             </form>
         @endcan
-
         <div class="clearfix"></div>
     </div><!-- End share-tags -->
+    <div id="commentlist" class="page-content">
+        <div class="boxedtitle page-title">
+            <h2>{{ __('Comments') }}</h2>
+        </div>
+        <ol class="commentlist clearfix">
+            @foreach ($comments as $comment)
+            <li class="comment">
+                <div class="comment-body comment-body-answered clearfix">
+                    <div class="avatar">
+                        <a href="{{ route('users.show', ['id' => $comment->user->id]) }}">
+                            <img alt="{{ $comment->user->fullname }}" src="{{ asset(config('asset.avatar_path') . $comment->user->avatar) }}">
+                        </a>
+                    </div>
+                    <div class="comment-text">
+                        <div class="author clearfix">
+                            <div class="comment-author"><a href="{{ route('users.show', ['id' => $comment->user->id]) }}">{{ $comment->user->fullname }}</a></div>
+                            <div class="comment-vote">
+                            @if (Auth::check())
+                                <ul class="question-vote">
+                                <li><a href="#" class="like-comment question-vote-up {{ Auth::user()->voteAnswers()->wherePivot('state', 1)->get()->where('id', $comment->id)->count() ? 'active-like-comment' : '' }}" title="Like" data-comment="{{ $comment->id }}"></a></li>
+                                <li><a href="#" class="dislike-comment question-vote-down {{ Auth::user()->voteAnswers()->wherePivot('state', -1)->get()->where('id', $comment->id)->count() ? 'active-like-comment' : '' }}" title="Dislike" data-comment="{{ $comment->id }}"></a></li>
+                                </ul>
+                            @else
+                                <ul class="question-vote">
+                                    <li><a href="{{ route('login') }}" class="question-vote-up" title="Like"></a></li>
+                                    <li><a href="{{ route('login') }}" class="question-vote-down" title="Dislike"></a></li>
+                                </ul>
+                            @endif
+                                
+                            </div>
+                            <span class="question-vote-result count-vote-comment"> {{ $comment->voteCount() }} </span>
+                            <div class="comment-meta">
+                                <div class="date"><i class="icon-time"></i>{{ $comment->created_at->diffForHumans() }}
+                                </div>
+                            </div>
+                            @if (Auth::check())
+                            <a class="comment-reply" href="#"><i class="icon-reply"></i>{{ __('Reply') }}</a>
+                            @else
+                            <a class="comment-reply" href="{{ route('login') }}"><i class="icon-reply"></i>{{ __('Reply') }}</a>
+                            @endif
+                        </div>
+                        <div class="text">
+                            @markdown($comment->content)
+                        </div>
+                        @can('setBestAnswer', $comment)
+                        <div class="question-answered"><a href="{{ route('answers.setbest.index', ['answer' => $comment->id]) }}"><i class="icon-ok"></i>{{ __('Set best answer') }}</a></div>
+                        @endcan
+                    </div>
+                </div>
+                
+                <ul class="children">
+                @if ($comment->childs->count())
+                    <li class="comment">
+                        <div class="comment-body clearfix">
+                            <div class="avatar"><img alt="" src="{{ asset(config('asset.avatar_path') . $comment->user->avatar) }}"></div>
+                            <div class="comment-text">
+                                <div class="author clearfix">
+                                    <div class="comment-author"><a href="#">{{ __('vbegy') }}</a></div>
+                                    <div class="comment-vote">
+                                        <ul class="question-vote">
+                                            @if (Auth::check())
+                                            <li><a href="#" class="question-vote-up" title="Like"></a></li>
+                                            @else
+                                            <li><a href="{{ route('login') }}" class="question-vote-up" title="Like"></a></li>
+                                            @endif
+                                            @if (Auth::check())
+                                            <li><a href="#" class="question-vote-down" title="Dislike"></a></li>
+                                            @else
+                                            <li><a href="{{ route('login') }}" class="question-vote-down" title="Dislike"></a></li>
+                                            @endif
+                                        </ul>
+                                    </div>
+                                    <span class="question-vote-result">+1</span>
+                                    <div class="comment-meta">
+                                        <div class="date"><i class="icon-time"></i>{{ __('January 15 , 2014 at 10:00 pm') }}
+                                        </div>
+                                    </div>
+                                    <a class="comment-reply" href="#"><i class="icon-reply"></i>{{ __('Reply') }}</a>
+                                </div>
+                                <div class="text">
+                                    <p>{{ __('Lorem') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                @endif
+                {{-- <textarea aria-required="true" cols="58" rows="3" name="content" class="reply">{{ old('content') }}</textarea> --}}
+                </ul><!-- End children -->
+            </li>
+            @endforeach
+        </ol><!-- End commentlist -->
+        {{ $comments->render('paginations.paginate') }}
+    </div><!-- End page-content -->
+    
+    @if (Auth::check())
+    <div id="respond" class="comment-respond page-content clearfix">
+        <div class="boxedtitle page-title">
+            <h2>{{ __('Leave a reply') }}</h2>
+        </div>
+        <form action="{{ route('posts.comments.store', ['post' => $post->id]) }}" method="post" id="commentform" class="comment-form">
+            @csrf
+            <input type="hidden" name="parent_id" value="0">
+            <div id="respond-textarea">
+                <p>
+                    <label class="required" for="comment">{{ __('Comment') }}<span>*</span>
+                    @error('content')
+                    <span class="error form-description">{{ $message }}</span>
+                    @enderror
+                    </label>
+                    <textarea id="question-details" name="content" aria-required="true" cols="58" rows="8" id = ""></textarea>
+                </p>
+            </div>
+            <p class="form-submit">
+                <input name="submit" type="submit" id="submit" value="Post your answer" class="button small color">
+            </p>
+        </form>
+    </div>
+    @else
+    <div id="respond" class="comment-respond page-content clearfix">
+        <p class="form-submit">
+            <form action="{{ route('login') }}">
+                <input name="submit" type="submit" id="submit" value="Login to answer" class="button small color">
+            </form>
+        </p>
+    </div>
+    @endif
 </div>
 @endsection
 @section('sidebar')
