@@ -7,6 +7,7 @@ import Category from '@/store/module/category'
 import Question from '@/store/module/question'
 import Post from '@/store/module/post'
 import Dashboard from '@/store/module/dashboard'
+import Role from '@/store/module/role'
 
 Vue.use(Vuex)
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
         Category,
         Question,
         Post,
-        Dashboard
+        Dashboard,
+        Role
     }
 })

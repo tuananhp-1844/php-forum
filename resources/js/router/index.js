@@ -15,6 +15,8 @@ import Question from '@/views/question'
 
 import Post from '@/views/post'
 
+import Role from '@/views/role'
+
 import Login from '@/views/pages/Login'
 
 import { checkToken, checkExpires } from '@/helper/local-storage'
@@ -62,6 +64,11 @@ const router = new Router({
                     path: 'post',
                     name: 'Post',
                     component: Post
+                },
+                {
+                    path: 'role',
+                    name: 'Role',
+                    component: Role
                 }
             ]
         },

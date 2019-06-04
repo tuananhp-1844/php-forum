@@ -51,6 +51,25 @@ export default {
             name: 'Category',
             url: '/category',
             icon: 'icon-list',
-        }
+        },
+        {
+            title: true,
+            name: 'Role and permission',
+            class: '',
+            wrapper: {
+                element: '',
+                attributes: {}
+            }
+        },
+        {
+            name: 'Role',
+            url: '/role',
+            icon: 'icon-people',
+        },
+        {
+            name: 'Permision',
+            url: '/permission',
+            icon: 'icon-lock',
+        },
     ]
 }

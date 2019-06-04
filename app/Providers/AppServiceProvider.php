@@ -23,9 +23,10 @@ class AppServiceProvider extends ServiceProvider
             'Report',
             'Answer',
             'Post',
+            'Role',
         ];
         foreach ($models as $key => $model) {
-            $this->app->bind(
+            $this->app->singleton(
                 "App\\Repositories\\Contracts\\{$model}RepositoryInterface",
                 "App\\Repositories\\Eloquents\\{$model}Repository"
             );
