@@ -44,7 +44,7 @@
                     </p>
                 </div>
                 <p class="form-submit login-submit">
-                    <input type="submit" value="{{ __('login') }}" class="button color small login-submit submit">
+                    <input type="submit" value="{{ __('login') }}" class="button color small login-submit submit" name="login">
                 </p>
                 <div class="rememberme">
                     <label><input type="checkbox" checked="checked" name="remember_me"> {{ __('Remember Me') }}</label>
