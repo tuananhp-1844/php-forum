@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Roles\RoleResource;
 use App\Models\Role;
 use App\Repositories\Contracts\RoleRepositoryInterface;
+use App\Http\Requests\Roles\CreateRequest;
+use App\Http\Requests\Roles\UpdateRequest;
 
 class RoleController extends Controller
 {
@@ -37,9 +39,11 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        //
+        $role = $this->roleRepository->store($request);
+
+        return new RoleResource($role);
     }
 
     /**
@@ -48,9 +52,9 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Role $role)
     {
-        //
+        return new RoleResource($role);
     }
 
     /**
@@ -60,9 +64,11 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, Role $role)
     {
-        //
+        $this->roleRepository->updateRole($request, $role);
+
+        return new RoleResource($role);
     }
 
     /**
@@ -71,8 +77,10 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Role $role)
     {
-        //
+        $role->delete();
+
+        return new RoleResource($role);
     }
 }
