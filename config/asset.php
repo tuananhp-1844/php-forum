@@ -2,7 +2,7 @@
 
 return [
     'avatar' => 'avatar.jpg',
-    'avatar_path' => 'storage/avatar/',
+    'avatar_path' => '/storage/avatar/',
     'avatar_folder' => 'avatar/',
     'question_path' => 'storage/question/',
     'question_folder' => 'question/',

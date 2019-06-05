@@ -61,7 +61,7 @@
                     </p>
                 </div>
                 <p class="form-submit">
-                    <input type="submit" value="Signup" class="button color small submit">
+                    <input type="submit" value="Signup" class="button color small submit" name="register">
                 </p>
             </form>
         </div>
