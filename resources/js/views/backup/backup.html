@@ -3,14 +3,13 @@
         <b-card no-header>
             <b-row class="mb-3">
                 <b-col cols="12" lg="12">
-                    <b-button variant="primary" class="pull-right"><i class="fa fa-pencil"></i>
+                    <b-button variant="primary" class="pull-right" @click="create"><i class="fa fa-pencil"></i>
                         {{ $t('Add new backup') }}</b-button>
                 </b-col>
             </b-row>
             <b-table striped hover :items="items" :fields="fields" selectable select-mode="single">
                 <template slot="action" slot-scope="row">
-                    <i class="fa fa-download"></i>
-                    <i class="fa fa-times"></i>
+                    <span @click = "download(row.item)"><i class="fa fa-download"></i></span>
                 </template>
             </b-table>
             <paginate :page-count="last_page" :click-handler="changePage" prev-text="prev" next-text="next"

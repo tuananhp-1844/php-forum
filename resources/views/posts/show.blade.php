@@ -226,6 +226,11 @@
 @endsection
 @section('sidebar')
 <aside class="col-md-3 sidebar">
+    <div class="widget">
+        <h3 class="widget_title">{{ __('Table Content') }}</h3>
+        <ul class="table_content">
+        </ul>          
+    </div>
     @include('layouts.statistic')
     <div class="widget widget_stats">
         <h3 class="widget_title">{{ __('About author') }}</h3>
@@ -257,3 +262,6 @@
     </div>
 </aside>
 @endsection
+@push('scripts')
+<script src="{{ mix('js/post.js') }}"></script>
+@endpush

@@ -1,3 +1,6 @@
+import { getToken } from '@/helper/local-storage'
+import swal from 'sweetalert'
+
 export default {
     name: 'backup',
     components: {},
@@ -38,6 +41,32 @@ export default {
                 window.scrollTo(0,0)
             }).catch(res => {
     
+            })
+        },
+        download(backup) {
+            location.href = process.env.MIX_APP_URL + 'backup/' + backup.id + '?token=' + getToken()
+        },
+        create() {
+            swal({
+                text: 'Do you comfirm create backup database?',
+                button: {
+                  text: "Confirm!",
+                  closeModal: false,
+                },
+            }).then((value) => {
+                if(value)
+                this.$store.dispatch('Backup/createBackup').then(res => {
+                    swal.stopLoading();
+                    swal.close();
+                    this.$bvToast.toast(`Tạo thành công`, {
+                        title: `Thông báo`,
+                        toaster: 'b-toaster-top-right',
+                        solid: true,
+                        variant: 'success',
+                    })
+                }).catch(res => {
+                    swal("Oh noes!", "The AJAX request failed!", "error");
+                })
             })
         }
     }

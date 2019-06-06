@@ -7,3 +7,9 @@ export function getBackup(page = 1) {
         }
     })
 }
+export function showBackup(backup) {
+    return HTTP.get('backup/' + backup.id)
+}
+export function createBackup () {
+    return HTTP.post('backup')
+}

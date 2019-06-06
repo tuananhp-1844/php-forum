@@ -707,11 +707,11 @@ jQuery(document).ready(function ($) {
     });
 
     jQuery("#publish-question").click(function (event) {
-        if(jQuery("#question_poll").prop("checked") == false) {
+        if (jQuery("#question_poll").prop("checked") == false) {
             return true;
         }
         jQuery(".poll-li input").each(function () {
-            if($(this).val() == '') {
+            if ($(this).val() == '') {
                 jQuery('.poll-error').html('Poll is required');
                 event.preventDefault();
                 window.scrollTo(0, 200);
@@ -777,7 +777,7 @@ jQuery(document).ready(function ($) {
     /* report */
     jQuery('article').on('click', '#report', function () {
         var question = $(this).data('question');
-        $.get("/questions/" + question + "/reports", function(data, status){
+        $.get("/questions/" + question + "/reports", function (data, status) {
             jQuery("#list-report").html('');
             jQuery("#list-report").append(data);
             jQuery(".panel-pop").animate({ "top": "-100%" }, 10).hide();
@@ -788,15 +788,15 @@ jQuery(document).ready(function ($) {
         });
     })
 
-    jQuery('#submit_report').click(function(event) {
+    jQuery('#submit_report').click(function (event) {
         var question = $('#question').data('question');
         var radioValue = $("input[name='report-radio']:checked").val();
-        if(radioValue){
+        if (radioValue) {
             $(this).attr('disabled', true);
             $.post("/questions/" + question + "/reports", {
                 report: radioValue,
                 comment: $("textarea[name='comment']").val() ? $("textarea[name='comment']").val() : "No comment",
-            }, function( data ) {
+            }, function (data) {
                 jQuery("#report-modal").hide();
                 $.notify("Content successfully reported!", "success");
                 $(this).removeAttr('disabled');
@@ -810,10 +810,10 @@ jQuery(document).ready(function ($) {
 
     var oldRadioValue = $("input[name='poll-radio']:checked");
     // poll question
-    $('input[type=radio][name=poll-radio]').change(function() {
+    $('input[type=radio][name=poll-radio]').change(function () {
         var radio = $(this);
         var poll = radio.val();
-        $.post("/polls/" + poll + "/users", function( data ) {
+        $.post("/polls/" + poll + "/users", function (data) {
             if (oldRadioValue) {
                 var old_poll_count = oldRadioValue.parent().find('.poll-count');
                 old_poll_count.html(parseInt(old_poll_count.html()) - 1);
@@ -827,15 +827,15 @@ jQuery(document).ready(function ($) {
 
     // Vote question
 
-    jQuery('#like').click(function(event) {
+    jQuery('#like').click(function (event) {
         event.preventDefault()
         var question = $(this).data('question');
-        $.post("/questions/" + question + "/votes", function(data, status) {
+        $.post("/questions/" + question + "/votes", function (data, status) {
             if (data == 1) {
                 jQuery('#count-vote').html(parseInt(jQuery('#count-vote').html()) + 1);
                 jQuery('#like').addClass('active-like');
                 // $.notify("successfully liked!", "success");
-            } else if(data == -1) {
+            } else if (data == -1) {
                 jQuery('#count-vote').html(parseInt(jQuery('#count-vote').html()) + 1);
                 jQuery('#dislike').removeClass('active-dislike');
                 jQuery('#like').removeClass('active-like');
@@ -848,18 +848,18 @@ jQuery(document).ready(function ($) {
         })
     })
 
-    jQuery('#dislike').click(function(event) {
+    jQuery('#dislike').click(function (event) {
         event.preventDefault()
         var question = $(this).data('question');
         $.ajax({
             url: "/questions/" + question + "/votes/1",
             type: 'DELETE',
-            success: function(data, status) {
+            success: function (data, status) {
                 if (data == -1) {
                     jQuery('#count-vote').html(parseInt(jQuery('#count-vote').html()) - 1);
                     jQuery('#dislike').addClass('active-dislike');
                     // $.notify("successfully disliked!", "success");
-                } else if(data == 1) {
+                } else if (data == 1) {
                     jQuery('#count-vote').html(parseInt(jQuery('#count-vote').html()) - 1);
                     jQuery('#dislike').removeClass('active-dislike');
                     jQuery('#like').removeClass('active-like');
@@ -873,18 +873,18 @@ jQuery(document).ready(function ($) {
         });
     })
 
-    jQuery('.comment').on('click', '.like-comment', function(event) {
+    jQuery('.comment').on('click', '.like-comment', function (event) {
         event.preventDefault()
         var comment = $(this).data('comment');
         var likeElement = $(this);
         var dislikeElement = $(this).parent().parent().find('.dislike-comment');
         var voteCountElement = $(this).parent().parent().parent().parent().find('.count-vote-comment');
-        $.post("/answers/" + comment + "/votes", function(data, status) {
+        $.post("/answers/" + comment + "/votes", function (data, status) {
             if (data == 1) {
                 voteCountElement.html(parseInt(voteCountElement.html()) + 1);
                 likeElement.addClass('active-like-comment');
                 // $.notify("successfully liked!", "success");
-            } else if(data == -1) {
+            } else if (data == -1) {
                 voteCountElement.html(parseInt(voteCountElement.html()) + 1);
                 dislikeElement.removeClass('active-like-comment');
                 likeElement.removeClass('active-like-comment');
@@ -897,7 +897,7 @@ jQuery(document).ready(function ($) {
         })
     })
 
-    jQuery('.comment').on('click', '.dislike-comment', function(event) {
+    jQuery('.comment').on('click', '.dislike-comment', function (event) {
         event.preventDefault()
         var comment = $(this).data('comment');
         var dislikeElement = $(this);
@@ -906,12 +906,12 @@ jQuery(document).ready(function ($) {
         $.ajax({
             url: "/answers/" + comment + "/votes/1",
             type: 'DELETE',
-            success: function(data, status) {
+            success: function (data, status) {
                 if (data == -1) {
                     voteCountElement.html(parseInt(voteCountElement.html()) - 1);
                     dislikeElement.addClass('active-like-comment');
                     // $.notify("successfully disliked!", "success");
-                } else if(data == 1) {
+                } else if (data == 1) {
                     voteCountElement.html(parseInt(voteCountElement.html()) - 1);
                     dislikeElement.removeClass('active-like-comment');
                     likeElement.removeClass('active-like-comment');
@@ -925,7 +925,7 @@ jQuery(document).ready(function ($) {
         });
     })
 
-    $("#answer").click(function(event) {
+    $("#answer").click(function (event) {
         event.preventDefault();
         $('html, body').animate({
             scrollTop: $("#respond").offset().top
@@ -933,13 +933,13 @@ jQuery(document).ready(function ($) {
         // $('#question-details').focus();
     });
 
-    jQuery('#clip').click(function(event) {
+    jQuery('#clip').click(function (event) {
         event.preventDefault()
         var question = $(this).data('question');
         $.ajax({
             url: "/questions/" + question + "/clips",
             type: 'GET',
-            success: function(data, status) {
+            success: function (data, status) {
                 if (data == 1) {
                     $('#clip').addClass('active-clip');
                     $.notify("successfully clip this question!", "success");
@@ -1222,11 +1222,11 @@ jQuery(document).ready(function ($) {
         });
     })
 
-    $("#avatar").change(function() {
+    $("#avatar").change(function () {
         readURL(this);
     });
 
-    $('#question_id').click(function(event) {
+    $('#question_id').click(function (event) {
         event.preventDefault();
         var $result = confirm("Want to delete?");
         if ($result) {
@@ -1234,19 +1234,32 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    $('#post_id').click(function(event) {
+    $('#post_id').click(function (event) {
         event.preventDefault();
         var $result = confirm("Want to delete?");
         if ($result) {
             $('#delete-form').submit();
         }
     });
+
+    // window.onscroll = function() {myFunction()};
+
+    // var header = document.getElementById("header");
+    // var sticky = header.offsetTop;
+
+    // function myFunction() {
+    //     if (window.pageYOffset > sticky) {
+    //         header.classList.add("sticky");
+    //     } else {
+    //         header.classList.remove("sticky");
+    //     }
+    // }
 });
 
 function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             $('#avatar_preview').attr('src', e.target.result);
         }
         reader.readAsDataURL(input.files[0]);

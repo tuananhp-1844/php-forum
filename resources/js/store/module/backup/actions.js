@@ -1,4 +1,4 @@
-import { getBackup } from '@/service/backup'
+import { getBackup, showBackup, createBackup } from '@/service/backup'
 
 export default {
     getBackup({commit}, payload) {
@@ -10,5 +10,26 @@ export default {
                 reject(error)
             })
         })
-    }
+    },
+
+    showBackup({commit}, payload) {
+        return new Promise((resolve, reject) => {
+            showBackup(payload.backup).then(res => {
+                resolve(res)
+            }).catch(error => {
+                reject(error)
+            })
+        })
+    },
+
+    createBackup({commit}, payload) {
+        return new Promise((resolve, reject) => {
+            createBackup().then(res => {
+                commit('createBackup', res)
+                resolve(res)
+            }).catch(error => {
+                reject(error)
+            })
+        })
+    },
 }

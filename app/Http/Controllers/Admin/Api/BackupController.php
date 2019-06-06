@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Backup\BackupResource;
 use App\Models\BackupDatabase;
+use Storage;
+use Artisan;
 
 class BackupController extends Controller
 {
@@ -21,7 +23,7 @@ class BackupController extends Controller
      */
     public function index()
     {
-        $backup = BackupDatabase::paginate(config('pagination.backup'));
+        $backup = BackupDatabase::orderBy('id', 'DESC')->paginate(config('pagination.backup'));
 
         return BackupResource::collection($backup);
     }
@@ -34,7 +36,10 @@ class BackupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Artisan::call('backup:database');
+        $backup = BackupDatabase::orderBy('id', 'DESC')->first();
+
+        return new BackupResource($backup);
     }
 
     /**
@@ -43,9 +48,10 @@ class BackupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+
+    public function show(BackupDatabase $backup)
     {
-        //
+        return Storage::disk('backup')->download($backup->name);
     }
 
     /**

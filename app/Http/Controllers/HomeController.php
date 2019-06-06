@@ -23,6 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return redirect()->route('questions.index');
+        return redirect()->route('posts.index');
     }
 }

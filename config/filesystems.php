@@ -48,6 +48,11 @@ return [
             'root' => storage_path('app'),
         ],
 
+        'backup' => [
+            'driver' => 'local',
+            'root' => storage_path(config('asset.backup_database')),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

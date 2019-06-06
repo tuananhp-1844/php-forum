@@ -81,6 +81,3 @@
     </div>
 </aside>
 @endsection
-@push('scripts')
-<script src="{{ mix('js/post.js') }}"></script>
-@endpush
