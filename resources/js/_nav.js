@@ -71,5 +71,19 @@ export default {
             url: '/permission',
             icon: 'icon-lock',
         },
+        {
+            title: true,
+            name: 'Backup',
+            class: '',
+            wrapper: {
+                element: '',
+                attributes: {}
+            }
+        },
+        {
+            name: 'Database',
+            url: '/backup/database',
+            icon: 'icon-social-soundcloud',
+        },
     ]
 }

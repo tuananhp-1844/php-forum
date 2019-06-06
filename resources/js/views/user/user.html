@@ -17,6 +17,10 @@
                 <template slot="id" slot-scope="row">
                     <span v-bind:class="{ ban: !row.item.active }">{{ row.item.id }}</span>
                 </template>
+                <template slot="verified_email" slot-scope="row">
+                    <b-badge v-bind:class="{ ban: !row.item.active }" variant="success" v-if="row.item.verified_email">Verified</b-badge>
+                    <b-badge v-bind:class="{ ban: !row.item.active }" variant="warning" v-if="!row.item.verified_email">Not verified</b-badge>
+                </template>
                 <template slot="active" slot-scope="row">
                     <b-form-checkbox :id="'checkbox '+ row.item.id" v-model="row.item.active" :name="'checkbox '+ row.item.id" @change="active(row.item.id)">
                     </b-form-checkbox>

@@ -8,6 +8,7 @@ import Question from '@/store/module/question'
 import Post from '@/store/module/post'
 import Dashboard from '@/store/module/dashboard'
 import Role from '@/store/module/role'
+import Backup from '@/store/module/backup'
 
 Vue.use(Vuex)
 
@@ -20,6 +21,7 @@ export default new Vuex.Store({
         Question,
         Post,
         Dashboard,
-        Role
+        Role,
+        Backup
     }
 })

@@ -10,8 +10,10 @@ export default {
                 { key: 'full_name', label: 'Full name'},
                 { key: 'email', label: 'Email'},
                 { key: 'provider', label: 'Provider'},
+                { key: 'verified_email', label: 'Verified Email' },
                 { key: 'avatar', label: 'Avatar' },
-                { key: 'active', label: 'Active' }
+                { key: 'active', label: 'Active' },
+                
             ],
         }
     },

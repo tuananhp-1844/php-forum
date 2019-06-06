@@ -12,4 +12,5 @@ return [
     'post' => 10,
     'post_admin' => 20,
     'user' => 20,
+    'backup' => 20,
 ];

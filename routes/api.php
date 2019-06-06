@@ -24,3 +24,4 @@ Route::resource('posts', 'Admin\Api\PostController')->except(['edit', 'create'])
 Route::post('posts/{post}/change-status', 'Admin\Api\PostController@changeStatus');
 Route::get('dashboard', 'Admin\Api\DashboardController');
 Route::resource('roles', 'Admin\Api\RoleController')->except(['edit', 'create']);
+Route::resource('backup', 'Admin\Api\BackupController')->except(['edit', 'create']);

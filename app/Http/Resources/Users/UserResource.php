@@ -21,6 +21,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'provider' => $this->provider,
             'active' => !$this->trashed(),
+            'verified_email' => $this->hasVerifiedEmail(),
         ];
     }
 }
