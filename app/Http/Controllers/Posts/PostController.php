@@ -9,6 +9,7 @@ use App\Models\Post;
 use App\Models\Tag;
 use App\Repositories\Contracts\CategoryRepositoryInterface as CategoryInterface;
 use App\Repositories\Contracts\QuestionRepositoryInterface as QuestionInterface;
+use App\Repositories\Contracts\UserRepositoryInterface as UserInterface;
 use App\Http\Requests\Posts\CreatePostRequest;
 use App\Http\Requests\Posts\UpdatePostRequest;
 use Auth;
@@ -18,15 +19,18 @@ class PostController extends Controller
     private $postRepository;
     private $categoryRepository;
     private $questionRepository;
+    private $userRepository;
 
     public function __construct(
         PostRepositoryInterface $postRepository,
         CategoryInterface $categoryRepository,
-        QuestionInterface $questionRepository
+        QuestionInterface $questionRepository,
+        UserInterface $userRepository
     ) {
         $this->postRepository = $postRepository;
         $this->categoryRepository = $categoryRepository;
         $this->questionRepository = $questionRepository;
+        $this->userRepository = $userRepository;
         $this->middleware('auth')->except('index', 'show');
         $this->middleware('can:update,post')->only(['update', 'edit']);
         $this->middleware('can:delete,post')->only('destroy');
@@ -47,9 +51,9 @@ class PostController extends Controller
                 $posts = $posts->trending();
                 break;
             case 'my-clips':
-                // if (Auth::check()) {
-                //     $posts = $this->userRepository->userPostClips(Auth::user());
-                // }
+                if (Auth::check()) {
+                    $posts = $this->userRepository->userPostClips(Auth::user());
+                }
                 break;
             default:
                 $posts = $posts->newest();
@@ -86,7 +90,7 @@ class PostController extends Controller
     {
         $post = $this->postRepository->store($request);
         
-        return redirect()->route('posts.show', ['id' => $post->id]);
+        return redirect()->route('posts.show', ['id' => $post->id, 'slug' => $post->slug]);
     }
 
     /**
@@ -127,9 +131,10 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
+        // dd($request->all());
         $this->postRepository->updatePost($request, $post);
 
-        return redirect()->route('posts.show', ['post' => $post->id]);
+        return redirect()->route('posts.show', ['post' => $post->id, 'slug' => $post->slug]);
     }
 
     /**

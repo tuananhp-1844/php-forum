@@ -33,7 +33,6 @@
                 <p>
                     <label class="required">{{ __('Question Title') }}<span>*</span></label>
                     <input type="text" id="question-title" name="title" value="{{ $question->title }}">
-                    <span class="form-description">{{ __('Please choose an appropriate title for the question to answer it even easier .') }}</span>
                     @error('title')
                         <span class="error form-description">{{ $message }}</span>
                     @enderror
@@ -41,7 +40,6 @@
                 <p>
                     <label>{{ __('Tags') }}</label>
                     <input type="text" class="input" name="tags" id="question_tags" data-seperator="," value="{{ implode(',', $question->tags->pluck('name')->toArray()) }}">
-                    <span class="form-description">{{ __('Please choose suitable Keywords Ex') }} : <span class="color">{{ __('question') }} ,{{ __('poll') }}</span> .</span>
                 </p>
                 <p>
                     <label class="required">{{ __('Category') }}<span>*</span></label>
@@ -53,7 +51,6 @@
                         @endforeach
                     </select>
                     </span>
-                    <span class="form-description">{{ __('Please choose the appropriate section so easily search for your question .') }}</span>
                     @error('category')
                         <span class="error form-description">{{ $message }}</span>
                     @enderror
@@ -94,7 +91,6 @@
                 <p>
                     <label class="required">{{ __('Details') }}<span>*</span></label>
                     <textarea id="question-details" aria-required="true" cols="58" rows="8" name="content">{{ $question->content }}</textarea>
-                    <span class="form-description">{{ __('Type the description thoroughly and in detail') }} .</span>
                     @error('content')
                     <span class="error form-description">{{ $message }}</span>
                     @enderror

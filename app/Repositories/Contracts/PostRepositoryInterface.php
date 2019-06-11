@@ -10,4 +10,7 @@ interface PostRepositoryInterface
     public function trending();
     public function store(Request $request);
     public function updatePost(Request $request, Post $post);
+    public function checkUserClip($userId, Post $post);
+    public function clip($userId, Post $post);
+    public function destroyClip($userId, Post $post);
 }

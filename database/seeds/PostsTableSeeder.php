@@ -5,6 +5,7 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\Category;
 use Faker\Factory as Faker;
+use Illuminate\Support\Str;
 
 class PostsTableSeeder extends Seeder
 {
@@ -22,6 +23,7 @@ class PostsTableSeeder extends Seeder
         foreach (range(1, 50) as $index) {
             $company = Post::create([
                 'title' => $faker->company,
+                'slug' => Str::slug($faker->company),
                 'user_id' => $faker->randomElement($users),
                 'category_id' => $faker->randomElement($categories),
                 'content' => $faker->realText($maxNbChars = 10000, $indexSize = 2),

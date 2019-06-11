@@ -26,7 +26,7 @@ class CreateQuestionRequest extends FormRequest
     {
         return [
             'category' => 'required',
-            'title' => 'required',
+            'title' => 'required|max:191',
             'content' => 'required',
             'ask' => 'array',
         ];

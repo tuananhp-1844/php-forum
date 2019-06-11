@@ -23,7 +23,7 @@
     color: #fff;
 }
 .active-clip {
-    color: #3498Db;
+    color: #3498Db !important;
     font-weight: 700;
 }
 .reply {

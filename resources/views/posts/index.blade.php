@@ -42,7 +42,7 @@
                 @foreach ($posts as $post)
                 <article class="post clearfix">
                     <div class="post-inner">
-                        <h2 class="post-title"><span class="post-type"><i class="icon-pencil"></i></span><a href="{{ route('posts.show', ['id' => $post->id]) }}">{{ $post->title }}</a></h2>
+                        <h2 class="post-title"><span class="post-type"><i class="icon-pencil"></i></span><a href="{{ route('posts.show', ['post' => $post->id, 'slug' => $post->slug]) }}">{{ $post->title }}</a></h2>
                         <div class="post-meta">
                             <span class="meta-author"><i class="icon-user"></i><a href="#">{{ $post->user->fullname }}</a></span>
                             <span class="meta-date"><i class="icon-time"></i>{{ $post->created_at->diffForHumans() }}</span>

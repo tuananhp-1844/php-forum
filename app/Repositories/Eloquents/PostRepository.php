@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Auth;
+use Str;
 
 class PostRepository extends BaseRepository implements PostRepositoryInterface
 {
@@ -34,6 +35,7 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
             'content' => $request->content,
             'view' => 0,
             'status' => 1,
+            'slug' => Str::slug($request->title),
         ]);
 
         if ($request->tags && $request->tags !== '') {
@@ -57,10 +59,11 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
     }
      public function updatePost(Request $request, Post $post)
      {
-        $post = $post->update([
+        $post->update([
             'category_id' => $request->category,
             'title' => $request->title,
-            'content' => $request->content
+            'content' => $request->content,
+            'slug' => Str::slug($request->title),
         ]);
 
         if ($request->tags && $request->tags !== '') {
@@ -82,4 +85,19 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
 
         return $post;
      }
+
+    public function checkUserClip($userId, Post $post)
+    {
+        return $post->clips->where('id', $userId)->count();
+    }
+
+    public function clip($userId, Post $post)
+    {
+        return $post->clips()->attach($userId);
+    }
+    
+    public function destroyClip($userId, Post $post)
+    {
+        return $post->clips()->detach($userId);
+    }
 }

@@ -459,6 +459,12 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    jQuery(".ul_list ul li a").each(function () {
+        if (jQuery(this).attr('href') == window.location) {
+            jQuery(this).addClass("active-clip")
+        }
+    });
+
     /* Button */
 
     jQuery(".button").each(function () {
@@ -945,6 +951,24 @@ jQuery(document).ready(function ($) {
                     $.notify("successfully clip this question!", "success");
                 } else {
                     $('#clip').removeClass('active-clip');
+                    // $.notify("successfully clip this question!!", "success");
+                }
+            }
+        });
+    })
+
+    jQuery('#clip_post').click(function (event) {
+        event.preventDefault()
+        var post = $(this).data('post');
+        $.ajax({
+            url: "/posts/" + post + "/clips",
+            type: 'GET',
+            success: function (data, status) {
+                if (data == 1) {
+                    $('#clip_post').addClass('active-clip');
+                    $.notify("successfully clip this post!", "success");
+                } else {
+                    $('#clip_post').removeClass('active-clip');
                     // $.notify("successfully clip this question!!", "success");
                 }
             }
