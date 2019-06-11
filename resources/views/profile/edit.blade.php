@@ -1,7 +1,10 @@
 @extends('layouts.app')
 @section('main')
 <div class="height_20"></div>
-<div class="col-md-12">
+<div class="col-md-3">
+    @include('profile.sidebar')
+</div>
+<div class="col-md-9">
     <div class="page-content">
     <div class="boxedtitle page-title"><h2>{{ __('Update Profile') }}</h2></div>
         <div class="form-style form-style-4">

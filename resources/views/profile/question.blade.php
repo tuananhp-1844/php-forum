@@ -8,7 +8,7 @@
 <div class="col-md-9">
     <div class="page-content">
         <div class="boxedtitle page-title">
-            <h2>{{ __('Clips') }}</h2>
+            <h2><i class="fa fa-question"></i> {{ __('My question') }}</h2>
         </div>
         <div class="page-content page-content-user">
             <div class="user-questions">

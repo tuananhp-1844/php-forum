@@ -29,6 +29,7 @@ class Post extends Model
         'content',
         'view',
         'status',
+        'slug',
     ];
 
     public function user()

@@ -65,10 +65,18 @@ Route::resource('users', 'Users\UserController')->only('show');
 
 Route::get('profile/clips', 'Profile\ProfileController@clip')->name('profile.clip');
 
+Route::get('profile/questions', 'Profile\ProfileController@question')->name('profile.question');
+
+Route::get('profile/posts', 'Profile\ProfileController@post')->name('profile.post');
+
 Route::resource('notifications', 'Notifications\NotificationController');
 
 Route::get('search', 'Search\SearchController@search')->name('search');
 
-Route::resource('posts', 'Posts\PostController');
+Route::get('posts/{post}-{slug}', 'Posts\PostController@show')->name('posts.show');
+
+Route::resource('posts', 'Posts\PostController')->except(['show']);
 
 Route::resource('posts.comments', 'Posts\CommentController')->only('store');
+
+Route::resource('posts.clips', 'Posts\ClipController')->only('index');

@@ -4,18 +4,17 @@ namespace App\Http\Controllers\Posts;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\Contracts\PostRepositoryInterface;
 use App\Models\Post;
-use App\Http\Requests\Answers\CreateAnswerRequest;
-use App\Repositories\Contracts\AnswerRepositoryInterface as AnswerInterface;
+use Auth;
 
-class CommentController extends Controller
+class ClipController extends Controller
 {
-    private $answerRepository;
-
-    public function __construct(AnswerInterface $answerRepository)
+    protected $postRepository;
+    public function __construct(PostRepositoryInterface $postRepository)
     {
         $this->middleware('auth');
-        $this->answerRepository = $answerRepository;
+        $this->postRepository = $postRepository;
     }
 
     /**
@@ -23,9 +22,18 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Post $post)
     {
-        //
+        $state = 0;
+        if ($this->postRepository->checkUserClip(Auth::user()->id, $post)) {
+            $this->postRepository->destroyClip(Auth::user()->id, $post);
+            $state = 0;
+        } else {
+            $this->postRepository->clip(Auth::user()->id, $post);
+            $state = 1;
+        }
+
+        return $state;
     }
 
     /**
@@ -34,11 +42,9 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateAnswerRequest $request, Post $post)
+    public function store(Request $request)
     {
-        $this->answerRepository->store($request, $post);
-
-        return redirect()->route('posts.show', ['post' => $post->id, 'slug' => $post->slug]);
+        //
     }
 
     /**

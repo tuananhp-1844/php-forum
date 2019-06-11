@@ -83,7 +83,12 @@
             <span class="share-inside-f-arrow"></span>
             <span class="share-inside-l-arrow"></span>
         </div><!-- End share-inside-warp -->
-        <div class="share-inside"><i class="icon-share-alt"></i>Share</div>
+        <div class="share-inside"><i class="icon-share-alt"></i>Share</div>&nbsp; &nbsp;
+        @if (Auth::check())
+        <a href="#" class="{{ $post->clips->where('id', Auth::user()->id)->count() ? 'active-clip' : '' }}" id = "clip_post" data-post="{{ $post->id }}"><i class="fa fa-paperclip"></i> {{ __('Clip post') }}</a>&nbsp; &nbsp;
+        @else
+        <a href="{{ route('login') }}"><i class="fa fa-paperclip"></i> {{ __('Clip post') }}</a>
+        @endif
         @can('update', $post)
             &nbsp; &nbsp;<a href="{{ route('posts.edit', ['post' => $post->id]) }}"><i class="fa fa-edit"></i> {{ __('Edit') }}</a>&nbsp; &nbsp;
         @endcan
@@ -253,7 +258,7 @@
         <ul class="related-posts">
             @foreach ($post->user->posts as $post)
                 <li class="related-item">
-                    <h3><a href="{{ route('posts.show', ['id' => $post->id]) }}">{{ $post->title }}</a></h3>
+                    <h3><a href="{{ route('posts.show', ['id' => $post->id, 'slug' => $post->slug]) }}">{{ $post->title }}</a></h3>
                     <div class="clear"></div>
                     <span>{{ $post->created_at->diffForHumans() }}</span>
                 </li>

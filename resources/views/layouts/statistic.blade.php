@@ -53,10 +53,10 @@
                 @endif
             </a>
         </li>
-        <li><a href="{{ route('profile.index') }}"><i class="icon-question-sign"></i>{{ __('Questions') }} ( <span>{{ Auth::user()->questions->count() }}</span> )</a></li>
-        <li><a href="{{ route('profile.index') }}"><i class="icon-comment"></i>{{ __('Answers') }} ( <span>{{ Auth::user()->answers->count() }}</span> )</a></li>
+        <li><a href="{{ route('profile.question') }}"><i class="icon-question-sign"></i>{{ __('Questions') }} ( <span>{{ Auth::user()->questions->count() }}</span> )</a></li>
+        <li><a href="{{ route('profile.post') }}"><i class="icon-comment"></i>{{ __('Posts') }} ( <span>{{ Auth::user()->posts->count() }}</span> )</a></li>
         <li><a href="{{ route('profile.index') }}"><i class="icon-btc"></i>{{ __('Points') }} ( <span>{{ Auth::user()->point }}</span> )</a></li>
-        <li><a href="{{ route('profile.clip') }}"><i class="fa fa-paperclip"></i>{{ __('Clip question') }} ( <span>{{ Auth::user()->clips->count() }}</span> )</a></li>
+        <li><a href="{{ route('profile.clip') }}"><i class="fa fa-paperclip"></i>{{ __('Clips') }} ( <span>{{ Auth::user()->clips->count() + Auth::user()->postClips->count() }}</span> )</a></li>
         </ul>
     </div>
 </div>

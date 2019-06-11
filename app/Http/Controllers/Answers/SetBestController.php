@@ -28,7 +28,7 @@ class SetBestController extends Controller
         $this->answerRepository->setBest($answer);
         $this->userRepository->addPoint($answer->user, 'best_answer');
 
-        return redirect()->route('questions.show', ['question' => $answer->question->id]);
+        return redirect()->route('questions.show', ['question' => $answer->answerable->id]);
     }
 
     /**

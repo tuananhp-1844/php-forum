@@ -104,4 +104,20 @@ class ProfileController extends Controller
 
         return view('profile.clip', compact('questions'));
     }
+
+    public function question()
+    {
+        $questions = Auth::user()->questions()->with('votes', 'category', 'answers', 'user');
+        $questions = $questions->paginate(config('pagination.question'));
+
+        return view('profile.question', compact('questions'));
+    }
+
+    public function post()
+    {
+        $posts = Auth::user()->posts()->with('category', 'comments', 'user');
+        $posts = $posts->paginate(config('pagination.question'));
+
+        return view('profile.post', compact('posts'));
+    }
 }

@@ -32,7 +32,6 @@
                 <p>
                     <label class="required">{{ __('Post Title') }}<span>*</span></label>
                     <input type="text" id="question-title" name="title" value="{{ old('title') }}">
-                    <span class="form-description">{{ __('Please choose an appropriate title for the post to answer it even easier .') }}</span>
                     @error('title')
                         <span class="error form-description">{{ $message }}</span>
                     @enderror
@@ -40,7 +39,6 @@
                 <p>
                     <label>{{ __('Tags') }}</label>
                     <input type="text" class="input" name="tags" id="question_tags" data-seperator=",">
-                    <span class="form-description">{{ __('Please choose suitable Keywords Ex') }} : <span class="color">{{ __('question') }} ,{{ __('poll') }}</span> .</span>
                 </p>
                 <p>
                     <label class="required">{{ __('Category') }}<span>*</span></label>
@@ -52,7 +50,6 @@
                         @endforeach
                         </select>
                     </span>
-                    <span class="form-description">{{ __('Please choose the appropriate section so easily search for your post .') }}</span>
                     @error('category')
                         <span class="error form-description">{{ $message }}</span>
                     @enderror

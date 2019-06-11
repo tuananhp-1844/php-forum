@@ -32,7 +32,6 @@
                 <p>
                     <label class="required">{{ __('Question Title') }}<span>*</span></label>
                     <input type="text" id="question-title" name="title" value="{{ old('title') }}">
-                    <span class="form-description">{{ __('Please choose an appropriate title for the question to answer it even easier .') }}</span>
                     @error('title')
                         <span class="error form-description">{{ $message }}</span>
                     @enderror
@@ -40,7 +39,6 @@
                 <p>
                     <label>{{ __('Tags') }}</label>
                     <input type="text" class="input" name="tags" id="question_tags" data-seperator=",">
-                    <span class="form-description">{{ __('Please choose suitable Keywords Ex') }} : <span class="color">{{ __('question') }} ,{{ __('poll') }}</span> .</span>
                 </p>
                 <p>
                     <label class="required">{{ __('Category') }}<span>*</span></label>
@@ -52,7 +50,6 @@
                         @endforeach
                         </select>
                     </span>
-                    <span class="form-description">{{ __('Please choose the appropriate section so easily search for your question .') }}</span>
                     @error('category')
                         <span class="error form-description">{{ $message }}</span>
                     @enderror
@@ -61,7 +58,6 @@
                     <label for="question_poll">{{ __('Poll') }}</label>
                     <input type="checkbox" id="question_poll" name="question_poll">
                     <span class="question_poll">{{ __('This question is a poll') }} ?</span>
-                    <span class="poll-description">{{ __('If you want to be doing a poll click here') }} .</span>
                 </p>
                 <span class="error form-description poll-error"></span>
                 <div class="clearfix"></div>
@@ -88,7 +84,6 @@
                 <p>
                     <label class="required">{{ __('Details') }}<span>*</span></label>
                     <textarea id="question-details" aria-required="true" cols="58" rows="8" name="content">{{ old('content') }}</textarea>
-                    <span class="form-description">{{ __('Type the description thoroughly and in detail') }} .</span>
                     @error('content')
                     <span class="error form-description">{{ $message }}</span>
                     @enderror

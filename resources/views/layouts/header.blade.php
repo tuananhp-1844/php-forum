@@ -106,7 +106,7 @@
                     <ul>
                         <li><a href="{{ route('profile.index') }}">{{ __('User Profile') }}</a></li>
                         <li><a href="{{ route('profile.edit') }}">{{ __('Edit Profile') }}</a></li>
-                        <li><a href="{{ route('profile.clip') }}">{{ __('Clip question') }}</a></li>
+                        <li><a href="{{ route('profile.clip') }}">{{ __('Clips') }}</a></li>
                         <li>
                             <a onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
                         </li>
