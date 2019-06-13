@@ -19,7 +19,7 @@ jQuery(document).ready(function ($) {
                 array.push('&nbsp; 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ' + element.innerHTML)
                 break;
             case 'H6':
-                array.push( + element.innerHTML)
+                array.push('&nbsp; 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ' + element.innerHTML)
                 break;
 
             default:

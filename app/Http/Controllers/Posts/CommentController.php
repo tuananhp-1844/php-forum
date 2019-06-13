@@ -38,7 +38,7 @@ class CommentController extends Controller
     {
         $this->answerRepository->store($request, $post);
 
-        return redirect()->route('posts.show', ['post' => $post->id]);
+        return redirect()->route('posts.show', ['post' => $post->id, 'slug' => $post->slug]);
     }
 
     /**
