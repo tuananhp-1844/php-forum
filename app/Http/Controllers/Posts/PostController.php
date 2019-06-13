@@ -61,6 +61,7 @@ class PostController extends Controller
         }
         $posts = $posts->with(['category', 'user', 'comments']);
         $posts = $posts->paginate(config('pagination.post'));
+        $posts = $posts->appends(request()->input());
         $questions = $this->questionRepository->newest()->paginate(config('pagination.question'));
         $hotTag = Tag::withCount('questions')->orderBy('questions_count', 'desc');
         $hotTag = $hotTag->with('questions')->limit(config('pagination.hot_tag'))->get();

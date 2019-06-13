@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Contracts\TagRepositoryInterface;
 use App\Http\Resources\Tags\TagResource;
 use App\Models\Tag;
+use App\Http\Requests\Tags\CreateRequest;
+use App\Http\Requests\Tags\UpdateRequest;
 
 class TagController extends Controller
 {
@@ -36,9 +38,9 @@ class TagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        $tag = $this->tagRespository->store();
+        $tag = $this->tagRespository->store($request);
 
         return new TagResource($tag);
     }
@@ -49,9 +51,9 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Tag $tag)
     {
-        //
+        return new TagResource($tag);
     }
 
     /**
@@ -61,9 +63,11 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, Tag $tag)
     {
-        //
+        $this->tagRespository->updateTag($request, $tag);
+
+        return new TagResource($tag);
     }
 
     /**
