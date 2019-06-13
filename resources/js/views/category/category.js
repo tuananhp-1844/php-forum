@@ -1,6 +1,10 @@
+import Create from './create'
+import Update from './update'
+import swal from 'sweetalert'
+
 export default {
     name: 'category',
-    components: {},
+    components: {Create, Update},
     props: [],
     data() {
         return {
@@ -40,6 +44,39 @@ export default {
             }).catch(res => {
     
             })
-        }
+        },
+        create () {
+            this.$refs.create.show()
+        },
+        destroy (category) {
+            swal({
+                title: this.$t('notify.delete_comfirm'),
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true
+            }).then((willDelete) => {
+                if (willDelete) {
+                    this.$store.dispatch('Category/destroyCategory', {
+                        category
+                    }).then((res) => {
+                        this.$bvToast.toast(`Xóa thành công`, {
+                            title: `Thông báo`,
+                            toaster: 'b-toaster-top-right',
+                            solid: true,
+                            variant: 'success',
+                        })
+                    }).catch(errors => {
+                        console.log(errors)
+                    })
+                }
+            })
+        },
+        update(category) {
+            this.$store.dispatch('Category/showCategory', { category }).then(res => {
+                this.$refs.update.show(res)
+            }).catch(error => {
+
+            })
+        },
     }
 }

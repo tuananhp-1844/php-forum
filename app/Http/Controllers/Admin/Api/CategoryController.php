@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Contracts\CategoryRepositoryInterface;
 use App\Http\Resources\Categories\CategoryResource;
+use App\Http\Requests\Categories\CreateRequest;
+use App\Http\Requests\Categories\UpdateRequest;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
@@ -36,9 +39,11 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        //
+        $category = $this->categoryRepository->store($request);
+
+        return new CategoryResource($category);
     }
 
     /**
@@ -47,9 +52,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Category $category)
     {
-        //
+        return new CategoryResource($category);
     }
 
     /**
@@ -59,9 +64,11 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, Category $category)
     {
-        //
+        $category = $this->categoryRepository->updateCategory($request, $category);
+
+        return new CategoryResource($category);
     }
 
     /**
@@ -70,8 +77,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
+
+        return new CategoryResource($category);
     }
 }
