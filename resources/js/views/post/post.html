@@ -1,6 +1,12 @@
 <b-row>
     <b-col cols="12" lg="12">
         <b-card no-header>
+            <b-row class="mb-3">
+                <b-col cols="12" lg="12">
+                    <b-button variant="primary" class="pull-right" @click="create()"><i class="fa fa-download"></i>
+                        {{ $t('Get post from Viblo') }}</b-button>
+                </b-col>
+            </b-row>
             <b-table striped hover :items="items" :fields="fields">
                 <template slot="user" slot-scope="row">
                     <b-img :src="row.item.user.avatar" alt="" width="40" height="40" rounded="circle"></b-img>
@@ -8,17 +14,17 @@
                 </template>
                 <template slot="status" slot-scope="row">
                     <b-dropdown size="sm" :text="row.item.status" variant="primary" class="m-2">
-                        <b-dropdown-item @click = "changeStatus(1, row.item.id)">Normal</b-dropdown-item>
-                        <b-dropdown-item @click = "changeStatus(2, row.item.id)">Editor choice</b-dropdown-item>
-                        <b-dropdown-item @click = "changeStatus(3, row.item.id)">Trending</b-dropdown-item>
+                        <b-dropdown-item @click="changeStatus(1, row.item.id)">Normal</b-dropdown-item>
+                        <b-dropdown-item @click="changeStatus(2, row.item.id)">Editor choice</b-dropdown-item>
+                        <b-dropdown-item @click="changeStatus(3, row.item.id)">Trending</b-dropdown-item>
                     </b-dropdown>
                 </template>
                 <template slot="action" slot-scope="row">
                     <b-dropdown variant="link" size="sm" toggle-class="text-decoration-none" no-caret>
                         <template slot="button-content"><i class="fa fa-bars" aria-hidden="true"></i></span></template>
-                        <b-dropdown-item >Action</b-dropdown-item>
-                        <b-dropdown-item >Another action</b-dropdown-item>
-                        <b-dropdown-item >Something else here...</b-dropdown-item>
+                        <b-dropdown-item>Action</b-dropdown-item>
+                        <b-dropdown-item>Another action</b-dropdown-item>
+                        <b-dropdown-item>Something else here...</b-dropdown-item>
                     </b-dropdown>
                 </template>
             </b-table>

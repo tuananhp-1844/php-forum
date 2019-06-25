@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \App\Console\Commands\BackupDatabase::class,
+        \App\Console\Commands\GetDataFromViblo::class,
     ];
 
     /**
